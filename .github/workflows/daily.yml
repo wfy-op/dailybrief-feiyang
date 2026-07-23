@@ -49,6 +49,14 @@ jobs:
             rm -f daily_reports/index.html daily_reports/archive.html
           fi
 
+      - name: Restore academic freshness state
+        run: |
+          mkdir -p data
+          if git ls-remote --exit-code --heads origin daily-state >/dev/null 2>&1; then
+            git fetch origin daily-state:refs/remotes/origin/daily-state --depth=1
+            git show origin/daily-state:academic-seen.json > data/academic-seen.json
+          fi
+
       - name: Check idempotency guard
         id: current
         env:
@@ -109,3 +117,20 @@ jobs:
           publish_branch: gh-pages
           keep_files: false
           commit_message: 'daily: ${{ steps.date.outputs.date }}'
+
+      - name: Prepare academic freshness state
+        if: steps.current.outputs.already-current != 'true'
+        run: |
+          mkdir -p state-dist
+          cp data/academic-seen.json state-dist/academic-seen.json
+
+      - name: Persist academic freshness state
+        if: steps.current.outputs.already-current != 'true'
+        continue-on-error: true
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./state-dist
+          publish_branch: daily-state
+          keep_files: false
+          commit_message: 'state: ${{ steps.date.outputs.date }}'

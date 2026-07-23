@@ -5,12 +5,12 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Node 20+](https://img.shields.io/badge/node-20%2B-brightgreen.svg)](https://nodejs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6.svg)](https://www.typescriptlang.org/)
-[![LLM: pluggable](https://img.shields.io/badge/LLM-pluggable%20(5%20backends)-orange.svg)](#-llm-后端配置)
+[![LLM: pluggable](https://img.shields.io/badge/LLM-pluggable%20(6%20backends)-orange.svg)](#-llm-后端配置)
 [![Deploy: GH Actions](https://img.shields.io/badge/deploy-GitHub%20Actions-2088ff.svg)](#a-github-actions--pages零基础设施推荐)
 [![Demo: live](https://img.shields.io/badge/demo-leiting--eric.github.io%2FDailyBrief-brightgreen.svg)](https://leiting-eric.github.io/DailyBrief)
 [![Stars](https://img.shields.io/github/stars/leiting-eric/DailyBrief?style=social)](https://github.com/leiting-eric/DailyBrief)
 
-> **你的私人 AI 每日简报，跑在你自己掌控的基础设施上。** 47 个启用信源配置 · LLM 摘要 · 21 个股票/加密标的**技术指标 + AI 交易点评** · 中英双语 · 5 个 LLM 后端可选。
+> **你的私人 AI 每日简报，跑在你自己掌控的基础设施上。** 47 个启用信源配置 · LLM 摘要 · 21 个股票/加密标的**技术指标 + AI 交易点评** · 中英双语 · 6 个 LLM 后端可选。
 >
 > **三种部署任选**：[**🚀 5 分钟 Fork 到 GitHub Actions**](#a-github-actions--pages零基础设施推荐) · [**💻 本地一键装**](#b-本地一键装) · [**🤖 一句话让 AI Agent 帮你装**](#c-给-ai-agent-一句话装)。
 
@@ -25,7 +25,7 @@
 
 - **🌍 全网多源聚合**：47 个启用信源配置覆盖硅谷科技、AI 前沿、全球财经、国际时政、中文社区，一份报告通吃
 - **📈 21 个标的实时行情**：美股 / 加密 / 港股 / 商品外汇 / 宏观信号，附 SMA / RSI / MACD 技术指标 + LLM 每日交易点评
-- **🤖 5 个 LLM 后端可插拔**：Claude CLI / Anthropic / OpenAI / DeepSeek / MiniMax，一个环境变量切换，不绑死任何家
+- **🤖 6 个 LLM 后端可插拔**：Claude CLI / Codex CLI / Anthropic / OpenAI / DeepSeek / MiniMax，一个环境变量切换，不绑死任何家
 - **🌐 中英双语**：`REPORT_LOCALE=en` 一切——数据源、prompt、UI 文案、Bullish/Bearish stance 全套切英文
 - **🚀 部署灵活**：GitHub Actions（零基础设施）/ 本地系统调度器 / 自托管服务器三选一，互不冲突可并存
 - **🆓 数据源零 API key**：所有源走免费公开端点（RSS / 公开 JSON），不需要付费订阅
@@ -80,53 +80,32 @@
 
 | 方式 | 适合谁 | 你需要 | 几分钟搞定 |
 |---|---|---|---|
-| **A. GitHub Actions + Pages** | 没服务器、不想常开电脑 | 一个 API key（Anthropic / OpenAI / DeepSeek / MiniMax 任一） | ~5 分钟（推荐） |
+| **A. GitHub Actions + Pages** | 没服务器、不想常开电脑 | GitHub 账号；默认无需单独 API key | ~5 分钟（推荐） |
 | **B. 本地一键装** | 有常开的电脑/服务器、想极致便宜 | Node 20+，可选 Claude Code 登录 | ~3 分钟 |
 | **C. 给 AI Agent 一句话** | 懒、想让 Cursor / Codex / Claude Code 帮你装 | 同上 | 一句话 |
 
 ### A. GitHub Actions + Pages（零基础设施，推荐）
 
-1. **Fork 这个 repo**（GitHub 右上角 Fork 按钮）
-2. 进 Fork 的 repo → **Settings → Actions → General → Workflow permissions** 设为 **Read and write permissions**
-3. **Settings → Pages → Build and deployment → Source** 选 "Deploy from a branch"，分支 `gh-pages` / 路径 `/ (root)`（第一次跑完才会出现 gh-pages 分支，先建 secret 再触发一次即可）
-4. **🔑 配置 LLM 后端** —— 这步是关键。每个后端都要**一个 secret + 对应的 `LLM_BACKEND` variable**（不只是 secret），按下表对照填：
+1. **Fork 这个 repo**（GitHub 右上角 Fork 按钮）。
+2. 进 Fork → **Settings → Actions → General → Workflow permissions**，允许工作流写入仓库。
+3. **Actions → Daily Brief Cloud → Run workflow**，先手动运行一次。
+4. 首次成功后，在 **Settings → Pages** 选择 `gh-pages` 分支和 `/ (root)`。
 
-   | 你想用 | Secrets 标签加 | Variables 标签加 `LLM_BACKEND` | 大致成本 |
-   |---|---|---|---|
-   | 🟣 **Anthropic Sonnet**（默认，prompt 按 Sonnet 调优） | `ANTHROPIC_API_KEY` | 不填或填 `anthropic` | ~$0.03-0.05 / 天，月 < $2 |
-   | 🐋 **DeepSeek**（便宜大碗，中文友好） | `DEEPSEEK_API_KEY` | `deepseek` | ~$0.01-0.02 / 天，月 < $1 |
-   | 🟢 **OpenAI** | `OPENAI_API_KEY` | `openai` | gpt-4o-mini ~$0.02 / 天 |
-   | 🔵 **MiniMax** | `MINIMAX_API_KEY` | `minimax` | 类似 DeepSeek 量级 |
+默认云端流程无需单独的 LLM API key：工作流使用 GitHub 自动签发的短期
+`GITHUB_TOKEN` 调用 GitHub Models 的 `openai/gpt-4o-mini`，并仅申请
+`models: read` 与 `contents: write`。如果模型临时限流或不可用，日报会保留来源
+摘要并切换到确定性简报，仍需通过发布质量门才会上线。
 
-   位置：**Settings → Secrets and variables → Actions**，左边切换 Secrets / Variables 两个标签。
+个性化生产计划固定为 Asia/Shanghai 08:07 主运行，10:07 和 14:07 做幂等补跑。
+补跑在 `gh-pages` 已包含当天 HTML 时会在模型调用前退出。需要改时间时直接编辑
+`.github/workflows/daily.yml` 的 cron，并同步修改三次触发。
 
-5. （可选）同页 Variables 再加：
-   - `LLM_MODEL` —— 覆盖该 backend 的默认模型（不填用 [`.env.example`](.env.example) 里列的默认）
-   - `REPORT_LOCALE` —— `zh`（默认）或 `en`，控制数据源 + UI + prompt 全套切英文
-   - `REPORT_TZ` —— IANA 时区名（默认 UTC），例 `Asia/Shanghai` / `America/Los_Angeles`。**同时影响触发时间和日期标签**
-   - `REPORT_HOUR` —— 触发的小时（基于 `REPORT_TZ`），默认 `8`（早 8 点）。逗号分隔可多次触发，如 `8,18` = 早 8 + 晚 6
-   - `REPORT_DAYS` —— 触发的星期（cron 风格，`0`=周日 ... `6`=周六），默认 `*`（每天）。例 `1-5` = 工作日；`1,3,5` = 周一三五
-6. **Actions 标签 → 选 "Daily Brief" workflow → Run workflow** 手动触发一次
+跑完后报告位于 `https://<你的用户名>.github.io/<repo-名字>/`。本项目的生产实例是
+[`https://wfy-op.github.io/dailybrief-feiyang/`](https://wfy-op.github.io/dailybrief-feiyang/)。
 
-跑完后报告在 `https://<你的用户名>.github.io/<repo-名字>/`。之后**默认每天 `REPORT_TZ` 时区的 08:00 自动更新**（不设 `REPORT_TZ` 就是 UTC 08:00）。
-
-> ⏰ **触发机制**：GitHub Actions 的 cron 只接受 UTC，所以工作流 cron 设置为**每小时跑一次**，里面有一个 `gate` 任务用 `REPORT_TZ` 把当前小时和 `REPORT_HOUR/REPORT_DAYS` 对照——匹配才往下跑 build，否则秒退。这样不论你在哪个时区都能精准命中本地时间，**夏令时也自动跟着切换**（IANA 时区数据库内置）。
-
-**常用 schedule 配方：**
-
-| 想要 | `REPORT_HOUR` | `REPORT_DAYS` |
-|---|---|---|
-| 每天 08:00（默认） | 不填或 `8` | 不填或 `*` |
-| 每天早晚两次（8 + 18 点） | `8,18` | `*` |
-| 工作日 09:00 | `9` | `1-5` |
-| 周一/三/五 早 7 晚 9 两次 | `7,21` | `1,3,5` |
-| 每 6 小时一次 | `0,6,12,18` | `*` |
-
-只想要默认每天 08:00 本地时间，**只填 `REPORT_TZ` 一个变量就够了**（如 `Asia/Shanghai`），其他全部留空。
-
-**💸 成本估算**：GitHub Actions 公开 repo 完全免费。Pages 公开 repo 也免费。唯一花钱的就是 LLM API 调用——DeepSeek 月成本不到 $1，Anthropic Sonnet < $2。
-
-> ⚠️ 用 GH Actions 模式就意味着**用不了本地 `claude` CLI**——Claude Code 的 OAuth 登录在你本机，GitHub 的服务器看不到。如果你已经在 Max 订阅里，建议两条路并行：本地装（B 方式）用 Claude CLI 跑你自己的服务器版本，GH Actions 用 DeepSeek 跑 Pages 公开版本。两份报告独立，互不影响。
+> GitHub Models 免费推理有速率限制，适合这类低频个人自动化；代码中的确定性降级
+> 是必保底。需要更高配额时可配置 `OPENAI_API_KEY`，并把 `OPENAI_BASE_URL` 和
+> `LLM_MODEL` 一并切换到对应服务。
 
 #### 🐛 A 方式常见坑
 
@@ -134,7 +113,7 @@
 - **Variable name 报 "alphanumeric only"** —— 输入 `LLM_BACKEND` 时下划线被中文输入法替换成了全角 `＿`（U+FF3F）。切到英文输入法 Shift+`-` 重打
 - **第一次跑完才能选 Pages source** —— Pages 设置页要求选已存在的分支，但 `gh-pages` 是首次 workflow 跑成功后才创建出来。顺序：配 secret → 触发 workflow → 跑完 → 回 Settings → Pages 选 `gh-pages`
 - **Action 红 X 怎么看具体原因** —— 点失败的 build → 左边列出每个 step → 找有红 X 的那步点开看 log。最常见两类：`401/402` = API key 拼错或没余额；`403` = workflow permissions 没设成 Read and write
-- **跑了 30 秒就挂** —— 多半是 secret/variable 没配对（光填了 secret 没填 `LLM_BACKEND` variable）或者 LLM API 返 400。看 step "Generate today's report" 的 log
+- **生成步骤失败** —— 先看 `Generate report`，再看确定性 fallback 是否触发；只有后续确定性校验失败才应阻止发布
 
 ### B. 本地一键装
 
@@ -185,7 +164,7 @@ node bootstrap.mjs --target /custom/path --at 07:30
 ## 📋 前置要求
 
 - **Node.js 20+** + **npm** + **git**（B/C 方式本地需要；A 方式不需要——GH Actions 容器自带）
-- **一个能跑的 LLM**（任选其一）：Claude Code CLI 已登录 / Anthropic / OpenAI / DeepSeek / MiniMax 任一家的 API key
+- **一个能跑的 LLM**：云端默认使用 GitHub Models，无需单独 key；本地可用 Claude/Codex CLI 或任一 API backend
 - 平台：Windows 10/11、macOS 12+、Linux（任一平台都支持，定时机制自动适配）
 
 ---
@@ -234,7 +213,7 @@ node scripts/install.mjs --global
 | `npm run sources` | 列出所有数据源（按 locale 标注启用/过滤状态）| 即时 |
 | `npm run sources:check` | 仅校验 `sources.config.json` schema（适合 CI / pre-commit）| 即时 |
 
-本机的 Cloudflare 定时发布使用单一控制入口：`pwsh -NoProfile -File scripts/run-and-archive.ps1 -DirectNpm -CatchUp`。它负责互斥锁、同日复用、确定性验收、归档、公开文件白名单、上传和线上哈希核验；详见 [`docs/cloudflare-pages.md`](docs/cloudflare-pages.md)。
+生产定时发布由 [`.github/workflows/daily.yml`](.github/workflows/daily.yml) 负责；模型认证、幂等补跑、质量门和运维命令见 [`docs/github-actions.md`](docs/github-actions.md)。本机 PowerShell 控制脚本只保留为手动应急路径。
 
 ---
 
@@ -299,6 +278,7 @@ REPORT_LOCALE=zh    # 默认 — 中文 mode，含 V2EX / LinuxDo / DW 中文等
 | backend | API key 环境变量 | 默认 model | base URL |
 |---|---|---|---|
 | 🎯 `claude-cli` （默认）| 不需要，复用 Claude Code OAuth | `sonnet` | — |
+| 🧩 `codex-cli` | 不需要，复用本机 Codex 登录 | `gpt-5.6-sol` | — |
 | 🟣 `anthropic` | `ANTHROPIC_API_KEY` | `claude-sonnet-4-6` | `api.anthropic.com` |
 | 🟢 `openai` | `OPENAI_API_KEY` | `gpt-4o-mini` | `api.openai.com/v1` |
 | 🐋 `deepseek` | `DEEPSEEK_API_KEY` | `deepseek-v4-flash` | `api.deepseek.com/v1` |
@@ -419,7 +399,8 @@ daily-brief/
 ├── daily_reports/      # 输出 (gitignored)
 │   └── 2026-05-15/     # 每日一个子目录，内含 .html (主) / .json (缓存) / -articles.json (缓存)
 │                       #   .md 默认不生成，可在 .env.local 设 OUTPUT_MARKDOWN=true 开启
-├── public-dist/        # 仅包含可公开的 HTML / feed；Cloudflare 唯一发布目录
+├── public-dist/        # 仅包含可公开的 HTML / feed；GitHub Pages 发布白名单
+├── cloudflare-redirect/ # 旧 pages.dev 地址到 GitHub Pages 的永久跳转
 ├── logs/               # 运行日志 (gitignored)
 ├── .github/workflows/  # GitHub Actions 工作流（A 方式部署）
 └── .claude/

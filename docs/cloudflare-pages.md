@@ -1,82 +1,47 @@
-# Cloudflare Pages Deployment
+# Cloudflare Pages Redirect and Local Fallback
 
-This publishes the allowlisted `public-dist/` bundle to a free `https://<project>.pages.dev/` URL with Cloudflare Pages Direct Upload. Private dated JSON and full article sidecars remain local under `daily_reports/`.
-
-The local DailyBrief flow still writes dated archives to `C:\Users\feiyang\Desktop\日报`. Cloudflare deployment is an extra publishing step.
-
-## First-Time Setup
-
-1. Create or log in to a Cloudflare account.
-2. From `C:\Users\feiyang\daily-brief`, create a Pages project:
-
-```powershell
-npx wrangler pages project create dailybrief-feiyang --production-branch=main
-```
-
-3. Complete the browser OAuth login if Wrangler asks for it.
-4. Add these values to `.env.local`:
-
-```dotenv
-CF_PAGES_PROJECT=dailybrief-feiyang
-CF_PAGES_BRANCH=main
-CF_PAGES_OUTPUT_DIR=public-dist
-```
-
-5. Deploy:
-
-```powershell
-npm run deploy:cf-pages -- --date YYYY-MM-DD
-```
-
-For an unattended machine without a Wrangler OAuth session, create a Cloudflare
-API token with Pages edit permissions and also set:
-
-```dotenv
-CLOUDFLARE_ACCOUNT_ID=<your-account-id>
-CLOUDFLARE_API_TOKEN=<your-token>
-```
-
-The latest report will be available at:
+Cloudflare Pages is no longer the production generator host. The project
+`dailybrief-feiyang` serves one permanent redirect:
 
 ```text
-https://dailybrief-feiyang.pages.dev/
+https://dailybrief-feiyang.pages.dev/*
+  → https://wfy-op.github.io/dailybrief-feiyang/:splat
 ```
 
-Use the actual project name if you choose a different one.
+This preserves existing bookmarks while GitHub Actions and GitHub Pages own the
+daily generation and publication lifecycle. See [`github-actions.md`](github-actions.md)
+for the production runbook.
 
-## Access Protection
+## Redirect source
 
-Until Access is configured, the `pages.dev` URL is public.
+The deployable redirect bundle is `cloudflare-redirect/`:
 
-To protect the site:
+- `_redirects` preserves the matched path with `:splat` and returns HTTP 301.
+- `index.html` is a fallback migration notice.
 
-1. Open Cloudflare dashboard > Workers & Pages.
-2. Select the DailyBrief Pages project.
-3. Go to Settings > General > Enable access policy.
-4. Open the created Access application.
-5. In Access > Applications > Configure, remove the wildcard from the public hostname so the main `<project>.pages.dev` hostname is protected.
-6. Re-enable the Pages access policy if you also want preview deployments protected.
-7. In Cloudflare Zero Trust, restrict allowed users to your email address.
-
-Cloudflare documents this as the known-issues flow for enabling Access on the main `*.pages.dev` domain.
-
-## Daily Automation
-
-The scheduled Codex automation runs one fail-closed control command:
+Deploy it manually only when the destination changes:
 
 ```powershell
-pwsh -NoProfile -File C:\Users\feiyang\daily-brief\scripts\run-and-archive.ps1 -DirectNpm -CatchUp
+.\node_modules\.bin\wrangler.cmd pages deploy .\cloudflare-redirect `
+  --project-name=dailybrief-feiyang `
+  --branch=main `
+  --commit-dirty=true
 ```
 
-The control script owns the lock, exact report date, deterministic validation, archive copy, public allowlist build, Cloudflare upload, live byte-hash verification, and atomic run manifest. Missing credentials or a failed upload returns non-zero and the manifest remains `failed`.
+Verify both the root and a dated path without following redirects:
 
-## Useful Files
+```powershell
+curl.exe -sS -I https://dailybrief-feiyang.pages.dev/
+curl.exe -sS -I https://dailybrief-feiyang.pages.dev/YYYY-MM-DD/YYYY-MM-DD.html
+```
 
-- Private report JSON/HTML and article sidecars: `daily_reports/YYYY-MM-DD/`
-- Public deployment bundle: `public-dist/`
-- Latest public report: `public-dist/index.html`
-- Public archive list: `public-dist/archive.html`
-- Dated local HTML archive: `C:\Users\feiyang\Desktop\日报\YYYY-MM-DD.html`
-- Deployment script: `scripts/deploy-cloudflare-pages.mjs`
-- Deterministic gate: `scripts/validate-publish.mjs`
-- Atomic run evidence: `logs/last-run-manifest.json`
+Both responses must be `301 Moved Permanently` with a GitHub Pages `Location`.
+
+## Emergency local publication
+
+`scripts/run-and-archive.ps1` and `scripts/deploy-cloudflare-pages.mjs` remain
+available for manual incident recovery. They generate and validate an
+allowlisted `public-dist/` bundle before upload and verify live bytes by hash.
+They are not scheduled and must not replace the GitHub Actions primary path.
+
+Private artifacts remain under `daily_reports/`; never upload that directory.

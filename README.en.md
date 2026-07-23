@@ -5,12 +5,12 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Node 20+](https://img.shields.io/badge/node-20%2B-brightgreen.svg)](https://nodejs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6.svg)](https://www.typescriptlang.org/)
-[![LLM: pluggable](https://img.shields.io/badge/LLM-pluggable%20(5%20backends)-orange.svg)](#-llm-backend-configuration)
+[![LLM: pluggable](https://img.shields.io/badge/LLM-pluggable%20(6%20backends)-orange.svg)](#-llm-backend-configuration)
 [![Deploy: GH Actions](https://img.shields.io/badge/deploy-GitHub%20Actions-2088ff.svg)](#a-github-actions--pages-zero-infra-recommended)
 [![Demo: live](https://img.shields.io/badge/demo-leiting--eric.github.io%2FDailyBrief-brightgreen.svg)](https://leiting-eric.github.io/DailyBrief)
 [![Stars](https://img.shields.io/github/stars/leiting-eric/DailyBrief?style=social)](https://github.com/leiting-eric/DailyBrief)
 
-> **Your own AI-curated daily news brief, on infrastructure you control.** 47 enabled source configurations · LLM summaries · 21-ticker market panel with SMA/RSI/MACD signals + AI commentary · bilingual (zh/en) · 5 swappable LLM backends.
+> **Your own AI-curated daily news brief, on infrastructure you control.** 47 enabled source configurations · LLM summaries · 21-ticker market panel with SMA/RSI/MACD signals + AI commentary · bilingual (zh/en) · 6 swappable LLM backends.
 >
 > **Three deployment paths, pick one:** [**🚀 5-min GitHub Actions fork**](#a-github-actions--pages-zero-infra-recommended) · [**💻 local one-liner install**](#b-local-one-liner-install) · [**🤖 have an AI agent install it for you**](#c-have-an-ai-agent-install-it-for-you).
 
@@ -25,7 +25,7 @@
 
 - **🌍 Multi-source aggregation** — 47 enabled source configurations spanning Silicon Valley tech, AI frontier, global finance, international politics, and developer communities. One report covers it all.
 - **📈 21 live tickers** — US stocks / crypto / HK / commodities / macro signals, with SMA / RSI / MACD indicators + daily LLM-written trading commentary
-- **🤖 5 swappable LLM backends** — Claude CLI / Anthropic / OpenAI / DeepSeek / MiniMax. One env var to switch, no vendor lock-in.
+- **🤖 6 swappable LLM backends** — Claude CLI / Codex CLI / Anthropic / OpenAI / DeepSeek / MiniMax. One env var to switch, no vendor lock-in.
 - **🌐 Bilingual (zh/en)** — set `REPORT_LOCALE=en` to flip the entire stack: sources, prompts, UI text, Bullish/Bearish stance labels — all switch.
 - **🚀 Flexible deployment** — GitHub Actions (zero infra) / local OS scheduler / self-hosted server — pick one or run them in parallel
 - **🆓 Zero data-source API keys** — every source uses free public endpoints (RSS / public JSON), no paid subscriptions
@@ -80,53 +80,36 @@
 
 | Path | Who it's for | What you need | Setup time |
 |---|---|---|---|
-| **A. GitHub Actions + Pages** | No server, don't want to keep a laptop running | One API key (Anthropic / OpenAI / DeepSeek / MiniMax) | ~5 min (recommended) |
+| **A. GitHub Actions + Pages** | No server, don't want to keep a laptop running | A GitHub account; no separate API key by default | ~5 min (recommended) |
 | **B. Local one-liner** | Have an always-on machine; want it cheapest | Node 20+, optionally Claude Code login | ~3 min |
 | **C. Have an AI agent install it** | Lazy; want Cursor / Codex / Claude Code to handle setup | Same as B | One sentence |
 
 ### A. GitHub Actions + Pages (zero-infra, recommended)
 
-1. **Fork this repo** (Fork button, top-right of GitHub)
-2. **Settings → Actions → General → Workflow permissions** → set to **Read and write permissions**
-3. **Settings → Pages → Build and deployment → Source** → "Deploy from a branch" → branch `gh-pages` / path `/ (root)` (the `gh-pages` branch only exists after the first successful workflow run — configure secrets first, trigger once, then come back)
-4. **🔑 Configure the LLM backend** — this is the critical step. Each backend needs **a secret AND the matching `LLM_BACKEND` variable** (not just the secret). Pick one row:
+1. **Fork this repo**.
+2. In **Settings → Actions → General → Workflow permissions**, allow workflows to write repository contents.
+3. Run **Actions → Daily Brief Cloud → Run workflow** once.
+4. After the first green run, configure **Settings → Pages** to publish the
+   `gh-pages` branch from `/ (root)`.
 
-   | You want | Secret to add | `LLM_BACKEND` variable | Rough cost |
-   |---|---|---|---|
-   | 🟣 **Anthropic Sonnet** (default; prompts tuned for it) | `ANTHROPIC_API_KEY` | leave unset or `anthropic` | ~$0.03-0.05/day, <$2/month |
-   | 🐋 **DeepSeek** (cheap, China-friendly) | `DEEPSEEK_API_KEY` | `deepseek` | ~$0.01-0.02/day, <$1/month |
-   | 🟢 **OpenAI** | `OPENAI_API_KEY` | `openai` | gpt-4o-mini ~$0.02/day |
-   | 🔵 **MiniMax** | `MINIMAX_API_KEY` | `minimax` | Similar to DeepSeek |
+The default cloud path needs no separate LLM API key. It uses GitHub's
+short-lived `GITHUB_TOKEN` with `models: read` to call GitHub Models
+`openai/gpt-4o-mini`. If inference is unavailable or rate-limited, source
+metadata is retained and the main digest falls back deterministically; the
+publish validators still have to pass.
 
-   Location: **Settings → Secrets and variables → Actions**. The page has two tabs — **Secrets** for keys, **Variables** for `LLM_BACKEND`.
+The personalized production schedule is fixed at 08:07 Asia/Shanghai, with
+idempotent catch-ups at 10:07 and 14:07. A catch-up exits before any model call
+when `gh-pages` already contains today's dated HTML. Change all three UTC cron
+hours together in `.github/workflows/daily.yml` if the schedule changes.
 
-5. (Optional) On the same Variables tab, add:
-   - `LLM_MODEL` — override the backend's default model (otherwise uses the default listed in [`.env.example`](.env.example))
-   - `REPORT_LOCALE` — `zh` (default) or `en` — switches sources + UI + LLM prompts as a set
-   - `REPORT_TZ` — IANA timezone name (default UTC); e.g. `Asia/Shanghai` / `America/Los_Angeles`. **Drives both the trigger time and the date label.**
-   - `REPORT_HOUR` — hour(s) to fire in `REPORT_TZ`, default `8` (08:00). Comma-separated for multiple, e.g. `8,18` = 8 AM and 6 PM
-   - `REPORT_DAYS` — day-of-week filter (cron-style, `0`=Sunday ... `6`=Saturday), default `*` (every day). E.g. `1-5` = weekdays; `1,3,5` = Mon/Wed/Fri
-6. **Actions tab → "Daily Brief" workflow → Run workflow** to trigger manually for the first time
+The production instance is
+[`https://wfy-op.github.io/dailybrief-feiyang/`](https://wfy-op.github.io/dailybrief-feiyang/).
 
-Once the workflow turns green, your report lives at `https://<your-username>.github.io/<repo-name>/`. After that, **it refreshes daily at 08:00 in `REPORT_TZ`** (or 08:00 UTC if `REPORT_TZ` is unset).
-
-> ⏰ **How the schedule works**: GitHub Actions cron is UTC-only, so the workflow runs **hourly** and uses a `gate` job to check if the current hour in `REPORT_TZ` matches `REPORT_HOUR` / `REPORT_DAYS`. If so, the build job proceeds; otherwise it exits in seconds. This lets the schedule track any local timezone precisely, and **handles DST transitions automatically** (via the IANA tz database).
-
-**Common schedule recipes:**
-
-| You want | `REPORT_HOUR` | `REPORT_DAYS` |
-|---|---|---|
-| Every day at 08:00 (default) | unset or `8` | unset or `*` |
-| Twice daily (8 AM + 6 PM) | `8,18` | `*` |
-| Weekdays at 09:00 | `9` | `1-5` |
-| Mon/Wed/Fri at 7 AM + 9 PM | `7,21` | `1,3,5` |
-| Every 6 hours | `0,6,12,18` | `*` |
-
-If you just want the default (08:00 local daily), **set only `REPORT_TZ`** (e.g. `Asia/Shanghai`) and leave the rest at defaults.
-
-**💸 Cost summary**: GitHub Actions on public repos is free. Pages on public repos is free. The only thing you pay for is LLM API calls — DeepSeek runs under $1/month, Anthropic Sonnet under $2.
-
-> ⚠️ **GH Actions mode can't reuse a local `claude` CLI login** — your Claude Code OAuth token lives on your machine, GitHub's runners can't see it. If you have a Max subscription, run both paths side by side: path B locally (uses Claude CLI), path A on GitHub Actions (uses DeepSeek). Independent reports, no interference.
+> GitHub Models free inference is rate-limited and is appropriate for this
+> low-frequency personal workflow. The deterministic fallback is the reliability
+> backstop. For higher quotas, configure `OPENAI_API_KEY` and update both
+> `OPENAI_BASE_URL` and `LLM_MODEL` for that provider.
 
 #### 🐛 Common gotchas
 
@@ -134,7 +117,7 @@ If you just want the default (08:00 local daily), **set only `REPORT_TZ`** (e.g.
 - **"Variable name can only contain alphanumeric characters"** — most likely the underscore in `LLM_BACKEND` got autocorrected by a CJK input method to a full-width `＿` (U+FF3F). Switch to English input, retype Shift+`-`, or copy-paste.
 - **Pages source dropdown doesn't show `gh-pages`** — that branch only exists after the first successful workflow run. Order: configure secret → trigger workflow → wait for green → go back to Settings → Pages.
 - **Where to read a failed run** — Actions tab → click the red X → left sidebar lists each step → click the failing one to expand its log. Most common causes: `401`/`402` (API key wrong or out of credit), `403` (workflow permissions still set to "Read only").
-- **Fails after ~30 seconds** — usually a secret/variable mismatch (added a secret but didn't add the matching `LLM_BACKEND` variable) or the LLM API returned 400. Check the "Generate today's report" step.
+- **Generation fails** — inspect `Generate report` and whether the deterministic fallback ran; publishing should stop only when a deterministic validator fails.
 
 ### B. Local one-liner install
 
@@ -185,7 +168,7 @@ The repo includes [`AGENTS.md`](AGENTS.md) (universal agent protocol) and [`.cla
 ## 📋 Requirements
 
 - **Node.js 20+**, **npm**, **git** (local for paths B/C; path A runs in GitHub's containers — no local install needed)
-- **One working LLM** (any of): Claude Code CLI logged in, OR Anthropic / OpenAI / DeepSeek / MiniMax API key
+- **One working LLM**: the cloud default is GitHub Models with no separate key; local runs can use Claude/Codex CLI or an API backend
 - Platform: Windows 10/11, macOS 12+, Linux (any platform — scheduler picks the matching mechanism)
 
 ---
@@ -234,7 +217,7 @@ Sleep-wake behavior at next trigger time:
 | `npm run sources` | List all sources with locale / enabled status | instant |
 | `npm run sources:check` | Validate `sources.config.json` schema (good for CI / pre-commit) | instant |
 
-The personalized Cloudflare schedule has one control entry point: `pwsh -NoProfile -File scripts/run-and-archive.ps1 -DirectNpm -CatchUp`. It owns locking, same-day reuse, deterministic validation, archive, the public allowlist, upload, and live hash verification; see [`docs/cloudflare-pages.md`](docs/cloudflare-pages.md).
+Production scheduling is owned by [`.github/workflows/daily.yml`](.github/workflows/daily.yml). See [`docs/github-actions.md`](docs/github-actions.md) for model authentication, catch-ups, validation, and operations. The local PowerShell control plane is manual recovery only.
 
 ---
 
@@ -299,6 +282,7 @@ Copy `.env.example` to `.env.local` (gitignored), uncomment the section for your
 | backend | API key env var | Default model | Base URL |
 |---|---|---|---|
 | 🎯 `claude-cli` (default) | None — reuses Claude Code OAuth | `sonnet` | — |
+| 🧩 `codex-cli` | None — reuses the local Codex login | `gpt-5.6-sol` | — |
 | 🟣 `anthropic` | `ANTHROPIC_API_KEY` | `claude-sonnet-4-6` | `api.anthropic.com` |
 | 🟢 `openai` | `OPENAI_API_KEY` | `gpt-4o-mini` | `api.openai.com/v1` |
 | 🐋 `deepseek` | `DEEPSEEK_API_KEY` | `deepseek-v4-flash` | `api.deepseek.com/v1` |
@@ -419,7 +403,8 @@ daily-brief/
 ├── daily_reports/      # Output (gitignored)
 │   └── 2026-05-15/     # One subdir per day, contains .html (main) / .json (cache) / -articles.json (cache)
 │                       #   .md not generated by default; set OUTPUT_MARKDOWN=true in .env.local to enable
-├── public-dist/        # public HTML/feed allowlist; the only Cloudflare upload directory
+├── public-dist/        # public HTML/feed allowlist published to GitHub Pages
+├── cloudflare-redirect/ # permanent legacy pages.dev redirect
 ├── logs/               # Run logs (gitignored)
 ├── .github/workflows/  # GitHub Actions workflow (path A deployment)
 └── .claude/

@@ -4,7 +4,7 @@ Operational knowledge for any AI coding agent working on this repo (Claude Code,
 
 ## What this project is
 
-`daily-brief` is a local-first pipeline with 47 enabled source configurations (46 in zh mode, 37 in en mode), LLM enrichment, financial analysis, an academic radar, and a self-contained HTML report. It runs locally or in GitHub Actions. The personalized Windows installation publishes through a fail-closed Codex automation to Cloudflare Pages. No web framework or application server.
+`daily-brief` is a static pipeline with 47 enabled source configurations (46 in zh mode, 37 in en mode), LLM enrichment, financial analysis, an academic radar, and a self-contained HTML report. The personalized production path is GitHub Actions on `wfy-op/dailybrief-feiyang`; GitHub Pages hosts the site and the old Cloudflare URL redirects there. No web framework or application server.
 
 The repo's `CLAUDE.md` includes this file via `@AGENTS.md`. Don't add stack-specific lore (Next.js, etc.) — there's none in this codebase.
 
@@ -12,7 +12,7 @@ The repo's `CLAUDE.md` includes this file via `@AGENTS.md`. Don't add stack-spec
 
 ```
 lib/
-  ai/           # LLM dispatcher + 5 backend implementations + prompts
+  ai/           # LLM dispatcher + 6 backend implementations + prompts
   sources/      # fetcher dispatch + per-source TS modules
   trading/      # Yahoo finance + technical indicators + watchlist
   financial-analysis/ # A-share / US-market snapshots and commentary
@@ -54,9 +54,13 @@ sources.config.json   # SINGLE SOURCE OF TRUTH for the source registry
 
 6. **No agent-specific build steps.** No `next build`, no bundling. `tsx` runs TS directly. The HTML is hand-rendered, CSS is inlined string-templated.
 
-7. **Scheduled publishing has one control plane.** Run `scripts/run-and-archive.ps1 -DirectNpm -CatchUp`; do not reimplement its preflight, validation, archive, or deploy phases in an automation prompt.
+7. **Production scheduling lives in GitHub Actions.** `.github/workflows/daily.yml` runs at 08:07 Asia/Shanghai with idempotent 10:07/14:07 catch-ups. Do not make a local Codex or OS scheduler the primary path. `run-and-archive.ps1` is manual recovery only.
 
-8. **`daily_reports/` is private source data; `public-dist/` is the publish allowlist.** Never upload dated JSON or `-articles.json` sidecars. A scheduled run is successful only after deterministic validation and live hash verification.
+8. **`daily_reports/` is private source data; `public-dist/` is the publish allowlist.** Never upload dated JSON or `-articles.json` sidecars. The cloud workflow may push only `public-dist/` to `gh-pages` after both deterministic validation stages pass.
+
+9. **GitHub Models is the default cloud model path.** The workflow uses its short-lived `GITHUB_TOKEN`, `models: read`, the OpenAI-compatible endpoint, and `openai/gpt-4o-mini`. Model failures must retain the deterministic digest fallback rather than blocking publication unnecessarily.
+
+10. **Ephemeral-runner state is isolated.** Only `academic-seen.json` is persisted to the `daily-state` branch. Never publish or copy `data/academic-reading-list.md` there.
 
 ## Commands
 
@@ -67,7 +71,8 @@ sources.config.json   # SINGLE SOURCE OF TRUTH for the source registry
 | Re-render from cache | `npm run render [date]` | <1s |
 | Re-run trading section | `npm run regen-trading [date]` | ~2 min, 1 LLM call |
 | Top up missing summaries | `npm run regen-enrich <cat:sub> [date]` | ~30s, 1 LLM call |
-| Fail-closed scheduled run | `pwsh -NoProfile -File scripts/run-and-archive.ps1 -DirectNpm -CatchUp` | 5-8 min |
+| Manual local recovery | `pwsh -NoProfile -File scripts/run-and-archive.ps1 -DirectNpm -CatchUp` | 5-8 min |
+| Trigger production run | `gh workflow run daily.yml --repo wfy-op/dailybrief-feiyang --ref personalized-cloud` | instant |
 | Validate report/site | `npm run validate:publish -- --date YYYY-MM-DD --stage report\|site` | <1s |
 | Static-site generator | `npm run build-site -- --date YYYY-MM-DD` | <1s |
 | Cloudflare deploy + verify | `npm run deploy:cf-pages -- --date YYYY-MM-DD` | ~30s |
@@ -105,12 +110,14 @@ sources.config.json   # SINGLE SOURCE OF TRUTH for the source registry
 - Don't add a web framework (Next.js, Express, etc.) — the project is intentionally static
 - Don't bypass the per-source try/catch — let `daily.ts` aggregate failures
 - Don't publish `daily_reports/`; only `public-dist/` is safe for public hosting
-- Don't mark a scheduled run successful before `deployedAndVerified=true`
+- Don't mark local recovery successful before `deployedAndVerified=true`; cloud success requires both validators and the `gh-pages` publish step
+- Don't re-enable the local Codex automation as the production scheduler
 
 ## Where to learn more
 
 - `README.md` — user-facing intro, install, configuration
 - `FORKING.md` — common customizations (LLM provider, sources, layout, styling)
-- `docs/cloudflare-pages.md` — personalized fail-closed Cloudflare runbook
+- `docs/github-actions.md` — production schedule, model auth, validation, and recovery runbook
+- `docs/cloudflare-pages.md` — legacy URL redirect and emergency local fallback
 - `.claude/skills/daily-brief/SKILL.md` — fuller operational reference (Claude Code auto-loads it; other agents can read it directly)
 - `sources.config.json` — see what sources look like in practice

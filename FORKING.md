@@ -4,6 +4,12 @@ This project is intentionally easy to fork — most customization is single-file
 
 ## Change daily schedule
 
+The personalized production schedule is in `.github/workflows/daily.yml` and
+uses three UTC cron hours corresponding to 08:07, 10:07, and 14:07
+Asia/Shanghai. Keep the primary and catch-up entries together when changing it.
+
+For an optional local OS schedule:
+
 ```bash
 node scripts/install.mjs --at 07:30   # re-registers at 07:30 local time
 ```
@@ -113,11 +119,12 @@ Two ways:
 
 ## Change LLM provider
 
-All LLM calls funnel through [`lib/ai/llm.ts`](lib/ai/llm.ts) `runLlm()`, which dispatches to one of five backends based on the `LLM_BACKEND` env var:
+All LLM calls funnel through [`lib/ai/llm.ts`](lib/ai/llm.ts) `runLlm()`, which dispatches to one of six backends based on the `LLM_BACKEND` env var:
 
 | `LLM_BACKEND` | Implementation | Auth |
 |---|---|---|
 | `claude-cli` *(default)* | [`lib/ai/backends/claude-cli.ts`](lib/ai/backends/claude-cli.ts) — spawns the local `claude` CLI | Whatever the CLI is logged in as (e.g. Max subscription) |
+| `codex-cli` | [`lib/ai/backends/codex-cli.ts`](lib/ai/backends/codex-cli.ts) — spawns the local Codex CLI | The local Codex login |
 | `anthropic` | [`lib/ai/backends/anthropic.ts`](lib/ai/backends/anthropic.ts) — direct API | `ANTHROPIC_API_KEY` |
 | `openai` / `deepseek` / `minimax` | [`lib/ai/backends/openai-compat.ts`](lib/ai/backends/openai-compat.ts) — OpenAI-compatible Chat Completions | `OPENAI_API_KEY` / `DEEPSEEK_API_KEY` / `MINIMAX_API_KEY` |
 
@@ -135,7 +142,8 @@ Whether you need any secret depends on how you've deployed:
 |---|---|
 | Local install + default `claude-cli` backend (reuses Claude Code OAuth) | **None** — just be logged into `claude` CLI |
 | Local install + any API backend (`anthropic` / `openai` / `deepseek` / `minimax`) | That backend's `*_API_KEY` in `.env.local` |
-| GitHub Actions deploy | The chosen backend's API key as a GH **Secret** (Claude OAuth is unreachable from GH runners) — see README §"GH Actions" for the secret/variable matrix |
+| GitHub Actions default | **None** — the workflow uses its short-lived `GITHUB_TOKEN` with GitHub Models |
+| GitHub Actions with a paid OpenAI-compatible provider | `OPENAI_API_KEY` as a GH **Secret**, plus matching `OPENAI_BASE_URL` and `LLM_MODEL` variables |
 
 Adding a NEW secret (e.g. you wire up a paid data source like Bloomberg):
 

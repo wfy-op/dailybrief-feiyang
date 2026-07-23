@@ -21,6 +21,18 @@ export interface SourceDef {
   useCurl?: boolean;
   enabled?: boolean;
   /**
+   * When true, the renderer will not create an empty source tab for this
+   * source. Use for fragile community sources where an empty tab is worse
+   * than temporarily hiding the column.
+   */
+  hideWhenEmpty?: boolean;
+  /**
+   * Optional cap applied after a source fetch succeeds. Use it to keep very
+   * high-volume or intentionally noisy sources from dominating the candidate
+   * pool and sidecar archive. Missing = keep the fetcher's default output.
+   */
+  fetchLimit?: number;
+  /**
    * Source content language. Default treated as "en". When this equals
    * the active REPORT_LOCALE, the summary-enrichment step skips this
    * source — its content is already in the target language, so an LLM
@@ -45,6 +57,11 @@ export interface SourceDef {
 export interface RawArticle {
   sourceId: string;
   title: string;
+  /**
+   * Optional localized display title generated during enrichment. Keep the
+   * original `title` intact for source traceability and feed/debug sidecars.
+   */
+  localizedTitle?: string;
   url: string;
   excerpt?: string;
   publishedAt?: Date;

@@ -10,7 +10,7 @@
 [![Demo: live](https://img.shields.io/badge/demo-leiting--eric.github.io%2FDailyBrief-brightgreen.svg)](https://leiting-eric.github.io/DailyBrief)
 [![Stars](https://img.shields.io/github/stars/leiting-eric/DailyBrief?style=social)](https://github.com/leiting-eric/DailyBrief)
 
-> **你的私人 AI 每日简报，跑在你自己掌控的基础设施上。** 23 个数据源 · LLM 摘要 · 21 个股票/加密标的**技术指标 + AI 交易点评** · 中英双语 · 5 个 LLM 后端可选。
+> **你的私人 AI 每日简报，跑在你自己掌控的基础设施上。** 47 个启用信源配置 · LLM 摘要 · 21 个股票/加密标的**技术指标 + AI 交易点评** · 中英双语 · 5 个 LLM 后端可选。
 >
 > **三种部署任选**：[**🚀 5 分钟 Fork 到 GitHub Actions**](#a-github-actions--pages零基础设施推荐) · [**💻 本地一键装**](#b-本地一键装) · [**🤖 一句话让 AI Agent 帮你装**](#c-给-ai-agent-一句话装)。
 
@@ -23,7 +23,7 @@
 
 ## ✨ 核心特性
 
-- **🌍 全网多源聚合**：23 个数据源覆盖硅谷科技、AI 前沿、全球财经、国际时政、中文社区，一份报告通吃
+- **🌍 全网多源聚合**：47 个启用信源配置覆盖硅谷科技、AI 前沿、全球财经、国际时政、中文社区，一份报告通吃
 - **📈 21 个标的实时行情**：美股 / 加密 / 港股 / 商品外汇 / 宏观信号，附 SMA / RSI / MACD 技术指标 + LLM 每日交易点评
 - **🤖 5 个 LLM 后端可插拔**：Claude CLI / Anthropic / OpenAI / DeepSeek / MiniMax，一个环境变量切换，不绑死任何家
 - **🌐 中英双语**：`REPORT_LOCALE=en` 一切——数据源、prompt、UI 文案、Bullish/Bearish stance 全套切英文
@@ -36,7 +36,7 @@
 
 ## 📚 信源图谱
 
-23 个数据源（zh 模式）/ 22 个（en 模式），分布如下：
+46 个中文模式信源配置 / 37 个英文模式信源配置，分布如下：
 
 ### 🧑‍💻 技术动态
 
@@ -234,6 +234,8 @@ node scripts/install.mjs --global
 | `npm run sources` | 列出所有数据源（按 locale 标注启用/过滤状态）| 即时 |
 | `npm run sources:check` | 仅校验 `sources.config.json` schema（适合 CI / pre-commit）| 即时 |
 
+本机的 Cloudflare 定时发布使用单一控制入口：`pwsh -NoProfile -File scripts/run-and-archive.ps1 -DirectNpm -CatchUp`。它负责互斥锁、同日复用、确定性验收、归档、公开文件白名单、上传和线上哈希核验；详见 [`docs/cloudflare-pages.md`](docs/cloudflare-pages.md)。
+
 ---
 
 ## 📊 数据源配置
@@ -392,6 +394,8 @@ daily-brief/
 │   ├── sources/        # RSS / API / curl 抓取器；新加源在这里
 │   ├── ai/             # 可插拔 LLM 后端 + 提示词（lib/ai/backends/ 下每个 backend）
 │   ├── trading/        # Yahoo Finance + 技术指标
+│   ├── financial-analysis/ # A股 / 美股市场分析
+│   ├── academic-radar/ # 论文发现、摘要质量、去重与编号
 │   ├── output/         # 渲染层 (HTML / Markdown)
 │   └── utils.ts        # 小工具（todayKey / getReportTz）
 ├── scripts/
@@ -405,6 +409,9 @@ daily-brief/
 │   ├── run-daily.mjs   # OS 调度器调用的包装（含自动 deploy + open）
 │   ├── open-report.mjs # 打开最新报告（跨平台）
 │   ├── build-site.mjs  # 生成 GH Pages 静态站 (index + archive)
+│   ├── validate-publish.mjs # 发布前确定性验收
+│   ├── deploy-cloudflare-pages.mjs # 白名单上传 + 线上哈希核验
+│   ├── run-and-archive.ps1 # 本机定时任务唯一控制入口
 │   ├── deploy.mjs      # scp 到远端 nginx 服务器（可选）
 │   ├── install.mjs     # 注册定时任务（Win/Mac/Linux 自适应）
 │   └── uninstall.mjs   # 卸载
@@ -412,6 +419,7 @@ daily-brief/
 ├── daily_reports/      # 输出 (gitignored)
 │   └── 2026-05-15/     # 每日一个子目录，内含 .html (主) / .json (缓存) / -articles.json (缓存)
 │                       #   .md 默认不生成，可在 .env.local 设 OUTPUT_MARKDOWN=true 开启
+├── public-dist/        # 仅包含可公开的 HTML / feed；Cloudflare 唯一发布目录
 ├── logs/               # 运行日志 (gitignored)
 ├── .github/workflows/  # GitHub Actions 工作流（A 方式部署）
 └── .claude/

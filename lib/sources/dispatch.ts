@@ -4,6 +4,8 @@ import { fetchHackerNews } from "./hackernews";
 import { fetchLinuxDo } from "./linuxdo";
 import { fetchRss } from "./rss";
 import { fetchV2ex } from "./v2ex";
+import { fetchWeiboHot } from "./weibo-hot";
+import { fetchZhihuHot } from "./zhihu-hot";
 import type { RawArticle, SourceDef } from "./types";
 
 /**
@@ -15,6 +17,8 @@ export async function fetchSource(source: SourceDef): Promise<RawArticle[]> {
   if (source.id === "github-trending") return fetchGithubTrending(source.id);
   if (source.id === "v2ex-hot") return fetchV2ex(source.id);
   if (source.id === "linuxdo") return fetchLinuxDo(source.id);
+  if (source.id === "weibo-hot") return fetchWeiboHot(source.id);
+  if (source.id === "zhihu-hot") return fetchZhihuHot(source.id);
   if (source.id === "attentionvc-ai") return fetchAttentionVc(source.id);
   return fetchRss(source.id, source.url, source.category, {
     useCurl: source.useCurl,

@@ -13,6 +13,9 @@
     "sources:check": "tsx scripts/sources.ts check",
     "deploy": "node scripts/deploy.mjs",
     "build-site": "node scripts/build-site.mjs",
+    "site:build": "node scripts/build-site.mjs",
+    "validate:publish": "node scripts/validate-publish.mjs",
+    "deploy:cf-pages": "node scripts/deploy-cloudflare-pages.mjs",
     "open": "node scripts/open-report.mjs"
   },
   "dependencies": {
@@ -26,6 +29,7 @@
     "@types/node": "^20",
     "dotenv": "^17.4.2",
     "tsx": "^4.21.0",
-    "typescript": "^5"
+    "typescript": "^5",
+    "wrangler": "4.111.0"
   }
 }

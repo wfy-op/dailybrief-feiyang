@@ -2,6 +2,7 @@ import "./_env";
 
 import { sources } from "../lib/sources/registry";
 import { fetchSource } from "../lib/sources/dispatch";
+import { applySourceFetchLimit } from "../lib/sources/source-policy";
 import type { ArticleInput } from "../lib/ai/pipeline";
 
 // Source-fetch sanity check only — does NOT call the LLM. For the full
@@ -13,7 +14,8 @@ async function main() {
   const enabled = sources.filter((s) => s.enabled !== false);
   for (const source of enabled) {
     try {
-      const items = await fetchSource(source);
+      const fetched = await fetchSource(source);
+      const items = applySourceFetchLimit(source, fetched);
       console.log(`  ${source.id.padEnd(20)} ${items.length}`);
       articles.push(...items.map((it) => ({ ...it, source: source.name })));
     } catch (e) {

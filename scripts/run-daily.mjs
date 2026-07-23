@@ -21,7 +21,7 @@ import { fileURLToPath } from "node:url";
 // Mirror deploy stdout/stderr into the daily log instead of the parent
 // stdio (which the scheduler swallowed anyway). Returns the spawnSync result.
 function spawnSyncShim(cmd, args, opts) {
-  const r = spawnSync(cmd, args, { ...opts, stdio: "pipe", shell: true });
+  const r = spawnSync(cmd, args, { ...opts, stdio: "pipe", shell: false });
   const out = (r.stdout?.toString("utf8") ?? "") + (r.stderr?.toString("utf8") ?? "");
   if (out) fs.appendFileSync(logFile, out);
   return r;
@@ -30,6 +30,22 @@ function spawnSyncShim(cmd, args, opts) {
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(__dirname, "..");
 process.chdir(projectRoot);
+
+function npmInvocation(args) {
+  const candidates = [
+    process.env.npm_execpath,
+    path.join(path.dirname(process.execPath), "node_modules", "npm", "bin", "npm-cli.js"),
+  ].filter(Boolean);
+  const npmCli = candidates.find((candidate) => fs.existsSync(candidate));
+  if (npmCli) {
+    return { command: process.execPath, args: [npmCli, ...args] };
+  }
+  return { command: "npm", args };
+}
+
+const skipCloudflareDeploy = /^(1|true|yes)$/i.test(
+  process.env.SKIP_CF_DEPLOY?.trim() ?? "",
+);
 
 const today = (() => {
   const d = new Date();
@@ -46,12 +62,10 @@ const logFile = path.join(logDir, `daily-${today}.log`);
 
 fs.appendFileSync(logFile, `[${now()}] running npm run daily\n`);
 
-// `shell: true` lets us write 'npm' instead of resolving npm.cmd vs npm
-// across platforms. The downside (shell injection) is not a concern here
-// since we're not passing user-controlled args.
-const child = spawn("npm", ["run", "daily"], {
+const dailyNpm = npmInvocation(["run", "daily"]);
+const child = spawn(dailyNpm.command, dailyNpm.args, {
   cwd: projectRoot,
-  shell: true,
+  shell: false,
   stdio: ["ignore", "pipe", "pipe"],
 });
 
@@ -63,28 +77,34 @@ child.on("close", (code) => {
   if (code === 0) {
     fs.appendFileSync(logFile, `\n[${now()}] OK\n`);
 
-    // Deploy to remote host (no-op if DEPLOY_HOST not set in .env.local).
-    // Runs synchronously so the log captures the outcome, but a failure
-    // here is non-fatal — daily.html is on disk, the user can rerun
-    // `npm run deploy` later.
-    fs.appendFileSync(logFile, `[${now()}] deploying…\n`);
-    const deployResult = spawnSyncShim("node", ["scripts/deploy.mjs"], {
-      cwd: projectRoot,
-    });
-    if (deployResult.status === 0) {
-      fs.appendFileSync(logFile, `[${now()}] deploy OK\n`);
+    if (skipCloudflareDeploy) {
+      fs.appendFileSync(logFile, `[${now()}] deploy skipped (SKIP_CF_DEPLOY)\n`);
     } else {
-      fs.appendFileSync(
-        logFile,
-        `[${now()}] deploy FAILED (exit ${deployResult.status}) — non-fatal, run \`npm run deploy\` to retry\n`,
+      // Deploy to Cloudflare Pages. A scheduled run is not successful until
+      // the exact dated bundle is live and byte-for-byte verified.
+      fs.appendFileSync(logFile, `[${now()}] deploying…\n`);
+      const deployResult = spawnSyncShim(
+        process.execPath,
+        ["scripts/deploy-cloudflare-pages.mjs", "--date", today],
+        { cwd: projectRoot },
       );
+      if (deployResult.status === 0) {
+        fs.appendFileSync(logFile, `[${now()}] deploy OK\n`);
+      } else {
+        fs.appendFileSync(
+          logFile,
+          `[${now()}] deploy FAILED (exit ${deployResult.status})\n`,
+        );
+        process.exit(1);
+      }
     }
 
     // Detached so we don't block on Chrome's lifetime. Errors here are
     // cosmetic — the report exists on disk regardless.
-    const opener = spawn("npm", ["run", "open"], {
+    const openNpm = npmInvocation(["run", "open"]);
+    const opener = spawn(openNpm.command, openNpm.args, {
       cwd: projectRoot,
-      shell: true,
+      shell: false,
       detached: true,
       stdio: "ignore",
     });

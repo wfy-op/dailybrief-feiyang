@@ -10,7 +10,9 @@
     "locales": [
       "zh",
       "en"
-    ]
+    ],
+    "fetchLimit": 8,
+    "notes": "Capped in v2: useful discovery source, but popularity is not the same as editorial importance."
   },
   {
     "id": "v2ex-hot",
@@ -20,9 +22,43 @@
     "category": "tech",
     "subcategory": "cn-community",
     "enabled": true,
+    "hideWhenEmpty": true,
+    "lang": "zh",
     "locales": [
       "zh"
-    ]
+    ],
+    "fetchLimit": 8,
+    "notes": "Keep enabled, but hide the tab when the public API returns no usable items."
+  },
+  {
+    "id": "weibo-hot",
+    "name": "微博热搜",
+    "type": "api",
+    "url": "https://weibo.com/ajax/side/hotSearch",
+    "category": "tech",
+    "subcategory": "cn-community",
+    "enabled": true,
+    "lang": "zh",
+    "locales": [
+      "zh"
+    ],
+    "fetchLimit": 10,
+    "notes": "Chinese public hot-search list; shown only in the Community panel so broad social trends do not dominate the main tech digest."
+  },
+  {
+    "id": "zhihu-hot",
+    "name": "知乎热榜",
+    "type": "api",
+    "url": "https://www.zhihu.com/hot",
+    "category": "tech",
+    "subcategory": "cn-community",
+    "enabled": true,
+    "lang": "zh",
+    "locales": [
+      "zh"
+    ],
+    "fetchLimit": 10,
+    "notes": "Uses Zhihu hot-list API when available, then falls back to the public TopHub Zhihu page if Zhihu requires browser auth."
   },
   {
     "id": "linuxdo",
@@ -32,9 +68,13 @@
     "category": "tech",
     "subcategory": "cn-community",
     "enabled": true,
+    "hideWhenEmpty": true,
+    "lang": "zh",
     "locales": [
       "zh"
-    ]
+    ],
+    "fetchLimit": 8,
+    "notes": "Keep enabled so source health records empty or failed fetches; hideWhenEmpty prevents an empty community tab when the Cloudflare-protected endpoint is unavailable."
   },
   {
     "id": "juejin",
@@ -44,6 +84,7 @@
     "category": "tech",
     "subcategory": "cn-community",
     "enabled": false,
+    "lang": "zh",
     "locales": [
       "zh"
     ]
@@ -55,8 +96,10 @@
     "url": "https://hacker-news.firebaseio.com/v0",
     "category": "tech",
     "subcategory": "overseas-community",
+    "lang": "en",
     "enabled": true,
     "locales": [
+      "zh",
       "en"
     ]
   },
@@ -80,10 +123,12 @@
     "category": "tech",
     "subcategory": "ai-news",
     "lang": "zh",
-    "enabled": false,
+    "enabled": true,
     "locales": [
       "zh"
-    ]
+    ],
+    "fetchLimit": 8,
+    "notes": "Enabled in v2 to add Chinese AI/tech coverage."
   },
   {
     "id": "openai-news",
@@ -96,7 +141,8 @@
     "locales": [
       "zh",
       "en"
-    ]
+    ],
+    "fetchLimit": 12
   },
   {
     "id": "deepmind-blog",
@@ -109,7 +155,8 @@
     "locales": [
       "zh",
       "en"
-    ]
+    ],
+    "fetchLimit": 12
   },
   {
     "id": "huggingface-blog",
@@ -122,7 +169,8 @@
     "locales": [
       "zh",
       "en"
-    ]
+    ],
+    "fetchLimit": 12
   },
   {
     "id": "tldr-ai",
@@ -135,7 +183,8 @@
     "locales": [
       "zh",
       "en"
-    ]
+    ],
+    "fetchLimit": 12
   },
   {
     "id": "smol-ai-news",
@@ -148,7 +197,8 @@
     "locales": [
       "zh",
       "en"
-    ]
+    ],
+    "fetchLimit": 12
   },
   {
     "id": "latent-space",
@@ -161,7 +211,8 @@
     "locales": [
       "zh",
       "en"
-    ]
+    ],
+    "fetchLimit": 12
   },
   {
     "id": "mit-tech-review-ai",
@@ -174,7 +225,53 @@
     "locales": [
       "zh",
       "en"
-    ]
+    ],
+    "fetchLimit": 10
+  },
+  {
+    "id": "arxiv-ai",
+    "name": "arXiv cs.AI",
+    "type": "rss",
+    "url": "https://export.arxiv.org/api/query?search_query=cat:cs.AI&sortBy=submittedDate&sortOrder=descending&max_results=8",
+    "category": "tech",
+    "subcategory": "ai-research",
+    "fetchLimit": 8,
+    "enabled": true,
+    "locales": [
+      "zh",
+      "en"
+    ],
+    "notes": "arXiv Atom API for latest cs.AI submissions. Replaced rss.arxiv.org category RSS because it can return an empty shell on non-update days while the API still returns recent papers."
+  },
+  {
+    "id": "arxiv-cl",
+    "name": "arXiv cs.CL",
+    "type": "rss",
+    "url": "https://export.arxiv.org/api/query?search_query=cat:cs.CL&sortBy=submittedDate&sortOrder=descending&max_results=8",
+    "category": "tech",
+    "subcategory": "ai-research",
+    "fetchLimit": 8,
+    "enabled": true,
+    "locales": [
+      "zh",
+      "en"
+    ],
+    "notes": "arXiv Atom API for latest cs.CL submissions. Replaced rss.arxiv.org category RSS because it can return an empty shell on non-update days while the API still returns recent papers."
+  },
+  {
+    "id": "arxiv-lg",
+    "name": "arXiv cs.LG",
+    "type": "rss",
+    "url": "https://export.arxiv.org/api/query?search_query=cat:cs.LG&sortBy=submittedDate&sortOrder=descending&max_results=8",
+    "category": "tech",
+    "subcategory": "ai-research",
+    "fetchLimit": 8,
+    "enabled": true,
+    "locales": [
+      "zh",
+      "en"
+    ],
+    "notes": "arXiv Atom API for latest cs.LG submissions. Replaced rss.arxiv.org category RSS because it can return an empty shell on non-update days while the API still returns recent papers."
   },
   {
     "id": "attentionvc-ai",
@@ -187,7 +284,9 @@
     "locales": [
       "zh",
       "en"
-    ]
+    ],
+    "fetchLimit": 8,
+    "notes": "Capped in v2: X virality is useful signal, but noisy and should not crowd out primary sources."
   },
   {
     "id": "solidot",
@@ -259,11 +358,13 @@
     "url": "https://simonwillison.net/atom/everything/",
     "category": "tech",
     "subcategory": "blog-weekly",
-    "enabled": false,
+    "enabled": true,
     "locales": [
       "zh",
       "en"
-    ]
+    ],
+    "fetchLimit": 6,
+    "notes": "Enabled in v2 as an independent AI engineering observer."
   },
   {
     "id": "cloudflare-blog",
@@ -331,17 +432,163 @@
     ]
   },
   {
+    "id": "macro-is-dead",
+    "name": "Macro Is Dead",
+    "type": "rss",
+    "url": "https://www.macroisdead.com/feed",
+    "category": "finance",
+    "subcategory": "creator",
+    "enabled": true,
+    "lang": "en",
+    "locales": [
+      "zh",
+      "en"
+    ],
+    "fetchLimit": 4,
+    "notes": "Public Substack RSS for Macro Is Dead. Replaced the broken X mirror source on 2026-06-28 after repeated failures across public tweet mirrors and RSS bridges in the local network. Current macro-market commentary with rates, oil and positioning coverage; treat as market opinion/NFA."
+  },
+  {
+    "id": "capital-flows",
+    "name": "Capital Flows Research",
+    "type": "rss",
+    "url": "https://www.capitalflowsresearch.com/feed",
+    "category": "finance",
+    "subcategory": "creator",
+    "enabled": true,
+    "lang": "en",
+    "locales": [
+      "zh",
+      "en"
+    ],
+    "fetchLimit": 4,
+    "notes": "Public Substack RSS for Capital Flows Research. Replaced the Kobeissi RSS.app feed on 2026-06-28 after RSS.app returned HTTP 402 and no official Kobeissi RSS endpoint was reachable. Market positioning, flows, crypto credit and macro commentary; treat as market opinion/NFA."
+  },
+  {
+    "id": "lyn-alden",
+    "name": "Lyn Alden",
+    "type": "rss",
+    "url": "https://www.lynalden.com/feed/",
+    "category": "finance",
+    "subcategory": "creator",
+    "enabled": false,
+    "useCurl": true,
+    "lang": "en",
+    "locales": [
+      "zh",
+      "en"
+    ],
+    "fetchLimit": 2,
+    "notes": "Public RSS for Lyn Alden's long-form macro and money-system writing. Disabled for now: this WordPress feed is reachable but intermittently fails rss-parser in the daily pipeline with an unexpected close tag; re-enable after adding a dedicated feed sanitizer."
+  },
+  {
+    "id": "chartstorm",
+    "name": "The Weekly ChartStorm",
+    "type": "rss",
+    "url": "https://www.chartstorm.info/feed",
+    "category": "finance",
+    "subcategory": "creator",
+    "enabled": true,
+    "lang": "en",
+    "locales": [
+      "zh",
+      "en"
+    ],
+    "fetchLimit": 2,
+    "notes": "Public Substack RSS for Callum Thomas / Weekly ChartStorm. Useful for chart-driven market outlook; treat as market opinion/NFA."
+  },
+  {
+    "id": "macro-compass",
+    "name": "The Macro Compass",
+    "type": "rss",
+    "url": "https://themacrocompass.substack.com/feed",
+    "category": "finance",
+    "subcategory": "creator",
+    "enabled": true,
+    "lang": "en",
+    "locales": [
+      "zh",
+      "en"
+    ],
+    "fetchLimit": 2,
+    "notes": "Public Substack RSS for MacroAlf / Alfonso Peccatiello. Macro, rates and liquidity perspective; treat as market opinion/NFA."
+  },
+  {
+    "id": "tavi-costa",
+    "name": "Tavi Costa",
+    "type": "rss",
+    "url": "https://tavicosta.substack.com/feed",
+    "category": "finance",
+    "subcategory": "creator",
+    "enabled": true,
+    "lang": "en",
+    "locales": [
+      "zh",
+      "en"
+    ],
+    "fetchLimit": 2,
+    "notes": "Public Substack RSS for Tavi Costa. Hard assets, commodities and macro-cycle perspective; treat as market opinion/NFA."
+  },
+  {
+    "id": "andreas-steno",
+    "name": "Stenos Signals",
+    "type": "rss",
+    "url": "https://andreassteno.substack.com/feed",
+    "category": "finance",
+    "subcategory": "creator",
+    "enabled": true,
+    "lang": "en",
+    "locales": [
+      "zh",
+      "en"
+    ],
+    "fetchLimit": 2,
+    "notes": "Public Substack RSS for Andreas Steno Larsen / Steno Research free articles. Macro and geopolitics perspective; treat as market opinion/NFA."
+  },
+  {
+    "id": "el-erian-bloomberg",
+    "name": "Mohamed El-Erian",
+    "type": "rss",
+    "url": "https://www.bloomberg.com/opinion/authors/ABsGWPqZF9s/mohamed-elerian.rss",
+    "category": "finance",
+    "subcategory": "creator",
+    "enabled": true,
+    "lang": "en",
+    "locales": [
+      "zh",
+      "en"
+    ],
+    "fetchLimit": 2,
+    "notes": "Bloomberg Opinion author RSS for Mohamed El-Erian. Central-bank, policy and macro-risk commentary; treat as market opinion/NFA."
+  },
+  {
     "id": "bloomberg-markets",
     "name": "Bloomberg Markets",
     "type": "rss",
     "url": "https://feeds.bloomberg.com/markets/news.rss",
     "category": "finance",
     "subcategory": "news",
+    "enabled": false,
+    "locales": [
+      "zh",
+      "en"
+    ],
+    "fetchLimit": 12,
+    "notes": "Disabled in v2 stability pass: direct RSS repeatedly ECONNRESET in current network; see bloomberg-google-markets wrapper."
+  },
+  {
+    "id": "bloomberg-google-markets",
+    "name": "Bloomberg via Google News",
+    "type": "rss",
+    "url": "https://news.google.com/rss/search?q=site%3Abloomberg.com%20(markets%20OR%20economy)&hl=en-US&gl=US&ceid=US%3Aen",
+    "category": "finance",
+    "subcategory": "news",
+    "fetchLimit": 10,
     "enabled": true,
     "locales": [
       "zh",
       "en"
-    ]
+    ],
+    "notes": "Added in v2: Google News wrapper because Bloomberg direct RSS resets in this network."
   },
   {
     "id": "wsj-markets",
@@ -354,7 +601,39 @@
     "locales": [
       "zh",
       "en"
-    ]
+    ],
+    "fetchLimit": 12
+  },
+  {
+    "id": "wsj-cn",
+    "name": "华尔街日报中文",
+    "type": "rss",
+    "url": "https://plink.anyfeeder.com/wsj/cn",
+    "category": "finance",
+    "subcategory": "news",
+    "enabled": true,
+    "lang": "zh",
+    "locales": [
+      "zh"
+    ],
+    "fetchLimit": 8,
+    "useCurl": true,
+    "notes": "Verified 2026-06-11 from Follow OPML. Chinese WSJ feed; preferred over the.bi mirror, which reset connections in the local test."
+  },
+  {
+    "id": "36kr",
+    "name": "36氪",
+    "type": "rss",
+    "url": "https://36kr.com/feed",
+    "category": "finance",
+    "subcategory": "news",
+    "enabled": true,
+    "lang": "zh",
+    "locales": [
+      "zh"
+    ],
+    "fetchLimit": 8,
+    "notes": "Verified 2026-06-11 from Follow OPML; Chinese startup, business, and technology-finance coverage."
   },
   {
     "id": "cnbc-topnews",
@@ -380,7 +659,8 @@
     "locales": [
       "zh",
       "en"
-    ]
+    ],
+    "fetchLimit": 12
   },
   {
     "id": "ftchinese-news",
@@ -392,7 +672,39 @@
     "enabled": false,
     "locales": [
       "zh"
-    ]
+    ],
+    "fetchLimit": 10,
+    "notes": "Disabled in v2 stability pass: direct RSS times out in current network; see ftchinese-google wrapper."
+  },
+  {
+    "id": "ftchinese-google",
+    "name": "FT Chinese via Google News",
+    "type": "rss",
+    "url": "https://news.google.com/rss/search?q=site%3Aftchinese.com%20(%E8%B4%A2%E7%BB%8F%20OR%20%E4%B8%AD%E5%9B%BD%20OR%20%E5%B8%82%E5%9C%BA)&hl=zh-CN&gl=CN&ceid=CN%3Azh-Hans",
+    "category": "finance",
+    "subcategory": "news",
+    "lang": "zh",
+    "fetchLimit": 10,
+    "enabled": true,
+    "locales": [
+      "zh"
+    ],
+    "notes": "Added in v2: Google News wrapper because FT Chinese direct RSS times out in this network."
+  },
+  {
+    "id": "chinaorg-business",
+    "name": "China.org.cn Business",
+    "type": "rss",
+    "url": "http://www.china.org.cn/english/rss/216549.xml",
+    "category": "finance",
+    "subcategory": "news",
+    "fetchLimit": 8,
+    "enabled": true,
+    "locales": [
+      "zh",
+      "en"
+    ],
+    "notes": "Added in v2 as a China official/state-media business perspective."
   },
   {
     "id": "yahoo-finance",
@@ -427,11 +739,13 @@
     "url": "https://feeds.bbci.co.uk/news/business/rss.xml",
     "category": "finance",
     "subcategory": "news",
-    "enabled": true,
+    "enabled": false,
     "locales": [
       "zh",
       "en"
-    ]
+    ],
+    "fetchLimit": 12,
+    "notes": "Disabled in v2 stability pass: direct RSS repeatedly ECONNRESET in current network."
   },
   {
     "id": "economist-finance",
@@ -440,11 +754,88 @@
     "url": "https://www.economist.com/finance-and-economics/rss.xml",
     "category": "finance",
     "subcategory": "news",
+    "enabled": false,
+    "locales": [
+      "zh",
+      "en"
+    ],
+    "fetchLimit": 12,
+    "notes": "Disabled in v2 stability pass: direct RSS repeatedly ECONNRESET in current network."
+  },
+  {
+    "id": "fed-press",
+    "name": "Federal Reserve Press Releases",
+    "type": "rss",
+    "url": "https://www.federalreserve.gov/feeds/press_all.xml",
+    "category": "finance",
+    "subcategory": "macro",
+    "fetchLimit": 8,
     "enabled": true,
     "locales": [
       "zh",
       "en"
-    ]
+    ],
+    "notes": "Added in v2: official US central-bank policy source."
+  },
+  {
+    "id": "fed-monetary",
+    "name": "Federal Reserve Monetary Policy",
+    "type": "rss",
+    "url": "https://www.federalreserve.gov/feeds/press_monetary.xml",
+    "category": "finance",
+    "subcategory": "macro",
+    "fetchLimit": 6,
+    "enabled": true,
+    "locales": [
+      "zh",
+      "en"
+    ],
+    "notes": "Added in v2: focused official monetary-policy feed."
+  },
+  {
+    "id": "sec-press",
+    "name": "SEC Press Releases",
+    "type": "rss",
+    "url": "https://www.sec.gov/news/pressreleases.rss",
+    "category": "finance",
+    "subcategory": "macro",
+    "fetchLimit": 8,
+    "enabled": true,
+    "locales": [
+      "zh",
+      "en"
+    ],
+    "notes": "Added in v2: official US securities-regulation source."
+  },
+  {
+    "id": "bea-news",
+    "name": "BEA News Releases",
+    "type": "rss",
+    "url": "https://apps.bea.gov/rss/rss.xml",
+    "category": "finance",
+    "subcategory": "macro",
+    "useCurl": true,
+    "fetchLimit": 8,
+    "enabled": true,
+    "locales": [
+      "zh",
+      "en"
+    ],
+    "notes": "Added in v2: official US economic statistics source; uses curl because Node direct gets 406."
+  },
+  {
+    "id": "bls-latest",
+    "name": "BLS Latest Releases",
+    "type": "rss",
+    "url": "https://www.bls.gov/feed/bls_latest.rss",
+    "category": "finance",
+    "subcategory": "macro",
+    "enabled": false,
+    "locales": [
+      "zh",
+      "en"
+    ],
+    "notes": "Candidate official macro source; disabled because current network returns 403 Access Denied."
   },
   {
     "id": "reddit-wallstreetbets",
@@ -530,11 +921,29 @@
     "url": "https://feeds.bbci.co.uk/news/world/rss.xml",
     "category": "politics",
     "subcategory": "world",
-    "enabled": true,
+    "enabled": false,
     "locales": [
       "zh",
       "en"
-    ]
+    ],
+    "fetchLimit": 12,
+    "notes": "Disabled in v2 stability pass: direct RSS repeatedly ECONNRESET in current network."
+  },
+  {
+    "id": "bbc-news-cn",
+    "name": "BBC News 中文网",
+    "type": "rss",
+    "url": "https://plink.anyfeeder.com/bbc/cn",
+    "category": "politics",
+    "subcategory": "world",
+    "enabled": true,
+    "lang": "zh",
+    "locales": [
+      "zh"
+    ],
+    "fetchLimit": 8,
+    "useCurl": true,
+    "notes": "Verified 2026-06-11 from Follow OPML. BBC official RSS reset locally, so use the reachable Chinese anyfeeder mirror."
   },
   {
     "id": "guardian-world",
@@ -547,7 +956,8 @@
     "locales": [
       "zh",
       "en"
-    ]
+    ],
+    "fetchLimit": 12
   },
   {
     "id": "nyt-world",
@@ -560,7 +970,24 @@
     "locales": [
       "zh",
       "en"
-    ]
+    ],
+    "fetchLimit": 12
+  },
+  {
+    "id": "nytimes-cn",
+    "name": "纽约时报中文",
+    "type": "rss",
+    "url": "https://plink.anyfeeder.com/nytimes/cn",
+    "category": "politics",
+    "subcategory": "world",
+    "enabled": true,
+    "lang": "zh",
+    "locales": [
+      "zh"
+    ],
+    "fetchLimit": 8,
+    "useCurl": true,
+    "notes": "Verified 2026-06-11 from Follow OPML. Chinese NYT feed; preferred over the bilingual feed, which timed out in the local test."
   },
   {
     "id": "npr-world",
@@ -573,7 +1000,8 @@
     "locales": [
       "zh",
       "en"
-    ]
+    ],
+    "fetchLimit": 10
   },
   {
     "id": "dw-chinese",
@@ -582,10 +1010,12 @@
     "url": "https://rss.dw.com/rdf/rss-chi-all",
     "category": "politics",
     "subcategory": "world",
-    "enabled": true,
+    "enabled": false,
     "locales": [
       "zh"
-    ]
+    ],
+    "fetchLimit": 12,
+    "notes": "Disabled in v2 stability pass: direct RSS repeatedly ECONNRESET in current network."
   },
   {
     "id": "aljazeera",
@@ -594,11 +1024,13 @@
     "url": "https://www.aljazeera.com/xml/rss/all.xml",
     "category": "politics",
     "subcategory": "world",
-    "enabled": true,
+    "enabled": false,
     "locales": [
       "zh",
       "en"
-    ]
+    ],
+    "fetchLimit": 12,
+    "notes": "Disabled in v2 stability pass: direct RSS repeatedly ECONNRESET in current network."
   },
   {
     "id": "the-diplomat",
@@ -607,11 +1039,73 @@
     "url": "https://thediplomat.com/feed/",
     "category": "politics",
     "subcategory": "world",
+    "enabled": false,
+    "locales": [
+      "zh",
+      "en"
+    ],
+    "fetchLimit": 12,
+    "notes": "Disabled in v2 stability pass: direct RSS repeatedly ECONNRESET in current network."
+  },
+  {
+    "id": "reuters-google-world",
+    "name": "Reuters via Google News",
+    "type": "rss",
+    "url": "https://news.google.com/rss/search?q=site%3Areuters.com%20(world%20OR%20business%20OR%20markets)&hl=en-US&gl=US&ceid=US%3Aen",
+    "category": "politics",
+    "subcategory": "world",
+    "fetchLimit": 10,
     "enabled": true,
     "locales": [
       "zh",
       "en"
-    ]
+    ],
+    "notes": "Added in v2: transparent Google News wrapper because Reuters public RSS is not reliably available."
+  },
+  {
+    "id": "ap-google-world",
+    "name": "AP via Google News",
+    "type": "rss",
+    "url": "https://news.google.com/rss/search?q=site%3Aapnews.com%20(world%20OR%20business%20OR%20technology)&hl=en-US&gl=US&ceid=US%3Aen",
+    "category": "politics",
+    "subcategory": "world",
+    "fetchLimit": 10,
+    "enabled": true,
+    "locales": [
+      "zh",
+      "en"
+    ],
+    "notes": "Added in v2: transparent Google News wrapper because AP public RSS is not reliably available."
+  },
+  {
+    "id": "scmp-google-china",
+    "name": "SCMP via Google News",
+    "type": "rss",
+    "url": "https://news.google.com/rss/search?q=site%3Ascmp.com%20(China%20OR%20Hong%20Kong%20OR%20Taiwan)&hl=en-US&gl=US&ceid=US%3Aen",
+    "category": "politics",
+    "subcategory": "world",
+    "fetchLimit": 10,
+    "enabled": true,
+    "locales": [
+      "zh",
+      "en"
+    ],
+    "notes": "Added in v2: Google News wrapper; SCMP direct RSS timed out in this network."
+  },
+  {
+    "id": "chinaorg-top",
+    "name": "China.org.cn Top News",
+    "type": "rss",
+    "url": "http://www.china.org.cn/english/rss/185842.xml",
+    "category": "politics",
+    "subcategory": "world",
+    "fetchLimit": 8,
+    "enabled": true,
+    "locales": [
+      "zh",
+      "en"
+    ],
+    "notes": "Added in v2 as a China official/state-media framing source."
   },
   {
     "id": "peoples-daily",

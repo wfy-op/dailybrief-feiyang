@@ -4,6 +4,13 @@ import { extractJson } from "./json-util";
 import { SYSTEM_PROMPT_DIGEST_EN, SYSTEM_PROMPT_DIGEST_ZH } from "./prompts";
 import { REPORT_LOCALE } from "../sources/registry";
 import type { Category, RawArticle } from "../sources/types";
+import type { FinancialAnalysisSection } from "../financial-analysis/types";
+import type { AcademicRadarSection } from "../academic-radar";
+import type {
+  FinanceTopicCluster,
+  SourceHealthSection,
+  TopReadItem,
+} from "../daily-addons";
 
 const SYSTEM_PROMPT_DIGEST =
   REPORT_LOCALE === "en" ? SYSTEM_PROMPT_DIGEST_EN : SYSTEM_PROMPT_DIGEST_ZH;
@@ -26,6 +33,16 @@ export interface DailyReport {
   keywords: string[];
   /** Optional trading-signals section, present when scripts/daily.ts ran successfully. */
   trading?: TradingSection;
+  /** Optional A-share / US-market review based on representative market data. */
+  financial_analysis?: FinancialAnalysisSection;
+  /** Optional research-paper radar tailored to the user's photonics work. */
+  academic_radar?: AcademicRadarSection;
+  /** Optional deterministic cross-section entry point for morning reading. */
+  top_reads?: TopReadItem[];
+  /** Optional deterministic clustering of finance creator opinions. */
+  finance_topics?: FinanceTopicCluster[];
+  /** Optional fetch status summary for enabled sources. */
+  source_health?: SourceHealthSection;
 }
 
 import type { TickerAnalysis } from "../trading/signals";
@@ -100,6 +117,63 @@ function selectRoundRobin(
     }
   }
   return out;
+}
+
+function fallbackBrief(item: ArticleInput): BriefItem {
+  const excerpt = (item.excerpt ?? "").replace(/\s+/g, " ").trim();
+  const summary = excerpt ||
+    (REPORT_LOCALE === "en"
+      ? `Source item from ${item.source}; open the original link for details.`
+      : `来自${item.source}的候选条目；具体内容以原文链接为准。`);
+  return {
+    title: item.title,
+    url: item.url,
+    source: item.source,
+    summary,
+    importance: 5,
+  };
+}
+
+export function buildDeterministicDailyReport(
+  articles: ArticleInput[],
+): DailyReport {
+  const grouped: Record<Category, ArticleInput[]> = {
+    tech: [],
+    finance: [],
+    politics: [],
+  };
+  for (const article of articles) grouped[article.category].push(article);
+  const selected = {
+    tech: selectRoundRobin(grouped.tech, 5).slice(0, 5),
+    finance: selectRoundRobin(grouped.finance, 5).slice(0, 5),
+    politics: selectRoundRobin(grouped.politics, 3).slice(0, 3),
+  };
+  const lead = selected.tech[0] ?? selected.finance[0] ?? selected.politics[0];
+  const counts = `${selected.tech.length}/${selected.finance.length}/${selected.politics.length}`;
+  const sourceKeywords = [...new Set(
+    [...selected.tech, ...selected.finance, ...selected.politics].map((item) => item.source),
+  )].slice(0, 5);
+
+  if (REPORT_LOCALE === "en") {
+    return {
+      hero_headline: lead?.title ?? "Daily source digest",
+      daily_overview: `Deterministic fallback digest built directly from fetched source metadata after the language-model summary was unavailable. It includes ${counts} technology, finance, and politics items respectively; titles, links, sources, and excerpts are preserved from the fetched candidates.`,
+      tech_briefs: selected.tech.map(fallbackBrief),
+      finance_briefs: selected.finance.map(fallbackBrief),
+      politics_briefs: selected.politics.map(fallbackBrief),
+      editor_note: "This edition used the deterministic fallback. Treat excerpts as source-provided context and open the original links before acting on them.",
+      keywords: ["technology", "finance", "politics", ...sourceKeywords].slice(0, 8),
+    };
+  }
+  return {
+    hero_headline: lead?.title ?? "每日来源简报",
+    daily_overview: `语言模型摘要不可用，本版已自动切换为确定性降级简报，直接保留抓取候选中的标题、链接、来源与摘要。科技、财经、时政分别收录 ${counts} 条；这里不补写来源之外的判断，阅读和决策前请打开原文核对。`,
+    tech_briefs: selected.tech.map(fallbackBrief),
+    finance_briefs: selected.finance.map(fallbackBrief),
+    politics_briefs: selected.politics.map(fallbackBrief),
+    editor_note: "本版使用确定性降级路径；摘要仅保留来源材料，不替代原文核验，也不构成投资或行动建议。",
+    keywords: ["科技", "财经", "时政", ...sourceKeywords].slice(0, 8),
+  };
 }
 
 async function callOnce(userPayloadJson: string): Promise<DailyReport> {
@@ -195,6 +269,7 @@ async function callOnce(userPayloadJson: string): Promise<DailyReport> {
 
 export async function generateDailyReport(
   articles: ArticleInput[],
+  options: { call?: (payload: string) => Promise<DailyReport> } = {},
 ): Promise<{ report: DailyReport; tokensUsed: number }> {
   const grouped: Record<Category, ArticleInput[]> = {
     tech: [],
@@ -219,8 +294,9 @@ export async function generateDailyReport(
   const userPayloadJson = JSON.stringify(userPayload);
 
   let report: DailyReport;
+  const generate = options.call ?? callOnce;
   try {
-    report = await callOnce(userPayloadJson);
+    report = await generate(userPayloadJson);
   } catch (firstErr) {
     // One retry — claude CLI occasionally wraps in narration on the first
     // pass but obeys when the same prompt is repeated.
@@ -229,7 +305,16 @@ export async function generateDailyReport(
         firstErr instanceof Error ? firstErr.message : String(firstErr)
       }`,
     );
-    report = await callOnce(userPayloadJson);
+    try {
+      report = await generate(userPayloadJson);
+    } catch (secondErr) {
+      console.error(
+        `[pipeline] second digest call failed; using deterministic fallback: ${
+          secondErr instanceof Error ? secondErr.message : String(secondErr)
+        }`,
+      );
+      report = buildDeterministicDailyReport(articles);
+    }
   }
 
   // Max subscription has no per-call token meter — we expose 0 for schema

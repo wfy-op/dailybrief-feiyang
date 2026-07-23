@@ -4,7 +4,7 @@ Operational knowledge for any AI coding agent working on this repo (Claude Code,
 
 ## What this project is
 
-`daily-brief` is a local-first pipeline that fetches 23 RSS / API news sources daily (22 in en mode after locale filtering), runs LLM enrichment, and renders a single self-contained HTML report. It runs on the user's machine via the OS scheduler, OR in GitHub Actions publishing to GitHub Pages. No web framework, no DB, no servers.
+`daily-brief` is a local-first pipeline with 47 enabled source configurations (46 in zh mode, 37 in en mode), LLM enrichment, financial analysis, an academic radar, and a self-contained HTML report. It runs locally or in GitHub Actions. The personalized Windows installation publishes through a fail-closed Codex automation to Cloudflare Pages. No web framework or application server.
 
 The repo's `CLAUDE.md` includes this file via `@AGENTS.md`. Don't add stack-specific lore (Next.js, etc.) — there's none in this codebase.
 
@@ -15,6 +15,8 @@ lib/
   ai/           # LLM dispatcher + 5 backend implementations + prompts
   sources/      # fetcher dispatch + per-source TS modules
   trading/      # Yahoo finance + technical indicators + watchlist
+  financial-analysis/ # A-share / US-market snapshots and commentary
+  academic-radar/     # paper discovery, abstract quality, freshness, numbering
   output/       # render.ts (HTML+MD generation), all CSS inlined
   utils.ts      # tiny shared helpers (todayKey, getReportTz)
 scripts/
@@ -25,6 +27,9 @@ scripts/
   regen-trading.ts    # rerun just the trading commentary
   regen-enrich.ts     # top up missing summaries for a subgroup
   build-site.mjs      # generate index.html + archive.html for static hosting
+  validate-publish.mjs # deterministic report/site quality gate
+  deploy-cloudflare-pages.mjs # allowlisted upload + byte-hash live verification
+  run-and-archive.ps1 # lock/generate/validate/archive/deploy control plane
   deploy.mjs          # scp HTML to a remote nginx host (opt-in)
   sources.ts          # `npm run sources` — list/validate sources.config.json
   install.mjs         # cross-platform OS scheduler registration
@@ -49,6 +54,10 @@ sources.config.json   # SINGLE SOURCE OF TRUTH for the source registry
 
 6. **No agent-specific build steps.** No `next build`, no bundling. `tsx` runs TS directly. The HTML is hand-rendered, CSS is inlined string-templated.
 
+7. **Scheduled publishing has one control plane.** Run `scripts/run-and-archive.ps1 -DirectNpm -CatchUp`; do not reimplement its preflight, validation, archive, or deploy phases in an automation prompt.
+
+8. **`daily_reports/` is private source data; `public-dist/` is the publish allowlist.** Never upload dated JSON or `-articles.json` sidecars. A scheduled run is successful only after deterministic validation and live hash verification.
+
 ## Commands
 
 | Task | Command | Cost |
@@ -58,7 +67,10 @@ sources.config.json   # SINGLE SOURCE OF TRUTH for the source registry
 | Re-render from cache | `npm run render [date]` | <1s |
 | Re-run trading section | `npm run regen-trading [date]` | ~2 min, 1 LLM call |
 | Top up missing summaries | `npm run regen-enrich <cat:sub> [date]` | ~30s, 1 LLM call |
-| Static-site generator | `npm run build-site` | <1s |
+| Fail-closed scheduled run | `pwsh -NoProfile -File scripts/run-and-archive.ps1 -DirectNpm -CatchUp` | 5-8 min |
+| Validate report/site | `npm run validate:publish -- --date YYYY-MM-DD --stage report\|site` | <1s |
+| Static-site generator | `npm run build-site -- --date YYYY-MM-DD` | <1s |
+| Cloudflare deploy + verify | `npm run deploy:cf-pages -- --date YYYY-MM-DD` | ~30s |
 | List sources by status | `npm run sources` | instant |
 | Validate sources.config.json | `npm run sources:check` | instant |
 
@@ -82,6 +94,7 @@ sources.config.json   # SINGLE SOURCE OF TRUTH for the source registry
 2. `logs/llm-calls.jsonl` — every LLM call with input size, latency, success, error category
 3. `npm run quota-report` — usage summary by backend
 4. If a tab renders wrong but the data is right, `npm run render` (1s) usually fixes display-only bugs without rerunning LLM
+5. `logs/last-run-manifest.json` — atomic phase/status, exact paths, hashes, archive and live-verification evidence
 
 ## What NOT to do
 
@@ -91,10 +104,13 @@ sources.config.json   # SINGLE SOURCE OF TRUTH for the source registry
 - Don't write into `daily_reports/` directly from agent code; let `scripts/daily.ts` or `render.ts` own that
 - Don't add a web framework (Next.js, Express, etc.) — the project is intentionally static
 - Don't bypass the per-source try/catch — let `daily.ts` aggregate failures
+- Don't publish `daily_reports/`; only `public-dist/` is safe for public hosting
+- Don't mark a scheduled run successful before `deployedAndVerified=true`
 
 ## Where to learn more
 
 - `README.md` — user-facing intro, install, configuration
 - `FORKING.md` — common customizations (LLM provider, sources, layout, styling)
+- `docs/cloudflare-pages.md` — personalized fail-closed Cloudflare runbook
 - `.claude/skills/daily-brief/SKILL.md` — fuller operational reference (Claude Code auto-loads it; other agents can read it directly)
 - `sources.config.json` — see what sources look like in practice

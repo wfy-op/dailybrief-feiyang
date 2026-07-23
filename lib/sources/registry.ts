@@ -68,6 +68,9 @@ function loadAndValidate(): SourceDef[] {
     seenIds.add(s.id);
     if (typeof s.name !== "string") throw new Error(`${at} (${s.id}): missing 'name'`);
     if (typeof s.url !== "string") throw new Error(`${at} (${s.id}): missing 'url'`);
+    if (s.hideWhenEmpty !== undefined && typeof s.hideWhenEmpty !== "boolean") {
+      throw new Error(`${at} (${s.id}): 'hideWhenEmpty' must be boolean`);
+    }
     if (!validTypes.has(s.type as string)) {
       throw new Error(`${at} (${s.id}): invalid 'type' '${String(s.type)}'`);
     }
@@ -78,6 +81,15 @@ function loadAndValidate(): SourceDef[] {
       if (!Array.isArray(s.locales) || s.locales.some((l) => l !== "zh" && l !== "en")) {
         throw new Error(`${at} (${s.id}): 'locales' must be an array of "zh" | "en"`);
       }
+    }
+    const fetchLimit = s.fetchLimit;
+    if (
+      fetchLimit !== undefined &&
+      (typeof fetchLimit !== "number" ||
+        !Number.isInteger(fetchLimit) ||
+        fetchLimit < 1)
+    ) {
+      throw new Error(`${at} (${s.id}): 'fetchLimit' must be a positive integer`);
     }
   }
   return parsed as SourceDef[];

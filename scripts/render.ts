@@ -7,6 +7,11 @@ import type { ArticleInput, DailyReport } from "../lib/ai/pipeline";
 import { groupRaw, renderHtml, renderMarkdown } from "../lib/output/render";
 import { sources } from "../lib/sources/registry";
 import { todayKey } from "../lib/utils";
+import { finalizeAcademicRadarDisplay } from "../lib/academic-radar/display";
+import {
+  buildDailyAddons,
+  type SourceHealthSection,
+} from "../lib/daily-addons";
 
 const OUTPUT_DIR = "daily_reports";
 
@@ -30,7 +35,10 @@ function loadReport(date: string): DailyReport {
   return JSON.parse(fs.readFileSync(file, "utf8")) as DailyReport;
 }
 
-function loadArticles(date: string): ArticleInput[] {
+function loadSidecar(date: string): {
+  articles: ArticleInput[];
+  sourceHealth?: SourceHealthSection;
+} {
   const file = path.join(OUTPUT_DIR, date, `${date}-articles.json`);
   if (!fs.existsSync(file)) {
     throw new Error(
@@ -42,11 +50,15 @@ function loadArticles(date: string): ArticleInput[] {
     articles: Array<
       Omit<ArticleInput, "publishedAt"> & { publishedAt?: string }
     >;
+    sourceHealth?: SourceHealthSection;
   };
-  return data.articles.map((a) => ({
-    ...a,
-    publishedAt: a.publishedAt ? new Date(a.publishedAt) : undefined,
-  }));
+  return {
+    articles: data.articles.map((a) => ({
+      ...a,
+      publishedAt: a.publishedAt ? new Date(a.publishedAt) : undefined,
+    })),
+    sourceHealth: data.sourceHealth,
+  };
 }
 
 async function main() {
@@ -54,19 +66,28 @@ async function main() {
   console.log(`[render] re-rendering ${date} from cached data…`);
 
   const report = loadReport(date);
-  const articles = loadArticles(date);
+  if (report.academic_radar) {
+    report.academic_radar = finalizeAcademicRadarDisplay(report.academic_radar);
+  }
+  const { articles, sourceHealth } = loadSidecar(date);
   console.log(`[render] loaded ${articles.length} articles + report`);
+  const reportWithAddons = buildDailyAddons(report, articles, sources, sourceHealth);
 
   const raw = groupRaw(articles, sources);
   const dateDir = path.join(OUTPUT_DIR, date);
   fs.mkdirSync(dateDir, { recursive: true });
   const base = path.join(dateDir, date);
-  fs.writeFileSync(`${base}.html`, renderHtml(report, raw, date), "utf8");
+  fs.writeFileSync(
+    `${base}.json`,
+    JSON.stringify(reportWithAddons, null, 2),
+    "utf8",
+  );
+  fs.writeFileSync(`${base}.html`, renderHtml(reportWithAddons, raw, date), "utf8");
   if (process.env.OUTPUT_MARKDOWN === "true") {
-    fs.writeFileSync(`${base}.md`, renderMarkdown(report, date), "utf8");
-    console.log(`[render] wrote ${base}.{html,md}`);
+    fs.writeFileSync(`${base}.md`, renderMarkdown(reportWithAddons, date), "utf8");
+    console.log(`[render] wrote ${base}.{json,html,md}`);
   } else {
-    console.log(`[render] wrote ${base}.html`);
+    console.log(`[render] wrote ${base}.{json,html}`);
   }
 }
 

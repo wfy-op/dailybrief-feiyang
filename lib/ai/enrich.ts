@@ -10,6 +10,11 @@ interface EnrichInput {
   source?: string;
 }
 
+export interface EnrichedNewsItem {
+  summary: string;
+  localizedTitle?: string;
+}
+
 const GH_SYSTEM_PROMPT_ZH = `你是一名技术编辑，负责为 GitHub Trending 项目写中文介绍。
 
 输入：每个项目有 owner/repo 名 + 一行英文 description（可能没有）。
@@ -223,6 +228,82 @@ async function runEnrichment(
   return result;
 }
 
+async function runNewsTitleSummaryEnrichment(
+  payload: unknown[],
+  scope: string,
+): Promise<Map<string, EnrichedNewsItem>> {
+  const systemPrompt =
+    REPORT_LOCALE === "en"
+      ? `You are an English-language news editor. For each input item, write a concise localized_title and a factual 50-100 word summary in English. Preserve names, institutions, numbers, countries, and market/geopolitical context. Output strict JSON only: {"items":[{"url":"<exact input url>","localized_title":"<English title>","summary":"<English summary>"}]}.`
+      : `You are a Simplified Chinese news editor. For each input item, translate or rewrite the title into a fluent Chinese news headline and write a factual 50-100 Chinese character summary. Preserve names, institutions, numbers, countries, companies, and geopolitical/market context. Do not add facts beyond title/excerpt/source. Output strict JSON only: {"items":[{"url":"<exact input url>","localized_title":"<Chinese title>","summary":"<Chinese summary>"}]}.`;
+  const langHeader =
+    REPORT_LOCALE === "en"
+      ? "**Output language: ENGLISH ONLY.**"
+      : "**Output language: SIMPLIFIED CHINESE ONLY for localized_title and summary.**";
+  const userPrompt = [
+    langHeader,
+    "",
+    `Candidate items (${payload.length} entries, JSON array):`,
+    JSON.stringify(payload),
+    "",
+    'Output {"items": [{"url": ..., "localized_title": ..., "summary": ...}, ...]}; url must be copied exactly from input.',
+  ].join("\n");
+
+  const result = new Map<string, EnrichedNewsItem>();
+
+  try {
+    const { text } = await runLlm({
+      systemPrompt,
+      userPrompt,
+      timeoutMs: 240_000,
+    });
+    const cleaned = extractJson(text);
+
+    let parsed: {
+      items?: Array<{
+        url?: string;
+        localized_title?: string;
+        localizedTitle?: string;
+        title_zh?: string;
+        title?: string;
+        summary?: string;
+      }>;
+      summaries?: Array<{
+        url?: string;
+        localized_title?: string;
+        localizedTitle?: string;
+        title_zh?: string;
+        title?: string;
+        summary?: string;
+      }>;
+    };
+    try {
+      parsed = JSON.parse(cleaned);
+    } catch {
+      parsed = JSON.parse(jsonrepair(cleaned));
+    }
+
+    for (const s of parsed.items ?? parsed.summaries ?? []) {
+      if (!s.url || !s.summary) continue;
+      result.set(s.url, {
+        summary: s.summary.trim(),
+        localizedTitle: (
+          s.localized_title ??
+          s.localizedTitle ??
+          s.title_zh ??
+          s.title ??
+          ""
+        ).trim() || undefined,
+      });
+    }
+  } catch (e) {
+    const msg = e instanceof Error ? e.message : String(e);
+    console.warn(`[enrich] ${scope} failed: ${msg}`);
+  }
+
+  return result;
+}
+
 /**
  * Generate Chinese summaries for a batch of GitHub Trending repos in
  * a single Claude CLI call. Failures are non-fatal — caller gets an
@@ -248,6 +329,15 @@ export async function enrichGithubTrendingSummaries(
 export async function enrichFinanceNewsSummaries(
   items: EnrichInput[],
 ): Promise<Map<string, string>> {
+  const enriched = await enrichNewsTitlesAndSummaries(items);
+  return new Map(
+    Array.from(enriched.entries()).map(([url, item]) => [url, item.summary]),
+  );
+}
+
+export async function enrichNewsTitlesAndSummaries(
+  items: EnrichInput[],
+): Promise<Map<string, EnrichedNewsItem>> {
   if (items.length === 0) return new Map();
   const payload = items.map((it) => ({
     url: it.url,
@@ -255,7 +345,7 @@ export async function enrichFinanceNewsSummaries(
     source: it.source ?? "",
     excerpt: (it.excerpt ?? "").slice(0, 280),
   }));
-  return runEnrichment(payload, PROMPTS.finance, "finance summaries");
+  return runNewsTitleSummaryEnrichment(payload, "news title/summary enrichment");
 }
 
 /**

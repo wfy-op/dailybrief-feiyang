@@ -1,3 +1,6 @@
+import Parser from "rss-parser";
+
+import { curlFetch } from "./curl-fetch";
 import type { RawArticle } from "./types";
 
 /**
@@ -48,17 +51,57 @@ interface V2exTopic {
   node?: { name: string; title?: string };
 }
 
-const HEADERS = {
+export const V2EX_RSSHUB_FALLBACK_URLS = [
+  "https://rsshub.rssforever.com/v2ex/topics/hot",
+  "https://rsshub.liumingye.cn/v2ex/topics/hot",
+  "https://rsshub.ktachibana.party/v2ex/topics/hot",
+  "https://rsshub.woodland.cafe/v2ex/topics/hot",
+  "https://rsshub.rssforever.com/v2ex/tab/tech",
+  "https://rsshub.liumingye.cn/v2ex/tab/tech",
+  "https://rsshub.ktachibana.party/v2ex/tab/tech",
+  "https://rsshub.woodland.cafe/v2ex/tab/tech",
+  "https://rsshub.rssforever.com/v2ex/topics/latest",
+  "https://rsshub.liumingye.cn/v2ex/topics/latest",
+] as const;
+
+const JSON_HEADERS = {
   "User-Agent": "Mozilla/5.0 (compatible; DailyBriefBot/1.0)",
   Accept: "application/json",
 } as const;
+
+const RSS_HEADERS: Record<string, string> = {
+  "User-Agent":
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+  Accept: "application/rss+xml, application/xml, text/xml, */*",
+  "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8",
+};
+
+const V2EX_RSS_OFF_TOPIC_RE =
+  /(婆媳|相亲|对象|男友|女友|分手|结婚|礼金|归乡|家暴|买房|买车|房贷|装修|贷款|低佣|开户|抽奖|返佣|招聘|求职|睡眠|焦虑|疾病|医院|交通问题|屏蔽短信)/i;
+
+const rssParser = new Parser({
+  timeout: 15000,
+  headers: RSS_HEADERS,
+});
+
+function stripHtml(s: string): string {
+  return s.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+}
+
+function normalizeV2exUrl(url: string): string {
+  return url.replace(/^https:\/\/v2ex\.com/i, "https://www.v2ex.com");
+}
+
+function isOffTopicTitle(title: string): boolean {
+  return V2EX_OFF_TOPIC_RE.test(title) || V2EX_RSS_OFF_TOPIC_RE.test(title);
+}
 
 async function fetchNode(node: string): Promise<V2exTopic[]> {
   try {
     const r = await fetch(
       `https://www.v2ex.com/api/topics/show.json?node_name=${node}`,
       {
-        headers: HEADERS,
+        headers: JSON_HEADERS,
         signal: AbortSignal.timeout(15000),
       },
     );
@@ -67,6 +110,57 @@ async function fetchNode(node: string): Promise<V2exTopic[]> {
   } catch {
     return [];
   }
+}
+
+export async function parseV2exRssFallbackXml(
+  sourceId: string,
+  xml: string,
+  limit = 25,
+): Promise<RawArticle[]> {
+  const feed = await rssParser.parseString(xml);
+  const seen = new Set<string>();
+
+  return (feed.items ?? [])
+    .map((item) => {
+      const title = (item.title ?? "").trim();
+      const url = normalizeV2exUrl((item.link ?? item.guid ?? "").trim());
+      const excerpt = stripHtml(
+        item.contentSnippet ?? item.content ?? item.summary ?? "",
+      ).slice(0, 300);
+      return {
+        sourceId,
+        title,
+        url,
+        excerpt: excerpt ? `RSSHub 技术社区 fallback · ${excerpt}` : "RSSHub 技术社区 fallback",
+        publishedAt: item.isoDate ? new Date(item.isoDate) : undefined,
+        category: "tech" as const,
+      };
+    })
+    .filter((item) => {
+      if (!item.title || !item.url) return false;
+      if (seen.has(item.url)) return false;
+      if (isOffTopicTitle(item.title)) return false;
+      seen.add(item.url);
+      return true;
+    })
+    .slice(0, limit);
+}
+
+async function fetchV2exRssFallback(
+  sourceId: string,
+  limit: number,
+): Promise<RawArticle[]> {
+  for (const url of V2EX_RSSHUB_FALLBACK_URLS) {
+    try {
+      const xml = await curlFetch(url, RSS_HEADERS, 15);
+      const items = await parseV2exRssFallbackXml(sourceId, xml, limit);
+      if (items.length > 0) return items;
+    } catch {
+      // Try the next public RSSHub instance. Source health will report empty
+      // if all fallbacks fail, matching other fragile community sources.
+    }
+  }
+  return [];
 }
 
 export async function fetchV2ex(
@@ -82,7 +176,7 @@ export async function fetchV2ex(
     for (const t of list) {
       if (!t.url || !t.title) continue;
       if (seen.has(t.url)) continue;
-      if (V2EX_OFF_TOPIC_RE.test(t.title)) continue;
+      if (isOffTopicTitle(t.title)) continue;
       // Drop 0-reply posts: user-stated requirement is "最热门 10 个"
       // — a 0-reply post is by definition not hot, no matter how recent.
       if ((t.replies ?? 0) === 0) continue;
@@ -97,7 +191,7 @@ export async function fetchV2ex(
   // Sort by reply count desc — closest available proxy for "hot"
   candidates.sort((a, b) => b.topic.replies - a.topic.replies);
 
-  return candidates.slice(0, limit).map(({ topic, nodeTitle }) => ({
+  const apiItems = candidates.slice(0, limit).map(({ topic, nodeTitle }) => ({
     sourceId,
     title: topic.title,
     url: topic.url,
@@ -105,4 +199,7 @@ export async function fetchV2ex(
     publishedAt: topic.created ? new Date(topic.created * 1000) : undefined,
     category: "tech" as const,
   }));
+
+  if (apiItems.length > 0) return apiItems;
+  return fetchV2exRssFallback(sourceId, limit);
 }

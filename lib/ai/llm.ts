@@ -6,6 +6,7 @@
  * backend is selected at runtime by the LLM_BACKEND environment variable:
  *
  *   LLM_BACKEND=claude-cli   (default; uses local Claude Code CLI, Max billing)
+ *   LLM_BACKEND=codex-cli    (uses local Codex CLI login)
  *   LLM_BACKEND=anthropic    (Anthropic Messages API)
  *   LLM_BACKEND=openai       (OpenAI Chat Completions)
  *   LLM_BACKEND=deepseek     (DeepSeek, OpenAI-compatible)
@@ -16,6 +17,7 @@
  */
 
 import { CLAUDE_MODEL, runClaudeCli } from "./backends/claude-cli";
+import { CODEX_MODEL, runCodexCli } from "./backends/codex-cli";
 import { anthropicModel, runAnthropic } from "./backends/anthropic";
 import {
   PRESETS,
@@ -36,6 +38,7 @@ export interface LlmRunResult {
 
 export type LlmBackendId =
   | "claude-cli"
+  | "codex-cli"
   | "anthropic"
   | "openai"
   | "deepseek"
@@ -43,6 +46,7 @@ export type LlmBackendId =
 
 const VALID_BACKENDS: ReadonlySet<LlmBackendId> = new Set([
   "claude-cli",
+  "codex-cli",
   "anthropic",
   "openai",
   "deepseek",
@@ -68,6 +72,8 @@ function getActiveModel(): string {
   switch (backend) {
     case "claude-cli":
       return CLAUDE_MODEL;
+    case "codex-cli":
+      return CODEX_MODEL;
     case "anthropic":
       return anthropicModel();
     case "openai":
@@ -87,6 +93,8 @@ export async function runLlm(opts: LlmRunOptions): Promise<LlmRunResult> {
   switch (backend) {
     case "claude-cli":
       return runClaudeCli(opts);
+    case "codex-cli":
+      return runCodexCli(opts);
     case "anthropic":
       return runAnthropic(opts);
     case "openai":

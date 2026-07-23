@@ -1,0 +1,2997 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>每日简报 · 2026-06-17</title>
+<link rel="alternate" type="application/rss+xml" title="DailyBrief Academic Radar" href="/academic-feed.xml">
+<style>
+  :root {
+    --bg: #fafaf9;
+    --bg-elevated: #ffffff;
+    --fg: #18181b;
+    --fg-soft: #3f3f46;
+    --muted: #71717a;
+    --rule: #e4e4e7;
+    --card: #f4f4f5;
+    --link: #1d4ed8;
+    --accent: #18181b;
+    --accent-fg: #fafaf9;
+    --rank-high-bg: #fee2e2;
+    --rank-high-fg: #991b1b;
+    --rank-mid-bg: #fef3c7;
+    --rank-mid-fg: #92400e;
+    --rank-low-bg: #e0e7ff;
+    --rank-low-fg: #3730a3;
+    --hero-grad-from: #fafaf9;
+    --hero-grad-to: #f4f4f5;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0a0a0a;
+      --bg-elevated: #18181b;
+      --fg: #fafafa;
+      --fg-soft: #d4d4d8;
+      --muted: #a1a1aa;
+      --rule: #27272a;
+      --card: #18181b;
+      --link: #93c5fd;
+      --accent: #fafafa;
+      --accent-fg: #0a0a0a;
+      --rank-high-bg: rgba(239,68,68,0.18);
+      --rank-high-fg: #fca5a5;
+      --rank-mid-bg: rgba(245,158,11,0.18);
+      --rank-mid-fg: #fcd34d;
+      --rank-low-bg: rgba(99,102,241,0.18);
+      --rank-low-fg: #a5b4fc;
+      --hero-grad-from: #18181b;
+      --hero-grad-to: #0a0a0a;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+      "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  main { max-width: 960px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
+
+  /* ===== header ===== */
+  header.report-header { margin-bottom: 1.25rem; }
+  .eyebrow {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+    font-weight: 500;
+  }
+  h1.report-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin: 0.4rem 0 1.2rem;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+  .archive-link {
+    display: inline-block;
+    margin-bottom: 1rem;
+    font-size: 0.85rem;
+    color: var(--muted);
+    text-decoration: none;
+    border-bottom: 1px dashed var(--rule);
+    padding-bottom: 1px;
+  }
+  .archive-link:hover { color: var(--accent); border-bottom-style: solid; }
+  .hero-card {
+    background: linear-gradient(135deg, var(--hero-grad-from) 0%, var(--hero-grad-to) 100%);
+    border: 1px solid var(--rule);
+    border-left: 4px solid var(--accent);
+    padding: 1rem 1.4rem;
+    border-radius: 0.6rem;
+  }
+  .hero-eyebrow {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 500;
+  }
+  .hero-headline {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0.35rem 0 0;
+    line-height: 1.45;
+    color: var(--fg);
+  }
+  .overview-card {
+    margin: 0.7rem 0 0;
+    padding: 0.7rem 1.1rem;
+    background: var(--card);
+    border-radius: 0.5rem;
+    border-left: 3px solid var(--muted);
+  }
+  .overview-card .eyebrow { display: block; margin-bottom: 0.3rem; }
+  .overview-text {
+    margin: 0;
+    font-size: 0.88rem;
+    line-height: 1.65;
+    color: var(--fg-soft);
+  }
+
+  /* ===== primary tabs ===== */
+  .tabs {
+    display: flex;
+    gap: 0.25rem;
+    margin: 1.25rem 0 0.75rem;
+    border-bottom: 1px solid var(--rule);
+    flex-wrap: wrap;
+  }
+  .tab {
+    background: none;
+    border: none;
+    padding: 0.7rem 1.1rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--muted);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    font-family: inherit;
+    transition: color 0.15s;
+  }
+  .tab:hover { color: var(--fg); }
+  .tab.active {
+    color: var(--fg);
+    border-bottom-color: var(--accent);
+  }
+  .tab .count {
+    font-size: 0.72rem;
+    color: var(--muted);
+    margin-left: 0.4rem;
+    font-weight: 400;
+  }
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  /* ===== digest (AI 简报) — compact ===== */
+  .digest-category { margin-bottom: 1.1rem; }
+  .category-header {
+    display: flex;
+    align-items: baseline;
+    gap: 0.55rem;
+    margin: 0 0 0.55rem;
+    padding-bottom: 0.35rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .category-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--fg);
+    margin: 0;
+    letter-spacing: 0.05em;
+  }
+  .category-count {
+    font-size: 0.7rem;
+    color: var(--muted);
+    background: var(--card);
+    padding: 0.12rem 0.45rem;
+    border-radius: 999px;
+  }
+  .brief-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+  @media (min-width: 720px) {
+    .brief-list { grid-template-columns: 1fr 1fr; }
+  }
+  .brief {
+    background: var(--bg-elevated);
+    border: 1px solid var(--rule);
+    border-radius: 0.5rem;
+    padding: 0.7rem 0.95rem;
+    transition: border-color 0.15s, transform 0.15s;
+  }
+  .brief:hover {
+    border-color: var(--muted);
+    transform: translateY(-1px);
+  }
+  .brief-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.6rem;
+    margin-bottom: 0.3rem;
+  }
+  .brief-source {
+    font-size: 0.72rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 500;
+  }
+  .brief-rank {
+    font-size: 0.7rem;
+    padding: 0.12rem 0.5rem;
+    border-radius: 999px;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+  .brief-rank.high { background: var(--rank-high-bg); color: var(--rank-high-fg); }
+  .brief-rank.mid  { background: var(--rank-mid-bg);  color: var(--rank-mid-fg); }
+  .brief-rank.low  { background: var(--rank-low-bg);  color: var(--rank-low-fg); }
+  .brief-title {
+    font-size: 0.98rem;
+    font-weight: 600;
+    margin: 0 0 0.3rem;
+    line-height: 1.35;
+  }
+  .brief-title a { color: var(--fg); text-decoration: none; }
+  .brief-title a:hover { color: var(--link); text-decoration: underline; }
+  .brief-summary {
+    margin: 0;
+    color: var(--fg-soft);
+    font-size: 0.86rem;
+    line-height: 1.55;
+  }
+
+  .editor-card {
+    background: var(--card);
+    border-left: 3px solid var(--muted);
+    border-radius: 0.5rem;
+    padding: 1rem 1.3rem;
+    margin: 1.5rem 0 1.2rem;
+  }
+  .editor-card .eyebrow { display: block; margin-bottom: 0.4rem; }
+  .editor-text {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--fg);
+  }
+  .keywords { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0 0 1.5rem; }
+  .keyword {
+    background: var(--card);
+    color: var(--fg-soft);
+    padding: 0.25rem 0.7rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+  }
+
+  /* ===== L2 sub-tabs ===== */
+  .sub-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 1rem 0;
+  }
+  .sub-tab {
+    background: var(--card);
+    border: 1px solid transparent;
+    padding: 0.5rem 1.05rem;
+    border-radius: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--fg-soft);
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.15s;
+  }
+  .sub-tab:hover { border-color: var(--muted); color: var(--fg); }
+  .sub-tab.active {
+    background: var(--accent);
+    color: var(--accent-fg);
+  }
+  .sub-tab .count {
+    font-size: 0.7rem;
+    opacity: 0.75;
+    margin-left: 0.4rem;
+    font-weight: 400;
+  }
+  .sub-content { display: none; }
+  .sub-content.active { display: block; }
+
+  /* ===== L3 source-tabs ===== */
+  .source-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin: 0.9rem 0 1.3rem;
+    padding-bottom: 0.7rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .source-tab {
+    background: none;
+    border: 1px solid var(--rule);
+    padding: 0.35rem 0.85rem;
+    border-radius: 999px;
+    font-size: 0.83rem;
+    color: var(--fg-soft);
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.15s;
+  }
+  .source-tab:hover { border-color: var(--muted); color: var(--fg); }
+  .source-tab.active {
+    background: var(--fg);
+    color: var(--bg);
+    border-color: var(--fg);
+  }
+  .source-tab .count {
+    font-size: 0.7rem;
+    opacity: 0.75;
+    margin-left: 0.3rem;
+  }
+  .source-content { display: none; }
+  .source-content.active { display: block; }
+
+  /* ===== article cards in raw panels ===== */
+  .article {
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .article:first-child { padding-top: 0; }
+  .article:last-child { border-bottom: none; }
+  .article-title {
+    font-size: 1rem;
+    margin: 0 0 0.3rem;
+    font-weight: 500;
+    line-height: 1.45;
+  }
+  .article-title a { color: var(--fg); text-decoration: none; }
+  .article-title a:hover { color: var(--link); text-decoration: underline; }
+  .article-meta { color: var(--muted); font-size: 0.76rem; margin: 0 0 0.35rem; }
+  .article-stats {
+    color: var(--muted);
+    font-size: 0.8rem;
+    margin: 0 0 0.4rem;
+    font-feature-settings: "tnum";
+  }
+  .article-excerpt {
+    margin: 0;
+    color: var(--fg-soft);
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+  .article-summary {
+    margin: 0.55rem 0 0;
+    padding: 0.6rem 0.85rem;
+    background: var(--card);
+    border-left: 2px solid var(--link);
+    border-radius: 0.3rem;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--fg);
+  }
+  .summary-label {
+    display: inline-block;
+    font-size: 0.68rem;
+    color: var(--link);
+    margin-right: 0.4rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .empty {
+    color: var(--muted);
+    text-align: center;
+    padding: 2rem 0;
+    font-size: 0.9rem;
+  }
+
+  /* ===== top reads / finance topics / source health ===== */
+  .top-read-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  @media (min-width: 760px) {
+    .top-read-list { grid-template-columns: 1fr 1fr; }
+  }
+  .top-read-card,
+  .finance-topic-card,
+  .source-health-panel {
+    background: var(--bg-elevated);
+    border: 1px solid var(--rule);
+    border-radius: 0.5rem;
+    padding: 0.9rem 1rem;
+  }
+  .top-read-head,
+  .finance-topic-head,
+  .source-health-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-bottom: 0.45rem;
+  }
+  .top-read-rank {
+    font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--accent-fg);
+    background: var(--accent);
+    border-radius: 999px;
+    padding: 0.12rem 0.5rem;
+  }
+  .top-read-category,
+  .finance-topic-count {
+    color: var(--muted);
+    font-size: 0.76rem;
+    white-space: nowrap;
+  }
+  .top-read-title,
+  .finance-topic-title {
+    margin: 0 0 0.3rem;
+    font-size: 1.02rem;
+    line-height: 1.4;
+  }
+  .top-read-title a,
+  .finance-topic-item a { color: var(--fg); text-decoration: none; }
+  .top-read-title a:hover,
+  .finance-topic-item a:hover { color: var(--link); text-decoration: underline; }
+  .top-read-meta {
+    margin: 0 0 0.45rem;
+    color: var(--muted);
+    font-size: 0.76rem;
+  }
+  .top-read-reason,
+  .finance-topic-signal,
+  .finance-topic-risk,
+  .finance-topic-item p {
+    margin: 0.4rem 0 0;
+    color: var(--fg-soft);
+    font-size: 0.88rem;
+    line-height: 1.65;
+  }
+  .top-read-reason span,
+  .finance-topic-signal strong,
+  .finance-topic-risk strong {
+    display: inline-block;
+    color: var(--link);
+    font-size: 0.72rem;
+    font-weight: 700;
+    margin-right: 0.45rem;
+  }
+  .finance-topics {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
+  }
+  .finance-topic-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin: 0.45rem 0;
+  }
+  .finance-topic-tags span {
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    color: var(--muted);
+    font-size: 0.74rem;
+    padding: 0.1rem 0.48rem;
+  }
+  .finance-topic-items {
+    margin-top: 0.55rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.45rem;
+  }
+  .finance-topic-item {
+    padding: 0.55rem 0;
+    border-top: 1px solid var(--rule);
+  }
+  .finance-topic-item h3 {
+    margin: 0 0 0.25rem;
+    font-size: 0.92rem;
+    line-height: 1.4;
+  }
+  .source-health-panel {
+    margin-top: 1.4rem;
+    background: var(--card);
+  }
+  .source-health-head h2 {
+    margin: 0;
+    font-size: 0.95rem;
+  }
+  .source-health-head p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.8rem;
+  }
+  .source-health-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.45rem;
+  }
+  @media (min-width: 760px) {
+    .source-health-list { grid-template-columns: 1fr 1fr; }
+  }
+  .source-health-item {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.25rem 0.75rem;
+    align-items: start;
+    padding: 0.65rem 0.75rem;
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--muted);
+    border-radius: 0.4rem;
+    background: var(--bg-elevated);
+    font-size: 0.82rem;
+  }
+  .source-health-item.status-failed { border-left-color: #dc2626; }
+  .source-health-item.status-empty { border-left-color: #d97706; }
+  .source-health-item.status-ok { border-left-color: #16a34a; }
+  .source-health-item span {
+    display: block;
+    color: var(--muted);
+    font-size: 0.74rem;
+  }
+  .source-health-status {
+    text-align: right;
+    white-space: nowrap;
+  }
+  .source-health-item p {
+    grid-column: 1 / -1;
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.76rem;
+    line-height: 1.5;
+  }
+
+  /* ===== financial analysis panel ===== */
+  .financial-overview {
+    margin: 0.4rem 0 1.2rem;
+    padding: 0.9rem 1.15rem;
+    background: var(--card);
+    border-left: 3px solid var(--accent);
+    border-radius: 0.45rem;
+  }
+  .financial-overview p {
+    margin: 0.35rem 0 0;
+    color: var(--fg-soft);
+    font-size: 0.92rem;
+    line-height: 1.75;
+  }
+  .financial-section { margin: 1.3rem 0; }
+  .financial-market-columns {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    align-items: start;
+    margin: 1.35rem 0;
+  }
+  .financial-market-column {
+    min-width: 0;
+    padding-top: 0.75rem;
+    border-top: 2px solid var(--rule);
+  }
+  .financial-market-heading {
+    margin: 0 0 0.75rem;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--fg);
+  }
+  .financial-market-column .financial-section:first-of-type {
+    margin-top: 0;
+  }
+  .financial-section-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.65rem;
+  }
+  @media (min-width: 720px) {
+    .financial-section-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (min-width: 900px) {
+    .financial-market-columns { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  }
+  .financial-card {
+    background: var(--bg-elevated);
+    border: 1px solid var(--rule);
+    border-radius: 0.5rem;
+    padding: 0.75rem 0.95rem;
+  }
+  .financial-card-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.7rem;
+    align-items: flex-start;
+    margin-bottom: 0.35rem;
+  }
+  .financial-name { margin: 0; font-size: 0.95rem; font-weight: 650; }
+  .financial-symbol { color: var(--muted); font-size: 0.74rem; font-family: ui-monospace, "SFMono-Regular", Menlo, monospace; }
+  .financial-pct { font-size: 0.95rem; font-weight: 650; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .financial-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    color: var(--muted);
+    font-size: 0.78rem;
+  }
+  .financial-notes {
+    margin: 0.45rem 0 0;
+    padding-left: 1.1rem;
+    color: var(--fg-soft);
+    font-size: 0.9rem;
+    line-height: 1.65;
+  }
+  .financial-risk {
+    margin-top: 1.3rem;
+    padding: 0.85rem 1.05rem;
+    background: var(--card);
+    border-left: 3px solid #d97706;
+    border-radius: 0.45rem;
+    color: var(--fg-soft);
+    font-size: 0.85rem;
+    line-height: 1.65;
+  }
+
+  /* ===== academic radar panel ===== */
+  .academic-overview {
+    margin: 0.4rem 0 1.2rem;
+    padding: 0.9rem 1.15rem;
+    background: var(--card);
+    border-left: 3px solid #2563eb;
+    border-radius: 0.45rem;
+  }
+  .academic-overview p {
+    margin: 0.35rem 0 0;
+    color: var(--fg-soft);
+    font-size: 0.92rem;
+    line-height: 1.75;
+  }
+  .academic-section { margin: 1.35rem 0; }
+  .academic-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  .academic-paper {
+    background: var(--bg-elevated);
+    border: 1px solid var(--rule);
+    border-radius: 0.5rem;
+    padding: 0.85rem 1rem;
+  }
+  .academic-paper-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-bottom: 0.45rem;
+  }
+  .academic-title {
+    margin: 0;
+    font-size: 0.98rem;
+    line-height: 1.35;
+  }
+  .academic-title a { color: var(--fg); text-decoration: none; }
+  .academic-title a:hover { color: var(--link); text-decoration: underline; }
+  .academic-priority {
+    white-space: nowrap;
+    border-radius: 999px;
+    padding: 0.18rem 0.55rem;
+    font-size: 0.72rem;
+    font-weight: 650;
+    background: var(--rank-low-bg);
+    color: var(--rank-low-fg);
+  }
+  .academic-priority.must-read {
+    background: var(--rank-high-bg);
+    color: var(--rank-high-fg);
+  }
+  .academic-priority.deep-read {
+    background: var(--rank-mid-bg);
+    color: var(--rank-mid-fg);
+  }
+  .academic-paper-no {
+    white-space: nowrap;
+    border-radius: 999px;
+    padding: 0.18rem 0.55rem;
+    font-size: 0.72rem;
+    font-weight: 750;
+    background: var(--fg);
+    color: var(--bg);
+  }
+  .academic-badges {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 0.35rem;
+  }
+  .academic-new {
+    white-space: nowrap;
+    border-radius: 999px;
+    padding: 0.18rem 0.55rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    background: #dcfce7;
+    color: #166534;
+  }
+  @media (prefers-color-scheme: dark) {
+    .academic-new {
+      background: rgba(34,197,94,0.18);
+      color: #86efac;
+    }
+  }
+  .academic-feed-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+  }
+  .academic-feed-links a {
+    color: var(--link);
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .academic-feed-links a:hover { text-decoration: underline; }
+  .academic-meta {
+    margin: 0 0 0.45rem;
+    color: var(--muted);
+    font-size: 0.76rem;
+    line-height: 1.55;
+  }
+  .academic-summary,
+  .academic-relevance,
+  .academic-action {
+    margin: 0.45rem 0 0;
+    color: var(--fg-soft);
+    font-size: 0.9rem;
+    line-height: 1.65;
+  }
+  .academic-action { color: var(--fg); }
+  .academic-original {
+    margin: 0.35rem 0 0;
+    color: var(--muted);
+    font-size: 0.82rem;
+    line-height: 1.55;
+  }
+  .academic-label {
+    display: inline-block;
+    color: var(--link);
+    font-size: 0.72rem;
+    font-weight: 650;
+    margin-right: 0.35rem;
+  }
+  .academic-why {
+    margin: 0.55rem 0 0;
+    padding: 0.62rem 0.78rem;
+    background: var(--card);
+    border-left: 2px solid #2563eb;
+    border-radius: 0.3rem;
+    color: var(--fg);
+    font-size: 0.88rem;
+    line-height: 1.7;
+  }
+  .academic-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin-top: 0.55rem;
+  }
+  .academic-tag {
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    padding: 0.14rem 0.48rem;
+    color: var(--muted);
+    font-size: 0.72rem;
+  }
+  .academic-notes {
+    margin: 0.45rem 0 0;
+    padding-left: 1.1rem;
+    color: var(--fg-soft);
+    font-size: 0.86rem;
+    line-height: 1.65;
+  }
+
+  /* ===== trading panel ===== */
+  .crypto-widgets {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.55rem;
+    margin: 0.4rem 0 1.2rem;
+  }
+  @media (min-width: 720px) {
+    .crypto-widgets { grid-template-columns: repeat(4, 1fr); }
+  }
+  .crypto-widget {
+    background: var(--bg-elevated);
+    border: 1px solid var(--rule);
+    border-radius: 0.5rem;
+    padding: 0.7rem 0.85rem;
+    text-align: center;
+  }
+  .widget-label {
+    font-size: 0.7rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.3rem;
+  }
+  .widget-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    color: var(--fg);
+    line-height: 1.1;
+  }
+  .widget-sub {
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-top: 0.25rem;
+  }
+  .widget-sub.positive { color: #16a34a; }
+  .widget-sub.negative { color: #dc2626; }
+  @media (prefers-color-scheme: dark) {
+    .widget-sub.positive { color: #4ade80; }
+    .widget-sub.negative { color: #fca5a5; }
+  }
+  .crypto-widget.fg-fear-extreme { border-left: 4px solid #b91c1c; }
+  .crypto-widget.fg-fear-extreme .widget-value { color: #b91c1c; }
+  .crypto-widget.fg-fear { border-left: 4px solid #d97706; }
+  .crypto-widget.fg-fear .widget-value { color: #d97706; }
+  .crypto-widget.fg-neutral { border-left: 4px solid var(--muted); }
+  .crypto-widget.fg-greed { border-left: 4px solid #65a30d; }
+  .crypto-widget.fg-greed .widget-value { color: #65a30d; }
+  .crypto-widget.fg-greed-extreme { border-left: 4px solid #16a34a; }
+  .crypto-widget.fg-greed-extreme .widget-value { color: #16a34a; }
+  @media (prefers-color-scheme: dark) {
+    .crypto-widget.fg-fear-extreme .widget-value,
+    .crypto-widget.fg-fear .widget-value { color: #fca5a5; }
+    .crypto-widget.fg-greed .widget-value,
+    .crypto-widget.fg-greed-extreme .widget-value { color: #4ade80; }
+  }
+
+  .trading-overview-card {
+    margin: 0 0 1.5rem;
+    padding: 1rem 1.3rem;
+    background: var(--card);
+    border-radius: 0.5rem;
+    border-left: 3px solid var(--accent);
+  }
+  .trading-overview-card .eyebrow { display: block; margin-bottom: 0.4rem; }
+  .trading-overview-text { font-size: 0.92rem; line-height: 1.75; color: var(--fg-soft); margin: 0; }
+
+  .trading-section-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin: 1.5rem 0 0.8rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid var(--rule);
+    color: var(--fg);
+    letter-spacing: 0.05em;
+  }
+
+  /* picks (Sonnet's watchlist) */
+  .trading-picks {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.6rem;
+  }
+  @media (min-width: 720px) {
+    .trading-picks { grid-template-columns: 1fr 1fr; }
+  }
+  .trading-pick {
+    background: var(--bg-elevated);
+    border: 1px solid var(--rule);
+    border-left: 4px solid var(--muted);
+    border-radius: 0.5rem;
+    padding: 0.8rem 1rem;
+  }
+  .trading-pick.stance-bull { border-left-color: #16a34a; }
+  .trading-pick.stance-bear { border-left-color: #dc2626; }
+  .trading-pick.stance-neutral { border-left-color: var(--muted); }
+  .pick-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.6rem;
+    margin-bottom: 0.45rem;
+  }
+  .pick-symbol-block {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .pick-symbol { font-weight: 700; font-size: 1rem; color: var(--fg); }
+  .pick-name { color: var(--muted); font-size: 0.82rem; }
+  .pick-stance {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  .pick-stance-bull { background: rgba(22,163,74,0.12); color: #16a34a; }
+  .pick-stance-bear { background: rgba(220,38,38,0.12); color: #dc2626; }
+  .pick-stance-neutral { background: var(--card); color: var(--muted); }
+  .pick-rationale { margin: 0; font-size: 0.88rem; line-height: 1.65; color: var(--fg-soft); }
+
+  /* asset-group tabs */
+  .trading-group-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0.6rem 0 1.2rem;
+  }
+  .trading-group-tab {
+    background: var(--card);
+    border: 1px solid transparent;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--fg-soft);
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.15s;
+  }
+  .trading-group-tab:hover { border-color: var(--muted); color: var(--fg); }
+  .trading-group-tab.active {
+    background: var(--accent);
+    color: var(--accent-fg);
+  }
+  .trading-group-tab .count {
+    font-size: 0.7rem;
+    opacity: 0.75;
+    margin-left: 0.4rem;
+    font-weight: 400;
+  }
+  .trading-group-content { display: none; }
+  .trading-group-content.active { display: block; }
+
+  /* ticker cards */
+  .ticker-card {
+    background: var(--bg-elevated);
+    border: 1px solid var(--rule);
+    border-radius: 0.55rem;
+    padding: 0.85rem 1.1rem;
+    margin-bottom: 0.7rem;
+  }
+  .ticker-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.65rem;
+  }
+  .ticker-id { min-width: 0; }
+  .ticker-symbol { margin: 0; font-size: 1rem; font-weight: 700; font-family: ui-monospace, "SFMono-Regular", Menlo, monospace; }
+  .ticker-name { margin: 0.15rem 0 0; font-size: 0.82rem; color: var(--muted); }
+  .ticker-price-block { text-align: right; flex-shrink: 0; }
+  .ticker-price { display: block; font-size: 1.05rem; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .ticker-pct { display: inline-block; font-size: 0.82rem; font-weight: 500; margin-top: 0.15rem; font-variant-numeric: tabular-nums; }
+  .ticker-pct.positive, .positive { color: #16a34a; }
+  .ticker-pct.negative, .negative { color: #dc2626; }
+
+  .ticker-indicators {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.35rem 0.9rem;
+    margin: 0;
+    font-size: 0.82rem;
+    color: var(--fg-soft);
+  }
+  @media (min-width: 720px) {
+    .ticker-indicators { grid-template-columns: repeat(3, 1fr); }
+  }
+  .ticker-indicators > div { display: flex; gap: 0.4rem; align-items: baseline; min-width: 0; }
+  .ticker-indicators dt { color: var(--muted); font-size: 0.74rem; margin: 0; white-space: nowrap; }
+  .ticker-indicators dd { margin: 0; font-variant-numeric: tabular-nums; font-weight: 500; color: var(--fg); }
+  .trend-bullish { color: #16a34a; }
+  .trend-bearish { color: #dc2626; }
+  .trend-neutral { color: var(--muted); }
+  .rsi-overbought { color: #d97706; }
+  .rsi-oversold { color: #2563eb; }
+
+  .ticker-signals {
+    margin-top: 0.65rem;
+    padding-top: 0.55rem;
+    border-top: 1px dashed var(--rule);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+  .signal-pill {
+    font-size: 0.72rem;
+    padding: 0.18rem 0.55rem;
+    border-radius: 999px;
+    font-weight: 500;
+  }
+  .signal-pill.tone-bull { background: rgba(22,163,74,0.13); color: #166534; }
+  .signal-pill.tone-bear { background: rgba(220,38,38,0.13); color: #991b1b; }
+  .signal-pill.tone-caution { background: rgba(217,119,6,0.15); color: #92400e; }
+  @media (prefers-color-scheme: dark) {
+    .signal-pill.tone-bull { color: #4ade80; }
+    .signal-pill.tone-bear { color: #fca5a5; }
+    .signal-pill.tone-caution { color: #fcd34d; }
+    .trend-bullish, .positive, .ticker-pct.positive { color: #4ade80; }
+    .trend-bearish, .negative, .ticker-pct.negative { color: #fca5a5; }
+    .rsi-overbought { color: #fcd34d; }
+    .rsi-oversold { color: #93c5fd; }
+    .trading-pick.stance-bull { border-left-color: #4ade80; }
+    .trading-pick.stance-bear { border-left-color: #fca5a5; }
+    .pick-stance-bull { background: rgba(74,222,128,0.15); color: #4ade80; }
+    .pick-stance-bear { background: rgba(252,165,165,0.15); color: #fca5a5; }
+  }
+  .signal-age { opacity: 0.7; font-weight: 400; }
+
+  .trading-risk {
+    margin: 1.5rem 0 0;
+    padding: 0.9rem 1.2rem;
+    background: var(--card);
+    border-radius: 0.45rem;
+    border-left: 3px solid #d97706;
+  }
+  .trading-risk .eyebrow { display: block; margin-bottom: 0.35rem; }
+  .trading-risk p { margin: 0; font-size: 0.82rem; line-height: 1.65; color: var(--fg-soft); }
+
+  footer {
+    margin-top: 2.5rem;
+    border-top: 1px solid var(--rule);
+    padding-top: 1.1rem;
+    color: var(--muted);
+    font-size: 0.82rem;
+  }
+</style>
+</head>
+<body>
+<main>
+  <header class="report-header">
+    <span class="eyebrow">每日简报</span>
+    <h1 class="report-title">2026-06-17</h1>
+    
+  </header>
+
+  <nav class="tabs" role="tablist">
+    <button class="tab active" data-tab="top-reads">今日必读<span class="count">7</span></button>
+    <button class="tab" data-tab="tech">技术动态<span class="count">31</span></button>
+    <button class="tab" data-tab="academic">学术雷达<span class="count">8</span></button>
+    
+    <button class="tab" data-tab="politics">时政观察<span class="count">15</span></button>
+    <button class="tab" data-tab="finance">财经要点<span class="count">61</span></button>
+    <button class="tab" data-tab="community">社区讨论<span class="count">38</span></button>
+  </nav>
+
+  <section class="panel active" data-panel="top-reads"><section class="top-reads">
+    <div class="top-read-list">
+      <article class="top-read-card">
+        <div class="top-read-head">
+          <span class="top-read-rank">#1</span>
+          <span class="top-read-category">学术雷达</span>
+        </div>
+        <h2 class="top-read-title"><a href="https://doi.org/10.1364/ao.592576" target="_blank" rel="noopener noreferrer">P1 由底部金属封盖 DBR、外围 DBR 和移位三孔光子晶体实现的低阈值、高效率 1.55 µm InP PCSEL 仿真研究</a></h2>
+        <p class="top-read-meta">OpenAlex · Applied Optics</p>
+        <p class="top-read-reason"><span>为什么要读</span>为什么与你有关： - 主线关联：直接服务 PCSEL 方向，优先看结构参数、耦合机制、出光/远场和验证口径。 - 可用线索：CWT。 - 可转化内容：先判断能否变成一个仿真 case、baseline、验证指标或参数先验。</p>
+      </article>
+<article class="top-read-card">
+        <div class="top-read-head">
+          <span class="top-read-rank">#2</span>
+          <span class="top-read-category">学术雷达</span>
+        </div>
+        <h2 class="top-read-title"><a href="https://doi.org/10.1364/oe.599120" target="_blank" rel="noopener noreferrer">P2 光子晶体面发射器件中模式辐射损耗的尺寸缩放规律</a></h2>
+        <p class="top-read-meta">OpenAlex · Optics Express</p>
+        <p class="top-read-reason"><span>为什么要读</span>为什么与你有关： - 主线关联：直接服务 PCSEL 方向，优先看结构参数、耦合机制、出光/远场和验证口径。 - 可用线索：先看是否能抽出结构参数、指标定义或仿真设置。 - 可转化内容：适合沉淀成验证指标或参数先验，尤其是 mode volume。</p>
+      </article>
+<article class="top-read-card">
+        <div class="top-read-head">
+          <span class="top-read-rank">#3</span>
+          <span class="top-read-category">财经要点</span>
+        </div>
+        <h2 class="top-read-title">金融分析：昨日/最近交易日的金融分析显示，A股整体偏强，样本平均+0.5...</h2>
+        <p class="top-read-meta">DailyBrief</p>
+        <p class="top-read-reason"><span>为什么要读</span>昨日走势上，A股大盘样本平均+0.59%，重点板块样本平均+0.27%，市场结构偏向指数权重防守。板块内部强弱分化明显：光通信+2.37%居前，大消费-1.99%落后，说明资金并非全面扩散，而是在少数方向里做选择。美股大盘样本平均-0.70%，重点公司样本平均-2.29%，Meta+1.13%强于同组，AMD-7.30%拖累风险偏好。 后续A股的基准判...</p>
+      </article>
+<article class="top-read-card">
+        <div class="top-read-head">
+          <span class="top-read-rank">#4</span>
+          <span class="top-read-category">财经要点</span>
+        </div>
+        <h2 class="top-read-title">财经观点：其他财经观点</h2>
+        <p class="top-read-meta">Mohamed El-Erian / Stenos Signals / Tavi Costa / The Macro Compass / The Weekly ChartStorm</p>
+        <p class="top-read-reason"><span>为什么要读</span>观点信号集中在「其他财经观点」：文章从观点角度讨论白银矿商，认为当前市场存在不会长期持续的错位，但不构成投资建议。；Tavi Costa发布宏观更新，聚焦若干重要市场设置与潜在机会，内容为观点分析而非投资建议。；The Weekly ChartStorm选取最新标普500图表中的重点，围绕“盈利狂热”观察市场情绪与走势。</p>
+      </article>
+<article class="top-read-card">
+        <div class="top-read-head">
+          <span class="top-read-rank">#5</span>
+          <span class="top-read-category">技术动态</span>
+        </div>
+        <h2 class="top-read-title"><a href="https://openai.com/index/deployment-simulation" target="_blank" rel="noopener noreferrer">OpenAI提出部署模拟方法</a></h2>
+        <p class="top-read-meta">OpenAI News</p>
+        <p class="top-read-reason"><span>为什么要读</span>OpenAI介绍Deployment Simulation，用真实对话数据在模型发布前预测行为，提升安全评估与上线前风险识别能力。</p>
+      </article>
+<article class="top-read-card">
+        <div class="top-read-head">
+          <span class="top-read-rank">#6</span>
+          <span class="top-read-category">财经要点</span>
+        </div>
+        <h2 class="top-read-title"><a href="https://news.google.com/rss/articles/CBMirwFBVV95cUxQMjZSNjViRXpkcFVCci1GSTdET3doQnlHejZPRGNVYnlrRkZGOGZJdXhELXJpY2hfQ3lWX2EyWlhCQmFWdWE1ZWtzaFIwMmJfZmthVlBSUU1SQlB0XzhtQ0lCZHhwRFFFSTZmR1JXa1A4akR6VDM0ejBCTzdZUzRlVEs0X0VpeldtRDdPS3N6aGhpS1VEa1VRdVpGNzM4RGtBZWFyXzdPRzI3eFRYenVj?oc=5" target="_blank" rel="noopener noreferrer">亚洲股市等待美联储信号</a></h2>
+        <p class="top-read-meta">Bloomberg via Google News</p>
+        <p class="top-read-reason"><span>为什么要读</span>美联储决议前，亚洲股市预计承压，油价保持稳定，投资者继续评估利率路径与地缘政治对风险资产的影响。</p>
+      </article>
+<article class="top-read-card">
+        <div class="top-read-head">
+          <span class="top-read-rank">#7</span>
+          <span class="top-read-category">时政观察</span>
+        </div>
+        <h2 class="top-read-title"><a href="https://www.nytimes.com/live/2026/06/16/world/iran-war-trump-us-deal" target="_blank" rel="noopener noreferrer">伊朗核谈判或重启</a></h2>
+        <p class="top-read-meta">NYT World</p>
+        <p class="top-read-reason"><span>为什么要读</span>伊朗外长称，初步协议签署后将启动关于核武与制裁减免的新一轮谈判，特朗普表示希望将战争置于身后。</p>
+      </article>
+    </div>
+  </section></section>
+  <section class="panel" data-panel="tech">
+    <nav class="sub-tabs"><button class="sub-tab active" data-sub="github-trending" data-cat="tech">GitHub Trending<span class="count">8</span></button><button class="sub-tab" data-sub="x-viral" data-cat="tech">X 推文<span class="count">8</span></button><button class="sub-tab" data-sub="ai-news" data-cat="tech">AI 媒体<span class="count">15</span></button></nav>
+<div class="sub-contents"><div class="sub-content active" data-sub-content="github-trending" data-cat="tech">
+    
+    <div class="source-contents">
+      <div class="source-content active" data-source-content="github-trending" data-sub="github-trending" data-cat="tech">
+    <article class="article">
+  <h3 class="article-title"><a href="https://github.com/freeCodeCamp/freeCodeCamp" target="_blank" rel="noopener noreferrer">免费编程与计算机科学学习平台的开源代码和课程库，涵盖数学、编程、前端...</a></h3>
+  <p class="article-meta">原标题: freeCodeCamp/freeCodeCamp</p>
+  <p class="article-stats">TypeScript · ★ 448,538 · 🍴 45,035 · 📈 633 stars today</p>
+  
+  <p class="article-excerpt">freeCodeCamp.org&#39;s open-source codebase and curriculum. Learn math, programming, and computer science for free.</p>
+  <p class="article-summary"><span class="summary-label">中文介绍</span> 免费编程与计算机科学学习平台的开源代码和课程库，涵盖数学、编程、前端、后端等内容，适合自学者、教师和训练营用于系统学习与教学实践。</p>
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://github.com/swc-project/swc" target="_blank" rel="noopener noreferrer">面向网页开发的高性能编译与构建工具平台，核心采用锈语言实现，用于代码...</a></h3>
+  <p class="article-meta">原标题: swc-project/swc</p>
+  <p class="article-stats">Rust · ★ 33,963 · 🍴 1,417 · 📈 20 stars today</p>
+  
+  <p class="article-excerpt">Rust-based platform for the Web</p>
+  <p class="article-summary"><span class="summary-label">中文介绍</span> 面向网页开发的高性能编译与构建工具平台，核心采用锈语言实现，用于代码转译、压缩和打包，适合前端工程师提升大型项目构建速度。</p>
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://github.com/teslamate-org/teslamate" target="_blank" rel="noopener noreferrer">特斯拉车辆的自托管数据记录工具，可持续采集行程、充电、能耗和车辆状态...</a></h3>
+  <p class="article-meta">原标题: teslamate-org/teslamate</p>
+  <p class="article-stats">Elixir · ★ 8,397 · 🍴 956 · 📈 215 stars today</p>
+  
+  <p class="article-excerpt">A self-hosted data logger for your Tesla 🚘 [main maintainer=@JakobLichterfeld]</p>
+  <p class="article-summary"><span class="summary-label">中文介绍</span> 特斯拉车辆的自托管数据记录工具，可持续采集行程、充电、能耗和车辆状态数据，适合车主在本地部署，用于用车分析、成本统计和隐私可控的数据留存。</p>
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://github.com/iptv-org/iptv" target="_blank" rel="noopener noreferrer">汇集全球公开可访问网络电视频道的播放列表项目，按来源整理频道链接，适...</a></h3>
+  <p class="article-meta">原标题: iptv-org/iptv</p>
+  <p class="article-stats">TypeScript · ★ 124,021 · 🍴 6,691 · 📈 1,197 stars today</p>
+  
+  <p class="article-excerpt">Collection of publicly available IPTV channels from all over the world</p>
+  <p class="article-summary"><span class="summary-label">中文介绍</span> 汇集全球公开可访问网络电视频道的播放列表项目，按来源整理频道链接，适合媒体工具、播放器和个人用户查找合法公开频道并快速接入观看。</p>
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://github.com/puppeteer/puppeteer" target="_blank" rel="noopener noreferrer">用于控制浏览器的脚本接口，可自动化操作谷歌和火狐浏览器，适合开发者进...</a></h3>
+  <p class="article-meta">原标题: puppeteer/puppeteer</p>
+  <p class="article-stats">TypeScript · ★ 94,876 · 🍴 9,451 · 📈 56 stars today</p>
+  
+  <p class="article-excerpt">JavaScript API for Chrome and Firefox</p>
+  <p class="article-summary"><span class="summary-label">中文介绍</span> 用于控制浏览器的脚本接口，可自动化操作谷歌和火狐浏览器，适合开发者进行网页测试、截图、数据抓取、表单自动化和端到端流程验证。</p>
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://github.com/meshery/meshery" target="_blank" rel="noopener noreferrer">云原生环境管理平台，面向服务网格和容器化基础设施，提供配置、性能评估...</a></h3>
+  <p class="article-meta">原标题: meshery/meshery</p>
+  <p class="article-stats">TypeScript · ★ 10,840 · 🍴 3,448 · 📈 228 stars today</p>
+  
+  <p class="article-excerpt">Meshery, the cloud native manager</p>
+  <p class="article-summary"><span class="summary-label">中文介绍</span> 云原生环境管理平台，面向服务网格和容器化基础设施，提供配置、性能评估和治理能力，适合平台工程团队统一管理复杂的云原生部署。</p>
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://github.com/cypress-io/cypress" target="_blank" rel="noopener noreferrer">面向浏览器应用的快速可靠测试工具，支持交互式调试和端到端测试，适合前...</a></h3>
+  <p class="article-meta">原标题: cypress-io/cypress</p>
+  <p class="article-stats">TypeScript · ★ 50,197 · 🍴 3,426 · 📈 13 stars today</p>
+  
+  <p class="article-excerpt">Fast, easy and reliable testing for anything that runs in a browser.</p>
+  <p class="article-summary"><span class="summary-label">中文介绍</span> 面向浏览器应用的快速可靠测试工具，支持交互式调试和端到端测试，适合前端与全栈团队验证页面行为、用户流程和持续集成中的回归问题。</p>
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://github.com/music-assistant/server" target="_blank" rel="noopener noreferrer">开源音乐库管理服务端，可连接流媒体服务和多种联网音箱，统一管理播放来...</a></h3>
+  <p class="article-meta">原标题: music-assistant/server</p>
+  <p class="article-stats">Python · ★ 2,559 · 🍴 450 · 📈 157 stars today</p>
+  
+  <p class="article-excerpt">Music Assistant is a free, opensource Media library manager that connects to your streaming services and a wide range of connected speakers. The server is the beating heart, the core of Music Assistant and must run on an always-on device like a Raspberry Pi, a NAS or an Intel NUC or alike.</p>
+  <p class="article-summary"><span class="summary-label">中文介绍</span> 开源音乐库管理服务端，可连接流媒体服务和多种联网音箱，统一管理播放来源与设备，适合家庭音频用户搭建集中式音乐控制和媒体库系统。</p>
+</article>
+  </div>
+    </div>
+  </div>
+<div class="sub-content" data-sub-content="x-viral" data-cat="tech">
+    
+    <div class="source-contents">
+      <div class="source-content active" data-source-content="attentionvc-ai" data-sub="x-viral" data-cat="tech">
+    <article class="article">
+  <h3 class="article-title"><a href="https://x.com/satyanadella/status/2066182223213293753" target="_blank" rel="noopener noreferrer">纳德拉讨论人工智能驱动经济下企业形态的变化，认为这次平台迁移不同于以...</a></h3>
+  <p class="article-meta">原标题: A frontier without an ecosystem is not stable</p>
+  <p class="article-stats">@satyanadella · 5.9M 粉丝 · 1.9M 阅 · 3.5K 赞 · 541 转</p>
+  <p class="article-meta">06/14 23:33</p>
+  <p class="article-excerpt">I’ve been thinking a lot about the future of the firm in an AI-driven economy. This transition is different than any previous platform shift. In the past, we used digital systems to enhance human</p>
+  <p class="article-summary"><span class="summary-label">中文介绍</span> 纳德拉讨论人工智能驱动经济下企业形态的变化，认为这次平台迁移不同于以往数字化增强人类流程，核心在于企业需要围绕智能生态重构，而不是只拥有前沿模型。</p>
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://x.com/eng_khairallah1/status/2066437136354545981" target="_blank" rel="noopener noreferrer">围绕欧布西迪安搭建自动运行的第二大脑，批评卡片盒、项目领域资源归档、...</a></h3>
+  <p class="article-meta">原标题: How To Build a Second Brain That Runs Itself With Obsidian (Full Course)</p>
+  <p class="article-stats">@eng_khairallah1 · 67.2K 粉丝 · 1.2M 阅 · 510 赞 · 73 转</p>
+  <p class="article-meta">06/15 16:26</p>
+  <p class="article-excerpt">You read maybe two hundred articles this year. A few dozen papers. Hundreds of threads. Save this Every second-brain method ever sold to you, Zettelkasten, PARA, the graph view, the daily note,</p>
+  <p class="article-summary"><span class="summary-label">中文介绍</span> 围绕欧布西迪安搭建自动运行的第二大脑，批评卡片盒、项目领域资源归档、图谱视图、每日笔记等方法常被过度包装，重点转向如何处理大量文章、论文和帖子。</p>
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://x.com/sairahul1/status/2066076937806856661" target="_blank" rel="noopener noreferrer">用五阶段流程解释大语言模型从零构建的底层机制，把通用预训练、对齐等环...</a></h3>
+  <p class="article-meta">原标题: How To Build Your Own LLM from Scratch (The 5-Stage Pipeline Behind GPT and Claude)</p>
+  <p class="article-stats">@sairahul1 · 116.6K 粉丝 · 905.5K 阅 · 503 赞 · 102 转</p>
+  <p class="article-meta">06/14 16:35</p>
+  <p class="article-excerpt">Everyone talks about LLMs. Nobody explains how they actually work under the hood. GPT. Claude. Gemini. Llama. They all come from the same 5-stage pipeline. And once you understand it, you can build</p>
+  <p class="article-summary"><span class="summary-label">中文介绍</span> 用五阶段流程解释大语言模型从零构建的底层机制，把通用预训练、对齐等环节串起来理解，覆盖常见模型背后的共同路径，偏基础教程而非新产品发布。</p>
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://x.com/BradGroux/status/2065938280508432788" target="_blank" rel="noopener noreferrer">提出把代码生成代理当作持续运行的操作循环，而不是高级自动补全或一次性...</a></h3>
+  <p class="article-meta">原标题: Codex-maxxing: treating Codex like an operating loop</p>
+  <p class="article-stats">@BradGroux · 5.9K 粉丝 · 714.6K 阅 · 1.0K 赞 · 638 转</p>
+  <p class="article-meta">06/14 07:24</p>
+  <p class="article-excerpt">Most people still use coding agents like fancy autocomplete or a one-shot chat box. That leaves a lot of value on the table. The better pattern is to treat Codex like a durable operating loop:</p>
+  <p class="article-summary"><span class="summary-label">中文介绍</span> 提出把代码生成代理当作持续运行的操作循环，而不是高级自动补全或一次性聊天框。重点是让科德克斯长期接收目标、反馈和验证，释放更高的工程自动化价值。</p>
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://x.com/aiedge_/status/2065064961999847849" target="_blank" rel="noopener noreferrer">整理并翻译安索ropic在接口文档中发布的官方提示词手册，聚焦神话模...</a></h3>
+  <p class="article-meta">原标题: Fable 5 (Mythos) Prompting Masterclass by Anthropic</p>
+  <p class="article-stats">@aiedge_ · 69.5K 粉丝 · 700.1K 阅 · 506 赞 · 68 转</p>
+  <p class="article-meta">06/11 21:33</p>
+  <p class="article-excerpt">TLDR: Anthropic just published the official playbook for prompting the most powerful AI model on earth - I translated it. Most people won&#39;t read this guide (it&#39;s buried in the API docs), which is</p>
+  <p class="article-summary"><span class="summary-label">中文介绍</span> 整理并翻译安索ropic在接口文档中发布的官方提示词手册，聚焦神话模型的提示方法。价值在于把隐藏在文档里的实战指南提炼出来，属于提示工程教程。</p>
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://x.com/lqiao/status/2066403957824688462" target="_blank" rel="noopener noreferrer">借神话本周被关闭讨论拥有智能与租用智能的风险：建立在不可控智能能力之...</a></h3>
+  <p class="article-meta">原标题: Owning vs. Renting Intelligence</p>
+  <p class="article-stats">@lqiao · 95.4K 粉丝 · 501.6K 阅 · 509 赞 · 86 转</p>
+  <p class="article-meta">06/15 14:14</p>
+  <p class="article-excerpt">Mythos got shut down this week. Whether you agreed with the decision or not is almost beside the point. A company built on top of intelligence it didn&#39;t control suddenly found itself exposed to</p>
+  <p class="article-summary"><span class="summary-label">中文介绍</span> 借神话本周被关闭讨论拥有智能与租用智能的风险：建立在不可控智能能力之上的公司，一旦底层模型或平台策略变化，就会暴露业务连续性和议价权问题。</p>
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://x.com/dhaber/status/2064711613714735141" target="_blank" rel="noopener noreferrer">观察人工智能正在改变工作记录方式：越来越多会议和讨论默认被录音、转写...</a></h3>
+  <p class="article-meta">原标题: Everything Is Recorded Now</p>
+  <p class="article-stats">@dhaber · 50.0K 粉丝 · 497.3K 阅 · 500 赞 · 57 转</p>
+  <p class="article-meta">06/10 22:09</p>
+  <p class="article-excerpt">One of the biggest ways that AI is transforming work (and also one of the most taboo subjects inside companies at the moment) is that most work discussions are being recorded now by default. This</p>
+  <p class="article-summary"><span class="summary-label">中文介绍</span> 观察人工智能正在改变工作记录方式：越来越多会议和讨论默认被录音、转写和沉淀。角度不是单纯效率提升，而是公司内部对隐私、权力和知识管理的敏感转变。</p>
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://x.com/Recursive_SI/status/2064980090702962699" target="_blank" rel="noopener noreferrer">递归发布自动化人工智能研究系统的早期结果，覆盖模型训练和图形处理器内...</a></h3>
+  <p class="article-meta">原标题: First Steps Toward Automated AI Research</p>
+  <p class="article-stats">@Recursive_SI · 6.3K 粉丝 · 465.1K 阅 · 516 赞 · 71 转</p>
+  <p class="article-meta">06/11 15:56</p>
+  <p class="article-excerpt">Early results from Recursive’s automated AI research system on model training and GPU kernel benchmarks Today we are releasing early results from Recursive’s automated AI research system. Across three</p>
+  <p class="article-summary"><span class="summary-label">中文介绍</span> 递归发布自动化人工智能研究系统的早期结果，覆盖模型训练和图形处理器内核基准三个方向，展示系统尝试自动发现研究改进点，属于自动化科研进展披露。</p>
+</article>
+  </div>
+    </div>
+  </div>
+<div class="sub-content" data-sub-content="ai-news" data-cat="tech">
+    
+    <div class="source-contents">
+      <div class="source-content active" data-source-content="_merged" data-sub="ai-news" data-cat="tech">
+    <article class="article">
+  <h3 class="article-title"><a href="https://deepmind.google/blog/unlocking-uk-house-building-with-ai-accelerated-planning/" target="_blank" rel="noopener noreferrer">英国政府携手 Google DeepMind，以 AI 加速住房规划审批</a></h3>
+  <p class="article-meta">原标题: Unlocking UK house-building with AI-accelerated planning</p>
+  
+  <p class="article-meta">DeepMind Blog · 06/17 05:29</p>
+  <p class="article-excerpt">UK government partners with Google DeepMind to build a new AI-powered prototype aimed at faster housing decisions.</p>
+  <p class="article-summary"><span class="summary-label">中文介绍</span> 英国政府与 Google DeepMind 合作开发 AI 原型，目标是提升住房规划决策效率，加快房屋建设相关审批流程。</p>
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.qbitai.com/2026/06/436073.html" target="_blank" rel="noopener noreferrer">一个模型控制手脚腰身！机器人终于学会全身协同干精细活了</a></h3>
+  
+  
+  <p class="article-meta">量子位 · 06/16 21:23</p>
+  <p class="article-excerpt">手的问题，其实不在手</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.qbitai.com/2026/06/435953.html" target="_blank" rel="noopener noreferrer">和朱广权同台讲脱口秀，鸿蒙小艺这次把AI助手卷到新阶段了？！</a></h3>
+  
+  
+  <p class="article-meta">量子位 · 06/16 21:02</p>
+  <p class="article-excerpt">会思考、能调度、还会自进化</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.qbitai.com/2026/06/435950.html" target="_blank" rel="noopener noreferrer">网易有道首席科学家段亦涛：让AI技术扎根业务场景</a></h3>
+  
+  
+  <p class="article-meta">量子位 · 06/16 18:36</p>
+  <p class="article-excerpt">转载来源：网易有道 本文为量子位获授权转载，观点仅为原作者所有。</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.qbitai.com/2026/06/435931.html" target="_blank" rel="noopener noreferrer">不儿，罗永浩、胡彦斌都来参加这场AI大赛了啊</a></h3>
+  
+  
+  <p class="article-meta">量子位 · 06/16 17:31</p>
+  <p class="article-excerpt">100万奖金，0门槛参赛</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.technologyreview.com/2026/06/16/1138591/data-center-online-quickly-electric-grid-flex/" target="_blank" rel="noopener noreferrer">数据中心想更快上线？电网灵活性成关键条件</a></h3>
+  <p class="article-meta">原标题: Want to get a data center online quickly? Give it some flex.</p>
+  
+  <p class="article-meta">MIT Tech Review AI · 06/16 17:00</p>
+  <p class="article-excerpt">At the end of a tense and scoreless first half of a soccer match between the English men’s team and rival Germany, millions of Brits let out a collective sigh and did what they so often do in moments of stress: They made tea. That wave of electric kettles clicking on, however, caused a different…</p>
+  <p class="article-summary"><span class="summary-label">中文介绍</span> 文章以英国用电峰值场景切入，讨论数据中心若要快速接入电网，可能需要在用电安排上提供更高灵活性。</p>
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.qbitai.com/2026/06/435882.html" target="_blank" rel="noopener noreferrer">SpaceX华人女孩刷屏！没有硕博学位，6年从火箭小白到「猛禽」飞行操作员</a></h3>
+  
+  
+  <p class="article-meta">量子位 · 06/16 14:40</p>
+  <p class="article-excerpt">她并不是一位被神话出来的「星舰女王」</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.qbitai.com/2026/06/435873.html" target="_blank" rel="noopener noreferrer">三连发！阿里发布首个具身大模型Qwen-Robot系列</a></h3>
+  
+  
+  <p class="article-meta">量子位 · 06/16 12:39</p>
+  <p class="article-excerpt">边走、边看、边思考</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.qbitai.com/2026/06/435859.html" target="_blank" rel="noopener noreferrer">从技术向运营生产力“质变”：神州数码以AI for Process构建AI落地产业的“飞轮”</a></h3>
+  
+  
+  <p class="article-meta">量子位 · 06/16 12:10</p>
+  
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.qbitai.com/2026/06/435853.html" target="_blank" rel="noopener noreferrer">沙利文权威认证：范式 Rise vGPU 获评 Tier 1 领先平台</a></h3>
+  
+  
+  <p class="article-meta">量子位 · 06/16 10:47</p>
+  <p class="article-excerpt">成为全球领先的通用人工智能科技公司</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.latent.space/p/ainews-satya-on-loopcraft-building" target="_blank" rel="noopener noreferrer">Satya 谈 Loopcraft：构建前沿生态系统</a></h3>
+  <p class="article-meta">原标题: [AINews] Satya on Loopcraft: Building Frontier Ecosystems</p>
+  
+  <p class="article-meta">Latent Space · 06/16 10:29</p>
+  <p class="article-excerpt">a quiet day lets us report on Satya&#39;s hit essay</p>
+  <p class="article-summary"><span class="summary-label">中文介绍</span> Latent Space 报道 Satya 关于 Loopcraft 的文章，聚焦前沿 AI 生态系统建设及相关观点，在相对平静的新闻日作出梳理。</p>
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://openai.com/index/deployment-simulation" target="_blank" rel="noopener noreferrer">OpenAI 推出部署模拟，用真实对话预测模型发布前行为</a></h3>
+  <p class="article-meta">原标题: Predicting model behavior before release by simulating deployment</p>
+  
+  <p class="article-meta">OpenAI News · 06/16 08:00</p>
+  <p class="article-excerpt">OpenAI introduces Deployment Simulation, a method to predict AI model behavior before deployment using real conversation data to improve safety and evaluation accuracy.</p>
+  <p class="article-summary"><span class="summary-label">中文介绍</span> OpenAI 介绍 Deployment Simulation 方法，利用真实对话数据在模型部署前预测行为，以提升安全评估和发布前测试准确性。</p>
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://tldr.tech/ai/2026-06-16" target="_blank" rel="noopener noreferrer">Meta AI 模式、Factory 2.0 与 Sakana 自主研究员登上 TLDR AI</a></h3>
+  <p class="article-meta">原标题: Meta AI mode 📱, Factory 2.0 👨‍💻, Sakana’s autonomous researcher 🐟</p>
+  
+  <p class="article-meta">TLDR AI · 06/16 08:00</p>
+  
+  <p class="article-summary"><span class="summary-label">中文介绍</span> TLDR AI 本期提及 Meta AI 模式、Factory 2.0 和 Sakana 自主研究员等主题，汇总 2026 年 6 月 16 日 AI 动态。</p>
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.technologyreview.com/2026/06/15/1138983/why-do-south-koreans-love-ai-so-much/" target="_blank" rel="noopener noreferrer">为什么韩国人如此热衷人工智能？</a></h3>
+  <p class="article-meta">原标题: Why do South Koreans love AI so much?</p>
+  
+  <p class="article-meta">MIT Tech Review AI · 06/16 02:46</p>
+  <p class="article-excerpt">This story originally appeared in The Algorithm, our weekly newsletter on AI. To get stories like this in your inbox first, sign up here. When I landed in Seoul after a grueling 12-hour flight from San Francisco, I walked through an unmanned immigration checkpoint, where a machine scanned my face an</p>
+  <p class="article-summary"><span class="summary-label">中文介绍</span> MIT Technology Review 从作者抵达首尔的经历写起，探讨韩国社会对 AI 的高度接受度及其在日常场景中的应用。</p>
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://tldr.tech/ai/2026-06-15" target="_blank" rel="noopener noreferrer">Anthropic Fable 关闭、GLM-5.2 与 OpenRouter Fusion 登上 TLDR AI</a></h3>
+  <p class="article-meta">原标题: Anthropic Fable shutdown 🏛️, GLM-5.2 🤖, OpenRouter Fusion 🧠</p>
+  
+  <p class="article-meta">TLDR AI · 06/15 08:00</p>
+  
+  <p class="article-summary"><span class="summary-label">中文介绍</span> TLDR AI 本期汇总 Anthropic Fable 关闭、GLM-5.2 和 OpenRouter Fusion 等消息，覆盖 2026 年 6 月 15 日 AI 新闻。</p>
+</article>
+  </div>
+    </div>
+  </div></div>
+  </section>
+  <section class="panel" data-panel="academic"><section class="academic-overview">
+    <span class="eyebrow">订阅画像</span>
+    <p>PCSEL / nanophotonics / CWT-FEM-FDTD modeling first; AI for photonics, research agents, and inverse design second.</p>
+    <p class="academic-feed-links">
+      <a href="/academic-feed.xml">订阅学术更新 RSS</a>
+      <a href="/academic-feed.json">订阅学术更新 JSON</a>
+      <span>新论文: 0</span>
+    </p>
+  </section>
+  <section class="academic-section">
+    <h2 class="category-title trading-section-title">今日必看</h2>
+    <div class="academic-grid">
+      <article class="academic-paper">
+    <header class="academic-paper-head">
+      <div>
+        <span class="academic-label">中文标题</span>
+        <h3 class="academic-title"><a href="https://doi.org/10.1364/ao.592576" target="_blank" rel="noopener noreferrer">由底部金属封盖 DBR、外围 DBR 和移位三孔光子晶体实现的低阈值、高效率 1.55 µm InP PCSEL 仿真研究</a></h3>
+      </div>
+      <div class="academic-badges">
+        <span class="academic-paper-no">P1</span>
+        
+        <span class="academic-priority must-read">今日必看</span>
+      </div>
+    </header>
+    <p class="academic-meta">OpenAlex · Applied Optics · 2026-05-22 · Siyu Chen, Jingwei Chen, Xingyu Liu, Zhiyuan Jiang · 新论文 2026-06-15 · 相关度 29.9</p>
+    <p class="academic-original"><span class="academic-label">英文原题</span>Simulation study of a low-threshold, high-efficiency 1.55 µm InP PCSEL enabled by a bottom metal-capped DBR, peripheral DBRs, and a shifted triple-hole photonic crystal</p>
+    <p class="academic-summary"><span class="academic-label">中文摘要</span>1.55 µm 的光子晶体面发射激光器（PCSELs）由于人眼安全性和低光纤损耗，对光通信和 LiDAR 应用极具吸引力。然而，其性能受到阈值增益与斜率效率之间权衡的限制，也受到传统分布式布拉格反射镜（DBR）结构的反射率和相位控制的限制。在这项工作中，据我们所知，我们提出了一种新型 InP 基 PCSEL 设计的理论和数值研究。具体而言，金属封盖 DBR 由三对 SiO 2 /TiO 2 层和一个 Au 层组成，在提供高反射率的同时显著降低制造复杂性。此外，引入围绕光子晶体（PC）区域的 DBR，以抑制面内损耗并增强激射模式的反馈。此外，移位三孔光子晶体能够灵活控制面内和垂直耦合强度，从而实现阈值增益与斜率效率之间的优化平衡。器件性能使用传输矩阵法和三维耦合波理论（3D-CWT）进行评估。结果表明，优化结构表现出 16cm −1 的低激射振荡阈值增益和相应的 76cm −1 阈值材料增益，同时具有 0.18 W/A 的高斜率效率，为工作在 1.55 µm 的高性能 InP 基 PCSELs 提供了一种有前景的理论设计策略。</p>
+    <p class="academic-relevance"><span class="academic-label">英文摘要</span>Photonic-crystal surface-emitting lasers (PCSELs) at 1.55 µm are highly attractive for optical communication and LiDAR applications owing to eye safety and low fiber loss. However, their performance is limited by the trade-off between threshold gain and slope efficiency, as well as by the reflectivity and phase control of conventional distributed Bragg reflector (DBR) structures. In this work, we present a theoretical and numerical investigation of a novel InP-based PCSEL design, to our knowledge. Specifically, the metal-capped DBR is composed of three pairs of SiO 2 /TiO 2 layers and an Au layer, providing high reflectivity while substantially reducing fabrication complexity. In addition, DBRs surrounding the photonic crystal (PC) region are introduced to suppress in-plane loss and enhance the feedback of the lasing mode. Furthermore, a shifted triple-hole photonic crystal enables flexible control of the in-plane and vertical coupling strengths, achieving an optimized balance between threshold gain and slope efficiency. The device performance is evaluated using the transfer-matrix method and three-dimensional coupled-wave theory (3D-CWT). As a result, the optimized structure exhibits a low threshold gain for lasing oscillation of 16cm −1 and a corresponding threshold material gain of 76cm −1 , together with a high slope efficiency of 0.18 W/A, providing a promising theoretical design strategy for high-performance InP-based PCSELs operating at 1.55 µm.</p>
+    <p class="academic-why"><span class="academic-label">为什么与你有关</span><br>为什么与你有关：<br>- 主线关联：直接服务 PCSEL 方向，优先看结构参数、耦合机制、出光/远场和验证口径。<br>- 可用线索：CWT。<br>- 可转化内容：先判断能否变成一个仿真 case、baseline、验证指标或参数先验。</p>
+    <p class="academic-action">今日必看：优先判断是否进入 PCSEL / CWT / 仿真建模文献库。</p>
+    <div class="academic-tags"><span class="academic-tag">photonic crystal surface emitting laser PCSEL</span><span class="academic-tag">PCSEL</span><span class="academic-tag">photonics</span><span class="academic-tag">photonic crystal</span><span class="academic-tag">CWT</span><span class="academic-tag">III-V</span></div>
+  </article>
+<article class="academic-paper">
+    <header class="academic-paper-head">
+      <div>
+        <span class="academic-label">中文标题</span>
+        <h3 class="academic-title"><a href="https://doi.org/10.1364/oe.599120" target="_blank" rel="noopener noreferrer">光子晶体面发射器件中模式辐射损耗的尺寸缩放规律</a></h3>
+      </div>
+      <div class="academic-badges">
+        <span class="academic-paper-no">P2</span>
+        
+        <span class="academic-priority must-read">今日必看</span>
+      </div>
+    </header>
+    <p class="academic-meta">OpenAlex · Optics Express · 2026-06-01 · Qingyuan Zhang, Ming Lyu, Jiang Hu, Qi Dai · 新论文 2026-06-13 · 相关度 25.9</p>
+    <p class="academic-original"><span class="academic-label">英文原题</span>Size scaling law for radiation losses of modes in photonic crystal surface emitting devices</p>
+    <p class="academic-summary"><span class="academic-label">中文摘要</span>光子晶体面发射激光器（PCSELs）因其能够产生超高功率和低发散角的激光束而受到广泛关注。这是因为它们支持高功率单模激射，其体积比传统半导体激光器大数个数量级。PCSEL 中有限的横向尺寸是限制其激射模式体积并进而限制其输出功率的主要因素。我们证明，总腔损耗 α = α ⊥ + α ∥ 与器件尺寸 L 之间的缩放关系为：表面辐射损耗按 α ⊥ ∼ O ( L −2 ) 缩放，而边缘辐射损耗 α ∥ ∼ O ( L −3 ) 缩放。这两种缩放关系都可以由能带图中复频率 ω ( k ) 的二阶展开来解释。我们的结果为设计大面积类 PCSEL 器件时估算尺寸效应提供了指导。</p>
+    <p class="academic-relevance"><span class="academic-label">英文摘要</span>Photonic-crystal surface-emitting lasers (PCSELs) have garnered significant attention due to their ability to generate laser beams with ultra-high power and low divergence. This is because they support high-power single-mode lasing with volumes orders of magnitude larger than those of conventional semiconductor lasers. The finite lateral size in a PCSEL is a primary factor limiting its lasing mode volume and, consequently, its output power. We demonstrate that the scaling relation between the total cavity loss α = α ⊥ + α ∥ and the device size L is such that the surface radiation loss scales as α ⊥ ∼ O ( L −2 ), while the edge radiation loss α ∥ ∼ O ( L −3 ). Both scaling relations can be explained by the second-order expansions of the complex frequency ω ( k ) of the band diagram. Our results provide a guideline for estimating the size effect when designing large-area PCSEL-like devices.</p>
+    <p class="academic-why"><span class="academic-label">为什么与你有关</span><br>为什么与你有关：<br>- 主线关联：直接服务 PCSEL 方向，优先看结构参数、耦合机制、出光/远场和验证口径。<br>- 可用线索：先看是否能抽出结构参数、指标定义或仿真设置。<br>- 可转化内容：适合沉淀成验证指标或参数先验，尤其是 mode volume。</p>
+    <p class="academic-action">今日必看：优先判断是否进入 PCSEL / CWT / 仿真建模文献库。</p>
+    <div class="academic-tags"><span class="academic-tag">photonic crystal surface emitting laser PCSEL</span><span class="academic-tag">PCSEL</span><span class="academic-tag">photonics</span><span class="academic-tag">photonic crystal</span><span class="academic-tag">mode volume</span></div>
+  </article>
+<article class="academic-paper">
+    <header class="academic-paper-head">
+      <div>
+        <span class="academic-label">中文标题</span>
+        <h3 class="academic-title"><a href="https://doi.org/10.1364/cleo_at.2024.am3j.6" target="_blank" rel="noopener noreferrer">紧凑型相干光子晶体面发射激光器阵列</a></h3>
+      </div>
+      <div class="academic-badges">
+        <span class="academic-paper-no">P3</span>
+        
+        <span class="academic-priority must-read">今日必看</span>
+      </div>
+    </header>
+    <p class="academic-meta">OpenAlex · 2024-01-01 · Chhabindra Gautam, Mingsen Pan, Yudong Chen, Thomas J. Rotter · 新论文 2026-06-09 · 相关度 40.5</p>
+    <p class="academic-original"><span class="academic-label">英文原题</span>Compact Coherent Photonic Crystal Surface-Emitting Laser Arrays</p>
+    <p class="academic-summary"><span class="academic-label">中文摘要</span>我们报告了一种采用被动耦合 PCSEL 阵列的新颖相干光束合成设计。我们制备的 GaAs 基阵列的实验结果显示出高光束质量、线宽和相干性。</p>
+    <p class="academic-relevance"><span class="academic-label">英文摘要</span>We report a novel coherent beam combining design with passively coupled PCSEL array. Experimental results of our fabricated GaAs-based arrays show high beam quality, linewidth, and coherency.</p>
+    <p class="academic-why"><span class="academic-label">为什么与你有关</span><br>为什么与你有关：<br>- 主线关联：直接服务 PCSEL 方向，优先看结构参数、耦合机制、出光/远场和验证口径。<br>- 可用线索：先看是否能抽出结构参数、指标定义或仿真设置。<br>- 可转化内容：先判断能否变成一个仿真 case、baseline、验证指标或参数先验。</p>
+    <p class="academic-action">今日必看：优先判断是否进入 PCSEL / CWT / 仿真建模文献库。</p>
+    <div class="academic-tags"><span class="academic-tag">&quot;coherent photonic crystal surface emitting laser&quot;</span><span class="academic-tag">PCSEL</span><span class="academic-tag">photonics</span><span class="academic-tag">surface-emitting laser</span><span class="academic-tag">photonic crystal</span><span class="academic-tag">III-V</span></div>
+  </article>
+<article class="academic-paper">
+    <header class="academic-paper-head">
+      <div>
+        <span class="academic-label">中文标题</span>
+        <h3 class="academic-title"><a href="https://doi.org/10.1117/12.3055947" target="_blank" rel="noopener noreferrer">相干耦合 PCSEL 阵列中的功率和亮度缩放</a></h3>
+      </div>
+      <div class="academic-badges">
+        <span class="academic-paper-no">P4</span>
+        
+        <span class="academic-priority must-read">今日必看</span>
+      </div>
+    </header>
+    <p class="academic-meta">OpenAlex · 2025-05-30 · Mingsen Pan, Chhabindra Gautam, Yudong Chen, Ming Zhou · 新论文 2026-06-09 · 相关度 44.0</p>
+    <p class="academic-original"><span class="academic-label">英文原题</span>Power and brightness scaling in coherently coupled PCSEL arrays</p>
+    <p class="academic-summary"><span class="academic-label">中文摘要</span>我们报告了一种新颖的相干光子晶体面发射激光器（PCSEL）阵列设计，通过在横向方向上被动耦合紧凑型光子晶体腔来实现。实验表征结果显示，我们在 InGaAs/GaAs 多量子阱（MQW）平台上制备的激光器阵列表现出高光束质量和相干性。</p>
+    <p class="academic-relevance"><span class="academic-label">英文摘要</span>We report a novel design of coherent photonic crystal surface-emitting laser (PCSEL) array by passively coupling compact photonic crystal cavities in the lateral directions. Experimental characterization results show high beam quality and coherency from our fabricated laser array on InGaAs/GaAs multiple quantum well (MQW) platform.</p>
+    <p class="academic-why"><span class="academic-label">为什么与你有关</span><br>为什么与你有关：<br>- 主线关联：直接服务 PCSEL 方向，优先看结构参数、耦合机制、出光/远场和验证口径。<br>- 可用线索：先看是否能抽出结构参数、指标定义或仿真设置。<br>- 可转化内容：适合沉淀成验证指标或参数先验，尤其是 quantum well。</p>
+    <p class="academic-action">今日必看：优先判断是否进入 PCSEL / CWT / 仿真建模文献库。</p>
+    <div class="academic-tags"><span class="academic-tag">&quot;coherent photonic crystal surface emitting laser&quot;</span><span class="academic-tag">PCSEL</span><span class="academic-tag">photonics</span><span class="academic-tag">surface-emitting laser</span><span class="academic-tag">photonic crystal</span><span class="academic-tag">quantum well</span><span class="academic-tag">III-V</span></div>
+  </article>
+<article class="academic-paper">
+    <header class="academic-paper-head">
+      <div>
+        <span class="academic-label">中文标题</span>
+        <h3 class="academic-title"><a href="https://doi.org/10.1109/jstqe.2026.3687110" target="_blank" rel="noopener noreferrer">通过自动微分优化对光子晶体激光器进行逆向设计</a></h3>
+      </div>
+      <div class="academic-badges">
+        <span class="academic-paper-no">P5</span>
+        
+        <span class="academic-priority must-read">今日必看</span>
+      </div>
+    </header>
+    <p class="academic-meta">OpenAlex · IEEE Journal of Selected Topics in Quantum Electronics · 2026-04-23 · Mihai Crisan, Shamsul Arafin · 新论文 2026-06-09 · 相关度 44.9</p>
+    <p class="academic-original"><span class="academic-label">英文原题</span>Inverse Design of Photonic Crystal Lasers Through Automatic Differentiation Optimization</p>
+    <p class="academic-summary"><span class="academic-label">中文摘要</span>（嵌入式）PhC 谐振器激光器的行为与晶胞轮廓密不可分。因此，设计过程中的很大一部分不幸地依赖于对介电常数轮廓的审慎手动选择。这是不利的，因为这会丢弃关于目标函数（激光器的物理响应）的信息。我们通过采用基于梯度的流程来解决这一问题，该流程将计算设计任务分为两个步骤，即光子本征模式的二维本征值问题（建模）和计算图（梯度传播）：（i）通过仿真进行前向传递，以预测光子晶体面发射激光器（PCSEL）的行为（远场和模式品质因子），以及（ii）反向传播步骤，在该步骤中计算（用户）定义的代价函数的梯度，以更新晶胞设计。该方法的性能在远场和腔内场性能指标方面均超过了用于大规模 PCSELs 的当代晶胞设计。</p>
+    <p class="academic-relevance"><span class="academic-label">英文摘要</span>The behavior of (embedded) PhC resonator lasers is inextricably linked to the unit cell profile. Hence, an overwhelming fraction of the design process unfortunately relies on the judicious manual choice of the permittivity profile. This is disadvantageous for the fact that this throws away information regarding the objective function (the physical response of the laser). We remedy this by employing gradient-based protocols that split the computational design task into two steps—between a 2D eigenvalue problem for the photonic eigenmodes (modeling) and the computational graph (gradient-propagation): (i) a forward passage through the simulation to predict the photonic-crystal surface-emitting laser (PCSEL) behavior (far-field and mode quality factors), and (ii) a backpropagation step where the gradient of a (user) defined cost function is computed to update the unit cell design. The performance of this method exceeds contemporary unit cell designs for large-scale PCSELs in both far-field and intracavity field performance metrics.</p>
+    <p class="academic-why"><span class="academic-label">为什么与你有关</span><br>为什么与你有关：<br>- 主线关联：直接服务 PCSEL 方向，优先看结构参数、耦合机制、出光/远场和验证口径。<br>- 可用线索：AI 代理模型/逆向设计。<br>- 可转化内容：适合沉淀成验证指标或参数先验，尤其是 far field。</p>
+    <p class="academic-action">今日必看：优先判断是否进入 PCSEL / CWT / 仿真建模文献库。</p>
+    <div class="academic-tags"><span class="academic-tag">photonic crystal surface emitting laser PCSEL</span><span class="academic-tag">PCSEL</span><span class="academic-tag">photonics</span><span class="academic-tag">surface-emitting laser</span><span class="academic-tag">photonic crystal</span><span class="academic-tag">far field</span><span class="academic-tag">inverse design</span></div>
+  </article>
+<article class="academic-paper">
+    <header class="academic-paper-head">
+      <div>
+        <span class="academic-label">中文标题</span>
+        <h3 class="academic-title"><a href="https://doi.org/10.1109/islc57752.2024.10717421" target="_blank" rel="noopener noreferrer">高亮度相干光子晶体面发射激光器阵列</a></h3>
+      </div>
+      <div class="academic-badges">
+        <span class="academic-paper-no">P6</span>
+        
+        <span class="academic-priority must-read">今日必看</span>
+      </div>
+    </header>
+    <p class="academic-meta">OpenAlex · 2024-09-29 · Mingsen Pan, Chhabindra Gautam, Yudong Chen, Thomas J. Rotter · 新论文 2026-06-09 · 相关度 44.0</p>
+    <p class="academic-original"><span class="academic-label">英文原题</span>High Brightness Coherent Photonic Crystal Surface-Emitting Laser Arrays</p>
+    <p class="academic-summary"><span class="academic-label">中文摘要</span>我们报告了一种新颖的相干光子晶体面发射激光器（PCSEL）阵列设计，通过在横向方向上被动耦合紧凑型光子晶体腔来实现。实验表征结果显示，我们在 InGaAs/GaAs 多量子阱（MQW）平台上制备的激光器阵列表现出高光束质量和相干性。</p>
+    <p class="academic-relevance"><span class="academic-label">英文摘要</span>We report a novel design of coherent photonic crystal surface-emitting laser (PCSEL) array by passively coupling compact photonic crystal cavities in the lateral directions. Experimental characterization results show high beam quality and coherency from our fabricated laser array on InGaAs/GaAs multiple quantum well (MQW) platform.</p>
+    <p class="academic-why"><span class="academic-label">为什么与你有关</span><br>为什么与你有关：<br>- 主线关联：直接服务 PCSEL 方向，优先看结构参数、耦合机制、出光/远场和验证口径。<br>- 可用线索：先看是否能抽出结构参数、指标定义或仿真设置。<br>- 可转化内容：适合沉淀成验证指标或参数先验，尤其是 quantum well。</p>
+    <p class="academic-action">今日必看：优先判断是否进入 PCSEL / CWT / 仿真建模文献库。</p>
+    <div class="academic-tags"><span class="academic-tag">&quot;coherent photonic crystal surface emitting laser&quot;</span><span class="academic-tag">PCSEL</span><span class="academic-tag">photonics</span><span class="academic-tag">surface-emitting laser</span><span class="academic-tag">photonic crystal</span><span class="academic-tag">quantum well</span><span class="academic-tag">III-V</span></div>
+  </article>
+<article class="academic-paper">
+    <header class="academic-paper-head">
+      <div>
+        <span class="academic-label">中文标题</span>
+        <h3 class="academic-title"><a href="https://doi.org/10.1117/12.3116258" target="_blank" rel="noopener noreferrer">具有金属反射镜的高斜率效率量子点光子晶体面发射激光器设计</a></h3>
+      </div>
+      <div class="academic-badges">
+        <span class="academic-paper-no">P7</span>
+        
+        <span class="academic-priority must-read">今日必看</span>
+      </div>
+    </header>
+    <p class="academic-meta">OpenAlex · 2026-06-05 · Yutong Di, Yi-Xiang Wang, Bojian Wang, Haoyu Chang · 新论文 2026-06-09 · 相关度 39.2</p>
+    <p class="academic-original"><span class="academic-label">英文原题</span>Design of high-slope-efficiency quantum dot photonic crystal surface-emitting lasers with metal reflector</p>
+    <p class="academic-summary"><span class="academic-label">中文摘要</span>我们提出了一种利用金属反射镜的量子点光子晶体面发射激光器（QD-PCSEL）设计。通过调节 p 包层厚度、引入氧化物层，并使用 GaInP 作为 p 包层，QD-PCSEL 的斜率效率得到显著提升。使用三维有限差分时域方法研究了 p 包层厚度和光子晶体（PC）层对斜率效率的影响。仿真结果表明，在填充因子为 22%、PC 层厚度为 420 nm、p 包层厚度为 1.3 μm 时，所设计的 QD-PCSEL 实现了 267 mW/A 的斜率效率。与已报道的实验结果相比，这代表了约 20 倍的提升。</p>
+    <p class="academic-relevance"><span class="academic-label">英文摘要</span>We present the design of a quantum dot photonic crystal surface-emitting laser (QD-PCSEL) utilizing a metal reflector. By adjusting the p-cladding layer thickness, incorporating an oxide layer, and using GaInP as the p-cladding layer, the slope efficiency of the QD-PCSEL is greatly enhanced. The influence of the p-cladding layer thickness and the photonic crystal (PC) layer on the slope efficiency was investigated using the three-dimensional finite-difference time-domain method. Simulation results demonstrate that with a fill factor of 22%, a PC layer thickness of 420 nm, and a p-cladding layer thickness of 1.3 μm, the designed QD-PCSEL achieves a slope efficiency of 267 mW/A. This represents an approximately 20-fold improvement compared to reported experimental results.</p>
+    <p class="academic-why"><span class="academic-label">为什么与你有关</span><br>为什么与你有关：<br>- 主线关联：直接服务 PCSEL 方向，优先看结构参数、耦合机制、出光/远场和验证口径。<br>- 可用线索：先看是否能抽出结构参数、指标定义或仿真设置。<br>- 可转化内容：先判断能否变成一个仿真 case、baseline、验证指标或参数先验。</p>
+    <p class="academic-action">今日必看：优先判断是否进入 PCSEL / CWT / 仿真建模文献库。</p>
+    <div class="academic-tags"><span class="academic-tag">photonic crystal surface emitting laser PCSEL</span><span class="academic-tag">PCSEL</span><span class="academic-tag">photonics</span><span class="academic-tag">surface-emitting laser</span><span class="academic-tag">photonic crystal</span></div>
+  </article>
+<article class="academic-paper">
+    <header class="academic-paper-head">
+      <div>
+        <span class="academic-label">中文标题</span>
+        <h3 class="academic-title"><a href="https://doi.org/10.1117/12.3104064" target="_blank" rel="noopener noreferrer">基于连续谱中束缚态线的可转向面发射激光器设计</a></h3>
+      </div>
+      <div class="academic-badges">
+        <span class="academic-paper-no">P8</span>
+        
+        <span class="academic-priority must-read">今日必看</span>
+      </div>
+    </header>
+    <p class="academic-meta">OpenAlex · 2026-05-28 · Alexander Cerjan · 新论文 2026-06-09 · 相关度 21.1</p>
+    <p class="academic-original"><span class="academic-label">英文原题</span>Steerable surface emitting laser design based on a line of bound states in the continuum</p>
+    <p class="academic-summary"><span class="academic-label">中文摘要</span>传统光子晶体面发射激光器（PCSELs）依赖于孤立的准连续谱中束缚态（q-BIC），这些态通常位于布里渊区中心，并提供高方向性和高品质因子。然而，由于其所依赖的 q-BIC 具有孤立性质，PCSELs 在需要连续可调性的应用中受到根本限制，必须构建许多不同的 PCSELs 并对其进行开关切换以实现这种可调性。在这里，我们引入了一种新的腔几何结构，该结构使用一种新颖的偏振和角度选择性布拉格反射镜，来开发一种具有连续的连续谱中束缚态线的面发射激光器。由此产生的色散允许在较宽波矢范围内形成高 Q 激射态，并具有双光束发射的潜力，其角分离可通过调节量子阱增益介质的温度和注入电流来调谐。数值仿真证实，该构型产生高品质因子，并由于其降低的共振态密度而支持大面积单模运行。该方法不仅将实现连续的光束角度控制，还与现有制造方法兼容。我们的研究代表了克服基于孤立 q-BIC 器件限制的重要一步，并为集成光子学中的动态和可调光束转向开辟了新的可能性。致谢：SNL 由 NTESS 根据 DOE NNSA 合同 DE-NA0003525 管理和运营。</p>
+    <p class="academic-relevance"><span class="academic-label">英文摘要</span>Traditional photonic crystal surface-emitting lasers (PCSELs) rely on isolated quasi-bound states in the continuum (q-BIC) that are generally at the center of the Brillouin zone and which offer high directionality and quality factors. However, due to the isolated nature of the q-BICs they rely on, PCSELs are fundamentally limited in applications that demand continuous tunability, requiring the construction of many different PCSELs that are switched on and off to achieve such tunability. Here, we introduce a new cavity geometry that uses a novel polarization- and angle-selective Bragg reflector to develop a surface emitting laser that features a continuous line of bound states in the continuum. The resulting dispersion allows for high-Q lasing states across a broad wavevector range, with the potential for twin-beam emission whose angular separation can be tuned by adjusting the temperature and injection current into the quantum well gain medium. Numerical simulations confirm that this configuration yields a high-quality factor and supports single-mode operation over large areas due to its reduced density of resonances. The approach will not only enable continuous angular beam control but also offers compatibility with existing fabrication methods. Our study represents a significant step toward overcoming the limitations of isolated-q-BIC-based devices and opens new possibilities for dynamic and tunable beam-steering in integrated photonics. Acknowledgement: SNL is managed and operated by NTESS under DOE NNSA contract DE-NA0003525.</p>
+    <p class="academic-why"><span class="academic-label">为什么与你有关</span><br>为什么与你有关：<br>- 主线关联：更偏photonics / photonic crystal / Q factor，可作为 PCSEL 周边器件物理或数值方法补充。<br>- 可用线索：先看是否能抽出结构参数、指标定义或仿真设置。<br>- 可转化内容：适合沉淀成验证指标或参数先验，尤其是 quality factor / quantum well。</p>
+    <p class="academic-action">今日必看：优先判断是否进入 PCSEL / CWT / 仿真建模文献库。</p>
+    <div class="academic-tags"><span class="academic-tag">photonic crystal surface emitting laser PCSEL</span><span class="academic-tag">PCSEL</span><span class="academic-tag">photonics</span><span class="academic-tag">photonic crystal</span><span class="academic-tag">Q factor</span><span class="academic-tag">quantum well</span></div>
+  </article>
+    </div>
+  </section>
+  <section class="academic-section">
+    <h2 class="category-title trading-section-title">周末深读候选</h2>
+    <div class="academic-grid">
+      <p class="empty">该组今日无数据。</p>
+    </div>
+  </section>
+  
+  <section class="financial-risk">
+    <strong>来源说明</strong>
+    <ul class="academic-notes">
+      <li>arXiv PCSEL / photonic crystal laser: 8 fetched.</li><li>arXiv AI for photonics: 8 fetched.</li><li>Semantic Scholar photonic crystal surface emitting laser PCSEL: failed (HTTP 429).</li><li>Semantic Scholar &quot;photonic-crystal surface-emitting laser&quot;: failed (HTTP 429).</li><li>Semantic Scholar &quot;photonic crystal surface-emitting laser&quot;: failed (HTTP 429).</li><li>Semantic Scholar &quot;PCSEL&quot; laser: failed (HTTP 429).</li><li>Semantic Scholar &quot;photonic crystal laser&quot; &quot;surface emitting&quot;: failed (HTTP 429).</li><li>Semantic Scholar &quot;coherent photonic crystal surface emitting laser&quot;: failed (HTTP 429).</li><li>OpenAlex photonic crystal surface emitting laser PCSEL: 8 fetched, 8 with usable abstracts.</li><li>OpenAlex &quot;photonic-crystal surface-emitting laser&quot;: 8 fetched, 4 with usable abstracts.</li><li>OpenAlex &quot;photonic crystal surface-emitting laser&quot;: 8 fetched, 0 with usable abstracts.</li><li>OpenAlex &quot;PCSEL&quot; laser: 8 fetched, 1 with usable abstracts.</li><li>OpenAlex &quot;photonic crystal laser&quot; &quot;surface emitting&quot;: 8 fetched, 6 with usable abstracts.</li><li>OpenAlex &quot;coherent photonic crystal surface emitting laser&quot;: 3 fetched, 3 with usable abstracts.</li><li>OpenAlex nanophotonic photonic crystal inverse design machine learning: 8 fetched, 8 with usable abstracts.</li><li>OpenAlex FDTD FEM nanocavity Q factor mode volume: 8 fetched, 6 with usable abstracts.</li><li>Crossref PCSEL photonic crystal surface emitting laser (published): 8 fetched.</li><li>Crossref PCSEL photonic crystal surface emitting laser (relevance): 8 fetched.</li><li>Crossref photonic crystal laser coupled wave finite element (published): 8 fetched.</li><li>Crossref photonic crystal laser coupled wave finite element (relevance): 8 fetched.</li><li>Crossref nanophotonic photonic crystal inverse design machine learning (published): 8 fetched.</li><li>Crossref FDTD FEM nanocavity Q factor mode volume (published): 8 fetched.</li><li>Crossref large language model research agent simulation photonics (published): 8 fetched.</li><li>Source set: Semantic Scholar, OpenAlex, and Crossref metadata search, plus arXiv best-effort preprint search when not explicitly disabled.</li><li>Ranking uses local keyword weighting, then mixes recent papers into the daily list so high-relevance old papers do not permanently hide new candidates.</li><li>abstract resolved: Size scaling law for radiation losses of modes in photonic crystal surface emitting devices (OpenAlex abstract metadata)</li><li>abstract resolved: Steerable surface emitting laser design based on a line of bound states in the continuum (original page: https://doi.org/10.1117/12.3104064)</li><li>abstract resolved: Simulation study of a low-threshold, high-efficiency 1.55 µm InP PCSEL enabled by a bottom metal-capped DBR, peripheral DBRs, and a shifted triple-hole photonic crystal (OpenAlex abstract metadata)</li><li>abstract resolved: Inverse Design of Photonic Crystal Lasers Through Automatic Differentiation Optimization (OpenAlex abstract metadata)</li>
+    </ul>
+    <strong>口径说明</strong><br>
+    Academic radar is a discovery filter, not a literature review. It may miss papers not indexed by arXiv/Crossref yet and should be followed by manual reading before citation.
+  </section></section>
+  
+  <section class="panel" data-panel="politics">
+    <div class="sub-content active" data-sub-content="world" data-cat="politics">
+    
+    <div class="source-contents">
+      <div class="source-content active" data-source-content="_merged" data-sub="world" data-cat="politics">
+    <article class="article">
+  <h3 class="article-title"><a href="https://www.nytimes.com/live/2026/06/16/world/iran-war-trump-us-deal" target="_blank" rel="noopener noreferrer">特朗普称希望将伊朗战争“抛在身后”</a></h3>
+  <p class="article-meta">原标题: Iran War Live Updates: Trump Says He Hopes to Put War in ‘Rearview Mirror’</p>
+  
+  <p class="article-meta">NYT World · 06/17 07:53</p>
+  <p class="article-excerpt">Iran’s foreign minister said new talks on nuclear arms and sanctions relief would start on Friday, right after an initial agreement is signed.</p>
+  <p class="article-summary"><span class="summary-label">中文摘要</span> 特朗普表示希望结束伊朗战争。伊朗外长称，初步协议签署后，关于核武与制裁减免的新谈判将于周五启动。</p>
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://news.google.com/rss/articles/CBMisAFBVV95cUxOcDN0bGlLTG8zUVBUOTZzVFR1djNTZG1TYUxNXzIzYTFva0d3LXRBalc4VDUtOGtsVEtIb0N1eVlIZW9wUTdGaks2LWwtVG5nS3d1UnJ2VWpVc0VaYWNCT2h2LXd0VUhoVVh5eHBVY3ptVk5SSUU5RW1zajhHWlJ4eVVBR3FaRGdKN1dJMTNGTG9xTlR1X3FsWTJmdV9ncVZvcGtSUFk2REx1ZnVUNXFpQQ?oc=5" target="_blank" rel="noopener noreferrer">沃什若任美联储主席，或终获重塑资产负债表机会</a></h3>
+  <p class="article-meta">原标题: As chair, Warsh finally has a chance to put stamp on Fed balance sheet - Reuters</p>
+  
+  <p class="article-meta">Reuters via Google News · 06/17 07:20</p>
+  <p class="article-excerpt">As chair, Warsh finally has a chance to put stamp on Fed balance sheet Reuters</p>
+  <p class="article-summary"><span class="summary-label">中文摘要</span> 路透称，沃什若出任美联储主席，将终于有机会在美联储资产负债表政策上留下自己的印记。</p>
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://news.google.com/rss/articles/CBMivwFBVV95cUxQaUgyOXptSWFSQnB6X2piVmtGbDZuX0h5UGY1bThuWHRaeG5RTGpLSjJtczY0a2Y1NHFqR29Hay1sM0VXMXYzNXlqRGpTWnQzNF9lc2t2UDY0a2RPMWtzbzc1cW10WkZaWVZCTXRGR3FLNGVjWkxiT296QkpneGU3amt5blRrTWgxenJnVDg3RTc1UW9kaDhVeVNJZDROcThFS3NlNDJrSXlUV001RnJheExYMGFDbVNRNzRGWXNRcw?oc=5" target="_blank" rel="noopener noreferrer">Oracle称微软云交易谈判失败报道细节“不准确”</a></h3>
+  <p class="article-meta">原标题: Oracle says details in report of failed Microsoft cloud deal talks &#39;inaccurate&#39; - Reuters</p>
+  
+  <p class="article-meta">Reuters via Google News · 06/17 06:09</p>
+  <p class="article-excerpt">Oracle says details in report of failed Microsoft cloud deal talks &#39;inaccurate&#39; Reuters</p>
+  <p class="article-summary"><span class="summary-label">中文摘要</span> Oracle表示，有关其与Microsoft云交易谈判失败的报道细节“不准确”，但未在标题和摘要中披露更多内容。</p>
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.theguardian.com/world/2026/jun/16/brazilian-court-convicts-eduardo-bolsonaro-us-help-father-jair" target="_blank" rel="noopener noreferrer">博索纳罗之子因寻求美国干预父亲政变案获刑四年</a></h3>
+  <p class="article-meta">原标题: Jair Bolsonaro’s son sentenced to four years in jail for seeking US interference in father’s Brazil coup trial</p>
+  
+  <p class="article-meta">The Guardian · 06/17 05:44</p>
+  <p class="article-excerpt">Brazil supreme court finds that Eduardo Bolsonaro – who resides in the US - tried to get sanctions put on judges trying ex-president over coup plot Brazil’s supreme court has sentenced Eduardo Bolsonaro to four years and two months in prison after finding him guilty of courting US ⁠interference in h</p>
+  <p class="article-summary"><span class="summary-label">中文摘要</span> 巴西最高法院认定Eduardo Bolsonaro试图促使美国制裁审理其父Jair Bolsonaro政变案的法官，判处其四年两个月监禁。</p>
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://news.google.com/rss/articles/CBMixgFBVV95cUxPWUQ2ODdpWjF3UzYxRTVRUi1hMkZRMEw3S3pDR0VWSzY5bjVWeE1TXzJZUUp1SWQ4QXFjVUJBNzRDcFp2cnJoMVBSQU45Vkp6YjdDanJLMlNiVFRTMm1KNnhlLWkxOXFLQUJmeTJkOThzTmlQMlpuVHlybW9SMnczd2lIWXJBcHI4Uk94R2RwUVg5aHJxR1ptNGppUVRSV1pneUp3WkN1elRrN1FSd0EwZ05kZDVEMTRpX0VGeHFwOVlvTmV3b3c?oc=5" target="_blank" rel="noopener noreferrer">消息称伊朗协议包含3000亿美元基金，逾半已承诺投入</a></h3>
+  <p class="article-meta">原标题: Exclusive: Iran deal includes $300 billion fund, more than half of which already committed, source says - Reuters</p>
+  
+  <p class="article-meta">Reuters via Google News · 06/17 05:14</p>
+  <p class="article-excerpt">Exclusive: Iran deal includes $300 billion fund, more than half of which already committed, source says Reuters</p>
+  <p class="article-summary"><span class="summary-label">中文摘要</span> 路透独家报道称，伊朗协议包括一只3000亿美元基金，消息人士称其中超过一半资金已获得承诺。</p>
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://news.google.com/rss/articles/CBMisgFBVV95cUxONEpZcjB1UUpuN05zN283anhrUE9FaHJWOGRPTnF6VWdLcEkwT3U5OWhjM05VckRjMFpnS2dDR2dtdXNDc0pYdkhxdXpnbExoM2loNmRsN29qLXVEYUdpZEI2cEpISFJXZkJXeGNzV292S0tCUVhZd2lRX1hlNFdaOXp2dEJ2LUh1dm9reFE3VlFnZE5salNHUXlmS3A4WlkwNVZ5aHhZZ29ENnExMEVkQjVB?oc=5" target="_blank" rel="noopener noreferrer">Nasdaq与S&amp;P 500下滑，道指创收盘新高</a></h3>
+  <p class="article-meta">原标题: Nasdaq and S&amp;P 500 slip while Dow hits record close - Reuters</p>
+  
+  <p class="article-meta">Reuters via Google News · 06/17 04:51</p>
+  <p class="article-excerpt">Nasdaq and S&amp;P 500 slip while Dow hits record close Reuters</p>
+  <p class="article-summary"><span class="summary-label">中文摘要</span> 美国股市表现分化，Nasdaq和S&amp;P 500走低，而Dow Jones Industrial Average收盘创下纪录高位。</p>
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.nytimes.com/2026/06/16/world/canada/hockey-night-in-canada-cbc-rogers.html" target="_blank" rel="noopener noreferrer">CBC周六传统节目《Hockey Night in Canada》免费播出终结</a></h3>
+  <p class="article-meta">原标题: ‘Hockey Night in Canada,’ a Saturday Night Ritual on the CBC, Is No More</p>
+  
+  <p class="article-meta">NYT World · 06/17 04:18</p>
+  <p class="article-excerpt">The longtime over-the-air telecast will no longer be free after the national broadcaster, and Rogers Sportsnet, the N.H.L. rights-holder, could not agree on a sub-licensing deal.</p>
+  <p class="article-summary"><span class="summary-label">中文摘要</span> 因加拿大国家广播公司CBC与NHL版权方Rogers Sportsnet未能达成分许可协议，长期免费无线播出的节目将不再免费。</p>
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.nytimes.com/2026/06/16/world/africa/ebola-outbreak-congo.html" target="_blank" rel="noopener noreferrer">非洲疾控中心警告：刚果埃博拉疫情或成史上最严重</a></h3>
+  <p class="article-meta">原标题: Ebola Outbreak Could Become Worst on Record, Africa C.D.C. Chief Warns</p>
+  
+  <p class="article-meta">NYT World · 06/17 03:53</p>
+  <p class="article-excerpt">Health workers have warned that the outbreak, already one of the worst in decades, could take as long as a year to contain if infection rates do not flatten.</p>
+  <p class="article-summary"><span class="summary-label">中文摘要</span> 卫生人员称，刚果埃博拉疫情已是数十年来最严重之一；若感染率不能趋平，遏制疫情可能需要长达一年。</p>
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.nytimes.com/2026/06/16/world/europe/trump-g7-leaders-europe.html" target="_blank" rel="noopener noreferrer">严重分歧后，欧洲领导人在G7对特朗普缓和姿态</a></h3>
+  <p class="article-meta">原标题: After a Bitter Split, European Leaders Play Nice With Trump</p>
+  
+  <p class="article-meta">NYT World · 06/17 03:32</p>
+  <p class="article-excerpt">A peace framework with Iran, and hope for cooperation with Ukraine, softened the tone on Tuesday at a Group of 7 gathering in France.</p>
+  <p class="article-summary"><span class="summary-label">中文摘要</span> 在法国举行的七国集团会议上，伊朗和平框架以及对乌克兰合作的期待，使欧洲领导人与特朗普之间的语气有所缓和。</p>
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.nytimes.com/2026/06/16/world/europe/russian-navy-english-channel-yacht-uk.html" target="_blank" rel="noopener noreferrer">俄罗斯海军舰船被指在英吉利海峡向英国游艇鸣枪警告</a></h3>
+  <p class="article-meta">原标题: Russian Navy Ship Accused of Firing Warning Shots at U.K. Yacht</p>
+  
+  <p class="article-meta">NYT World · 06/17 03:25</p>
+  <p class="article-excerpt">Britain’s Defense Ministry said it was investigating a report that a Russian vessel fired warning shots near a U.K.-registered yacht in the English Channel on Tuesday.</p>
+  <p class="article-summary"><span class="summary-label">中文摘要</span> 英国国防部表示，正调查一艘俄罗斯船只周二在英吉利海峡一艘英国注册游艇附近鸣枪警告的报告。</p>
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.nytimes.com/2026/06/16/world/europe/eu-us-trade-trump.html" target="_blank" rel="noopener noreferrer">欧洲议会批准久拖未决的欧盟与美国贸易协议</a></h3>
+  <p class="article-meta">原标题: European Union Lawmakers Approve Much-Delayed Trade Deal With U.S.</p>
+  
+  <p class="article-meta">NYT World · 06/17 01:48</p>
+  <p class="article-excerpt">After nearly a year of wrangling, the deal the European Union struck with President Trump in Turnberry, Scotland, is headed for final approval.</p>
+  <p class="article-summary"><span class="summary-label">中文摘要</span> 经过近一年争论，欧盟与特朗普总统在苏格兰Turnberry达成的贸易协议已获欧洲议员批准，并将进入最终批准阶段。</p>
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.theguardian.com/world/2026/jun/16/toronto-police-shootings-gun-for-hire-network" target="_blank" rel="noopener noreferrer">多伦多警方称数十起枪击案关联“多层级”雇凶枪击网络</a></h3>
+  <p class="article-meta">原标题: Toronto police link dozens of shootings to ‘multilayered’ gun-for-hire network</p>
+  
+  <p class="article-meta">The Guardian · 06/17 01:47</p>
+  <p class="article-excerpt">Young adults and teens are being recruited through apps like Telegram and paid to carry out attacks, officials say Police investigators in Toronto have said that dozens of shootings – including one at the US consulate in March – are linked to a “multilayered” gun-for-hire network that is also respon</p>
+  <p class="article-summary"><span class="summary-label">中文摘要</span> 多伦多警方称，数十起枪击案包括3月美国领事馆枪击事件，均与通过Telegram等应用招募青少年行凶的网络有关。</p>
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.nytimes.com/2026/06/16/world/europe/europe-strait-of-hormuz-iran-security.html" target="_blank" rel="noopener noreferrer">法国、英国等国称将向霍尔木兹海峡派遣舰船</a></h3>
+  <p class="article-meta">原标题: France, Britain and Other Countries Say They’ll Send Ships to the Strait of Hormuz</p>
+  
+  <p class="article-meta">NYT World · 06/17 01:29</p>
+  <p class="article-excerpt">For months, a coalition led by Britain and France has been preparing to send minesweepers and other ships to secure the strait once the fighting ends. That moment may finally be here.</p>
+  <p class="article-summary"><span class="summary-label">中文摘要</span> 由英国和法国牵头的联盟数月来准备在战斗结束后派扫雷舰等船只保障霍尔木兹海峡安全，该时刻或已到来。</p>
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.theguardian.com/fashion/2026/jun/16/max-mara-woos-china-luxury-brand-consumers" target="_blank" rel="noopener noreferrer">从驼色大衣到国潮：Max Mara争取中国奢侈品消费者</a></h3>
+  <p class="article-meta">原标题: From camel coats to guochao: Max Mara woos China’s luxury brand consumers</p>
+  
+  <p class="article-meta">The Guardian · 06/17 01:15</p>
+  <p class="article-excerpt">Fashion house pays tribute to Chinese style with its 75th anniversary catwalk show in Shanghai “New York may be the city that never sleeps, but Shanghai doesn’t even sit down.” For the British designer Ian Griffiths, who encountered this line in the New Yorker, it summed up why China’s biggest city </p>
+  <p class="article-summary"><span class="summary-label">中文摘要</span> Max Mara在上海举办75周年大秀，向中国风格致敬。设计师Ian Griffiths称上海的活力体现了品牌争取中国市场的理由。</p>
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.npr.org/2026/06/16/g-s1-128162/albania-resort-protests-kushner-trump" target="_blank" rel="noopener noreferrer">阿尔巴尼亚政府支持Kushner相关豪华度假村引发民众愤怒</a></h3>
+  <p class="article-meta">原标题: In Albania, anger grows against the government for supporting a Kushner-linked luxury resort</p>
+  
+  <p class="article-meta">NPR World · 06/17 01:10</p>
+  <p class="article-excerpt">Albania&#39;s government has given preliminary approval to plans for the luxury resort along a stretch of coastline, prompting daily protests and legal challenges by environmental groups.</p>
+  <p class="article-summary"><span class="summary-label">中文摘要</span> 阿尔巴尼亚政府初步批准一处海岸豪华度假村计划，引发生态组织每日抗议和法律挑战，项目与Kushner有关。</p>
+</article>
+  </div>
+    </div>
+  </div>
+  </section>
+  <section class="panel" data-panel="finance">
+    <nav class="sub-tabs"><button class="sub-tab active" data-sub="financial-analysis" data-cat="finance">金融分析<span class="count">29</span></button><button class="sub-tab" data-sub="finance-topics" data-cat="finance">观点聚类<span class="count">10</span></button><button class="sub-tab" data-sub="news" data-cat="finance">财经新闻<span class="count">12</span></button><button class="sub-tab" data-sub="creator" data-cat="finance">财经博主观察<span class="count">10</span></button><button class="sub-tab" data-sub="macro" data-cat="finance">宏观与政策<span class="count">10</span></button></nav>
+<div class="sub-contents"><div class="sub-content active" data-sub-content="financial-analysis" data-cat="finance"><section class="financial-overview">
+    <span class="eyebrow">市场复盘 · 最近交易日 A股 2026-06-16 / 美股 2026-06-16 / 宏观 2026-06-15</span>
+    <p>昨日/最近交易日的金融分析显示，A股整体偏强，样本平均+0.59%，上证指数-0.11%；创业板指+1.72%；板块上光通信最强（+2.37%），大消费相对落后（-1.99%）；重点板块中4/7个收涨。 美股整体偏弱，样本平均-0.70%，S&amp;P 500 ETF-0.60%；Nasdaq 100 ETF-1.90%；大型科技股中Meta领涨（+1.13%），AMD承压（-7.30%）；10Y美债收益率-0.22%。</p>
+  </section>
+
+  <section class="financial-section">
+    <h2 class="category-title trading-section-title">走势总结</h2>
+    <p class="overview-text trading-overview-text">昨日走势上，A股大盘样本平均+0.59%，重点板块样本平均+0.27%，市场结构偏向指数权重防守。板块内部强弱分化明显：光通信+2.37%居前，大消费-1.99%落后，说明资金并非全面扩散，而是在少数方向里做选择。美股大盘样本平均-0.70%，重点公司样本平均-2.29%，Meta+1.13%强于同组，AMD-7.30%拖累风险偏好。</p>
+  </section>
+
+  <section class="financial-section">
+    <h2 class="category-title trading-section-title">后续趋势研判</h2>
+    <ul class="financial-notes">
+      <li>基准情景：A股维持结构性轮动，美股科技权重保持分化但不系统性下跌；这种情况下日报后续应重点跟踪半导体、AI/算力、光通信和Nvidia/AVGO/AMD的联动。</li><li>偏强情景：VIX回落、美元或10Y美债不再上行，且A股强势板块扩散到消费/银行等方向；这会提高指数级反弹的可信度。</li><li>偏弱情景：波动率上行、美元走强、10Y 美债收益率上行，同时美股AI龙头走弱；这会压制A股科技映射，市场可能回到防守轮动。</li>
+    </ul>
+  </section>
+
+  <div class="financial-market-columns">
+    <section class="financial-market-column" data-financial-column="a-share">
+      <h2 class="financial-market-heading">A股市场</h2>
+      <section class="financial-section">
+        <h3 class="category-title trading-section-title">A股复盘</h3>
+        <p class="overview-text trading-overview-text">上证指数-0.11%；创业板指+1.72%；板块上光通信最强（+2.37%），大消费相对落后（-1.99%）；重点板块中4/7个收涨。</p>
+      </section>
+      <section class="financial-section">
+        <h3 class="category-title trading-section-title">后续趋势研判</h3>
+        <p class="overview-text trading-overview-text">后续A股的基准判断是震荡偏强但需要成交和板块扩散确认。大盘指数已表现为整体偏强，样本平均+0.59%，如果强势板块能从光通信、机器人扩散到消费、银行等低波动方向，反弹持续性会更好；如果仍只有少数题材上涨，则更像结构性轮动。</p>
+        <p class="overview-text trading-overview-text">半导体当前+1.03%，后续要看是否跟随美股AI硬件链修复。AI/算力当前+0.26%，如果Nvidia/AMD/AVGO保持强势，A股映射会更容易延续。银行当前-1.25%，它更像防守和指数稳定器；若银行强、科技弱，市场风格会偏保守。大消费、机器人、有色和光通信需要结合强弱排序看资金轮动，短期更关注能否从单日强势变成连续2-3日相对强势。</p>
+      </section>
+      <section class="financial-section">
+    <h2 class="category-title trading-section-title">大盘指数</h2>
+    <div class="financial-section-grid">
+      <article class="financial-card">
+    <header class="financial-card-head">
+      <div>
+        <h3 class="financial-name">上证指数</h3>
+        <span class="financial-symbol">sh000001</span>
+      </div>
+      <span class="financial-pct negative">-0.11%</span>
+    </header>
+    <div class="financial-meta">
+      <span>5 日 +2.04%</span>
+      <span>RSI —</span>
+      <span>中性</span>
+      
+    </div>
+  </article>
+<article class="financial-card">
+    <header class="financial-card-head">
+      <div>
+        <h3 class="financial-name">深证成指</h3>
+        <span class="financial-symbol">sz399001</span>
+      </div>
+      <span class="financial-pct positive">+0.93%</span>
+    </header>
+    <div class="financial-meta">
+      <span>5 日 +2.66%</span>
+      <span>RSI —</span>
+      <span>多头</span>
+      
+    </div>
+  </article>
+<article class="financial-card">
+    <header class="financial-card-head">
+      <div>
+        <h3 class="financial-name">创业板指</h3>
+        <span class="financial-symbol">sz399006</span>
+      </div>
+      <span class="financial-pct positive">+1.72%</span>
+    </header>
+    <div class="financial-meta">
+      <span>5 日 +3.56%</span>
+      <span>RSI —</span>
+      <span>多头</span>
+      
+    </div>
+  </article>
+<article class="financial-card">
+    <header class="financial-card-head">
+      <div>
+        <h3 class="financial-name">沪深300</h3>
+        <span class="financial-symbol">sh000300</span>
+      </div>
+      <span class="financial-pct negative">-0.15%</span>
+    </header>
+    <div class="financial-meta">
+      <span>5 日 +1.72%</span>
+      <span>RSI —</span>
+      <span>中性</span>
+      
+    </div>
+  </article>
+<article class="financial-card">
+    <header class="financial-card-head">
+      <div>
+        <h3 class="financial-name">科创50</h3>
+        <span class="financial-symbol">sh000688</span>
+      </div>
+      <span class="financial-pct positive">+0.58%</span>
+    </header>
+    <div class="financial-meta">
+      <span>5 日 +5.73%</span>
+      <span>RSI —</span>
+      <span>多头</span>
+      
+    </div>
+  </article>
+    </div>
+  </section>
+      <section class="financial-section">
+    <h2 class="category-title trading-section-title">A股板块</h2>
+    <div class="financial-section-grid">
+      <article class="financial-card">
+    <header class="financial-card-head">
+      <div>
+        <h3 class="financial-name">光通信</h3>
+        <span class="financial-symbol">sh515050</span>
+      </div>
+      <span class="financial-pct positive">+2.37%</span>
+    </header>
+    <div class="financial-meta">
+      <span>5 日 +3.27%</span>
+      <span>RSI —</span>
+      <span>多头</span>
+      <span> · 单日强势上涨</span>
+    </div>
+  </article>
+<article class="financial-card">
+    <header class="financial-card-head">
+      <div>
+        <h3 class="financial-name">机器人</h3>
+        <span class="financial-symbol">sz159770</span>
+      </div>
+      <span class="financial-pct positive">+2.16%</span>
+    </header>
+    <div class="financial-meta">
+      <span>5 日 -3.19%</span>
+      <span>RSI —</span>
+      <span>多头</span>
+      <span> · 单日强势上涨</span>
+    </div>
+  </article>
+<article class="financial-card">
+    <header class="financial-card-head">
+      <div>
+        <h3 class="financial-name">半导体</h3>
+        <span class="financial-symbol">sh512480</span>
+      </div>
+      <span class="financial-pct positive">+1.03%</span>
+    </header>
+    <div class="financial-meta">
+      <span>5 日 +6.88%</span>
+      <span>RSI —</span>
+      <span>多头</span>
+      
+    </div>
+  </article>
+<article class="financial-card">
+    <header class="financial-card-head">
+      <div>
+        <h3 class="financial-name">AI / 算力</h3>
+        <span class="financial-symbol">sz159819</span>
+      </div>
+      <span class="financial-pct positive">+0.26%</span>
+    </header>
+    <div class="financial-meta">
+      <span>5 日 +0.98%</span>
+      <span>RSI —</span>
+      <span>中性</span>
+      
+    </div>
+  </article>
+<article class="financial-card">
+    <header class="financial-card-head">
+      <div>
+        <h3 class="financial-name">有色</h3>
+        <span class="financial-symbol">sh512400</span>
+      </div>
+      <span class="financial-pct negative">-0.68%</span>
+    </header>
+    <div class="financial-meta">
+      <span>5 日 +9.63%</span>
+      <span>RSI —</span>
+      <span>空头</span>
+      
+    </div>
+  </article>
+<article class="financial-card">
+    <header class="financial-card-head">
+      <div>
+        <h3 class="financial-name">银行</h3>
+        <span class="financial-symbol">sh512800</span>
+      </div>
+      <span class="financial-pct negative">-1.25%</span>
+    </header>
+    <div class="financial-meta">
+      <span>5 日 +0.00%</span>
+      <span>RSI —</span>
+      <span>空头</span>
+      
+    </div>
+  </article>
+<article class="financial-card">
+    <header class="financial-card-head">
+      <div>
+        <h3 class="financial-name">大消费</h3>
+        <span class="financial-symbol">sz159928</span>
+      </div>
+      <span class="financial-pct negative">-1.99%</span>
+    </header>
+    <div class="financial-meta">
+      <span>5 日 -0.47%</span>
+      <span>RSI —</span>
+      <span>空头</span>
+      
+    </div>
+  </article>
+    </div>
+  </section>
+    </section>
+
+    <section class="financial-market-column" data-financial-column="us-market">
+      <h2 class="financial-market-heading">美股市场</h2>
+      <section class="financial-section">
+        <h3 class="category-title trading-section-title">美股复盘</h3>
+        <p class="overview-text trading-overview-text">S&amp;P 500 ETF-0.60%；Nasdaq 100 ETF-1.90%；大型科技股中Meta领涨（+1.13%），AMD承压（-7.30%）；10Y美债收益率-0.22%。</p>
+      </section>
+      <section class="financial-section">
+        <h3 class="category-title trading-section-title">后续趋势研判</h3>
+        <p class="overview-text trading-overview-text">后续美股的基准判断是先看止跌和波动率回落。指数样本整体偏弱，样本平均-0.70%，如果AMD、Super Micro、ASML继续走弱，指数修复会受限；只有当龙头股重新企稳、VIX回落，风险偏好才更容易恢复。</p>
+        <p class="overview-text trading-overview-text">美股重点公司后续主要看三条线：AI硬件链、平台型科技和高波动个股。Nvidia当前-2.37%，它仍是AI风险偏好的核心参照。若Meta、Alphabet、Apple继续领涨，同时AMD、Super Micro、ASML跌幅收敛，指数更容易走出健康轮动；反过来，如果强者补跌，说明资金可能从高估值科技撤出。</p>
+      </section>
+      <section class="financial-section">
+    <h2 class="category-title trading-section-title">美股大盘</h2>
+    <div class="financial-section-grid">
+      <article class="financial-card">
+    <header class="financial-card-head">
+      <div>
+        <h3 class="financial-name">S&amp;P 500 ETF</h3>
+        <span class="financial-symbol">SPY</span>
+      </div>
+      <span class="financial-pct negative">-0.60%</span>
+    </header>
+    <div class="financial-meta">
+      <span>5 日 -0.60%</span>
+      <span>RSI —</span>
+      <span>空头</span>
+      
+    </div>
+  </article>
+<article class="financial-card">
+    <header class="financial-card-head">
+      <div>
+        <h3 class="financial-name">Nasdaq 100 ETF</h3>
+        <span class="financial-symbol">QQQ</span>
+      </div>
+      <span class="financial-pct negative">-1.90%</span>
+    </header>
+    <div class="financial-meta">
+      <span>5 日 -1.90%</span>
+      <span>RSI —</span>
+      <span>空头</span>
+      
+    </div>
+  </article>
+<article class="financial-card">
+    <header class="financial-card-head">
+      <div>
+        <h3 class="financial-name">Dow Jones</h3>
+        <span class="financial-symbol">DIA</span>
+      </div>
+      <span class="financial-pct positive">+0.58%</span>
+    </header>
+    <div class="financial-meta">
+      <span>5 日 +0.58%</span>
+      <span>RSI —</span>
+      <span>多头</span>
+      
+    </div>
+  </article>
+<article class="financial-card">
+    <header class="financial-card-head">
+      <div>
+        <h3 class="financial-name">Russell 2000 ETF</h3>
+        <span class="financial-symbol">IWM</span>
+      </div>
+      <span class="financial-pct negative">-0.87%</span>
+    </header>
+    <div class="financial-meta">
+      <span>5 日 -0.87%</span>
+      <span>RSI —</span>
+      <span>空头</span>
+      
+    </div>
+  </article>
+    </div>
+  </section>
+      <section class="financial-section">
+    <h2 class="category-title trading-section-title">美股重点公司</h2>
+    <div class="financial-section-grid">
+      <article class="financial-card">
+    <header class="financial-card-head">
+      <div>
+        <h3 class="financial-name">Meta</h3>
+        <span class="financial-symbol">META</span>
+      </div>
+      <span class="financial-pct positive">+1.13%</span>
+    </header>
+    <div class="financial-meta">
+      <span>5 日 +1.13%</span>
+      <span>RSI —</span>
+      <span>多头</span>
+      
+    </div>
+  </article>
+<article class="financial-card">
+    <header class="financial-card-head">
+      <div>
+        <h3 class="financial-name">Alphabet</h3>
+        <span class="financial-symbol">GOOGL</span>
+      </div>
+      <span class="financial-pct positive">+1.06%</span>
+    </header>
+    <div class="financial-meta">
+      <span>5 日 +1.06%</span>
+      <span>RSI —</span>
+      <span>多头</span>
+      
+    </div>
+  </article>
+<article class="financial-card">
+    <header class="financial-card-head">
+      <div>
+        <h3 class="financial-name">Apple</h3>
+        <span class="financial-symbol">AAPL</span>
+      </div>
+      <span class="financial-pct positive">+0.95%</span>
+    </header>
+    <div class="financial-meta">
+      <span>5 日 +0.95%</span>
+      <span>RSI —</span>
+      <span>多头</span>
+      
+    </div>
+  </article>
+<article class="financial-card">
+    <header class="financial-card-head">
+      <div>
+        <h3 class="financial-name">Amazon</h3>
+        <span class="financial-symbol">AMZN</span>
+      </div>
+      <span class="financial-pct negative">-0.01%</span>
+    </header>
+    <div class="financial-meta">
+      <span>5 日 -0.01%</span>
+      <span>RSI —</span>
+      <span>中性</span>
+      
+    </div>
+  </article>
+<article class="financial-card">
+    <header class="financial-card-head">
+      <div>
+        <h3 class="financial-name">Microsoft</h3>
+        <span class="financial-symbol">MSFT</span>
+      </div>
+      <span class="financial-pct negative">-1.48%</span>
+    </header>
+    <div class="financial-meta">
+      <span>5 日 -1.48%</span>
+      <span>RSI —</span>
+      <span>空头</span>
+      
+    </div>
+  </article>
+<article class="financial-card">
+    <header class="financial-card-head">
+      <div>
+        <h3 class="financial-name">Tesla</h3>
+        <span class="financial-symbol">TSLA</span>
+      </div>
+      <span class="financial-pct negative">-1.58%</span>
+    </header>
+    <div class="financial-meta">
+      <span>5 日 -1.58%</span>
+      <span>RSI —</span>
+      <span>空头</span>
+      
+    </div>
+  </article>
+<article class="financial-card">
+    <header class="financial-card-head">
+      <div>
+        <h3 class="financial-name">Nvidia</h3>
+        <span class="financial-symbol">NVDA</span>
+      </div>
+      <span class="financial-pct negative">-2.37%</span>
+    </header>
+    <div class="financial-meta">
+      <span>5 日 -2.37%</span>
+      <span>RSI —</span>
+      <span>空头</span>
+      <span> · 单日明显回落</span>
+    </div>
+  </article>
+<article class="financial-card">
+    <header class="financial-card-head">
+      <div>
+        <h3 class="financial-name">TSMC</h3>
+        <span class="financial-symbol">TSM</span>
+      </div>
+      <span class="financial-pct negative">-3.53%</span>
+    </header>
+    <div class="financial-meta">
+      <span>5 日 -3.53%</span>
+      <span>RSI —</span>
+      <span>空头</span>
+      <span> · 单日明显回落</span>
+    </div>
+  </article>
+<article class="financial-card">
+    <header class="financial-card-head">
+      <div>
+        <h3 class="financial-name">Broadcom</h3>
+        <span class="financial-symbol">AVGO</span>
+      </div>
+      <span class="financial-pct negative">-4.37%</span>
+    </header>
+    <div class="financial-meta">
+      <span>5 日 -4.37%</span>
+      <span>RSI —</span>
+      <span>空头</span>
+      <span> · 单日明显回落</span>
+    </div>
+  </article>
+<article class="financial-card">
+    <header class="financial-card-head">
+      <div>
+        <h3 class="financial-name">ASML</h3>
+        <span class="financial-symbol">ASML</span>
+      </div>
+      <span class="financial-pct negative">-4.69%</span>
+    </header>
+    <div class="financial-meta">
+      <span>5 日 -4.69%</span>
+      <span>RSI —</span>
+      <span>空头</span>
+      <span> · 单日明显回落</span>
+    </div>
+  </article>
+<article class="financial-card">
+    <header class="financial-card-head">
+      <div>
+        <h3 class="financial-name">Super Micro</h3>
+        <span class="financial-symbol">SMCI</span>
+      </div>
+      <span class="financial-pct negative">-5.28%</span>
+    </header>
+    <div class="financial-meta">
+      <span>5 日 -5.28%</span>
+      <span>RSI —</span>
+      <span>空头</span>
+      <span> · 单日明显回落</span>
+    </div>
+  </article>
+<article class="financial-card">
+    <header class="financial-card-head">
+      <div>
+        <h3 class="financial-name">AMD</h3>
+        <span class="financial-symbol">AMD</span>
+      </div>
+      <span class="financial-pct negative">-7.30%</span>
+    </header>
+    <div class="financial-meta">
+      <span>5 日 -7.30%</span>
+      <span>RSI —</span>
+      <span>空头</span>
+      <span> · 单日明显回落</span>
+    </div>
+  </article>
+    </div>
+  </section>
+    </section>
+  </div>
+
+  <section class="financial-section">
+    <h2 class="category-title trading-section-title">跨市场观察</h2>
+    <ul class="financial-notes">
+      <li>10Y美债收益率回落-0.22%，对成长股估值压力有所缓和。</li><li>美股AI硬件链样本平均-4.68%，A股AI/算力+0.26%、半导体+1.03%，可作为跨市场科技风险偏好的参照。</li>
+    </ul>
+  </section>
+
+  <section class="financial-risk">
+    <strong>口径说明</strong><br>
+    本板块基于公开行情数据、代表性指数/ETF/个股和技术指标做复盘，不构成投资建议；代表性板块口径可能与官方行业指数存在差异。
+  </section></div>
+<div class="sub-content" data-sub-content="finance-topics" data-cat="finance"><section class="finance-topics">
+    <article class="finance-topic-card">
+      <div class="finance-topic-head">
+        <h2 class="finance-topic-title">其他财经观点</h2>
+        <span class="finance-topic-count">6</span>
+      </div>
+      
+      <p class="finance-topic-signal"><strong>观点信号</strong>观点信号集中在「其他财经观点」：文章从观点角度讨论白银矿商，认为当前市场存在不会长期持续的错位，但不构成投资建议。；Tavi Costa发布宏观更新，聚焦若干重要市场设置与潜在机会，内容为观点分析而非投资建议。；The Weekly ChartStorm选取最新标普500图表中的重点，围绕“盈利狂热”观察市场情绪与走势。</p>
+      <div class="finance-topic-items">
+        <article class="finance-topic-item">
+          <h3><a href="https://tavicosta.substack.com/p/the-case-for-silver-miners" target="_blank" rel="noopener noreferrer">Tavi Costa：白银矿商的投资逻辑</a></h3>
+          <p class="article-meta">Tavi Costa</p>
+          <p>文章从观点角度讨论白银矿商，认为当前市场存在不会长期持续的错位，但不构成投资建议。</p>
+        </article>
+<article class="finance-topic-item">
+          <h3><a href="https://tavicosta.substack.com/p/macro-update-077" target="_blank" rel="noopener noreferrer">Tavi Costa宏观更新：关键布局正在形成</a></h3>
+          <p class="article-meta">Tavi Costa</p>
+          <p>Tavi Costa发布宏观更新，聚焦若干重要市场设置与潜在机会，内容为观点分析而非投资建议。</p>
+        </article>
+<article class="finance-topic-item">
+          <h3><a href="https://www.chartstorm.info/p/chart-of-the-week-earnings-euphoria" target="_blank" rel="noopener noreferrer">本周图表：盈利狂热成为市场焦点</a></h3>
+          <p class="article-meta">The Weekly ChartStorm</p>
+          <p>The Weekly ChartStorm选取最新标普500图表中的重点，围绕“盈利狂热”观察市场情绪与走势。</p>
+        </article>
+<article class="finance-topic-item">
+          <h3><a href="https://themacrocompass.substack.com/p/run-it-hot-yet-again" target="_blank" rel="noopener noreferrer">The Macro Compass：经济再次“高温运行”</a></h3>
+          <p class="article-meta">The Macro Compass</p>
+          <p>The Macro Compass回归发布宏观分析，围绕经济与市场继续高热运行的背景展开观点解读。</p>
+        </article>
+      </div>
+      <p class="finance-topic-risk"><strong>验证/风险</strong>这是财经博主观点聚合，不构成投资建议；需要用公司公告、财报和价格行为交叉验证。</p>
+    </article>
+<article class="finance-topic-card">
+      <div class="finance-topic-head">
+        <h2 class="finance-topic-title">宏观流动性/利率</h2>
+        <span class="finance-topic-count">2</span>
+      </div>
+      
+      <p class="finance-topic-signal"><strong>观点信号</strong>观点信号集中在「宏观流动性/利率」：The Macro Compass分析Warsh及新任美联储主席相关议题，聚焦其对货币政策和市场预期的潜在影响。；文章称市场已习惯在波动初现时期待降息，Powell不应屈从这种诱惑，美联储需保持克制。</p>
+      <div class="finance-topic-items">
+        <article class="finance-topic-item">
+          <h3><a href="https://themacrocompass.substack.com/p/all-you-need-to-know-about-warsh" target="_blank" rel="noopener noreferrer">关于Warsh与新任美联储主席，你需要知道的一切</a></h3>
+          <p class="article-meta">The Macro Compass</p>
+          <p>The Macro Compass分析Warsh及新任美联储主席相关议题，聚焦其对货币政策和市场预期的潜在影响。</p>
+        </article>
+<article class="finance-topic-item">
+          <h3><a href="https://www.bloomberg.com/opinion/articles/2025-04-08/fed-must-resist-giving-into-market-expectations-of-rate-cuts" target="_blank" rel="noopener noreferrer">El-Erian：美联储必须避免重蹈过去覆辙</a></h3>
+          <p class="article-meta">Mohamed El-Erian</p>
+          <p>文章称市场已习惯在波动初现时期待降息，Powell不应屈从这种诱惑，美联储需保持克制。</p>
+        </article>
+      </div>
+      <p class="finance-topic-risk"><strong>验证/风险</strong>这是财经博主观点聚合，不构成投资建议；需要用公司公告、财报和价格行为交叉验证。</p>
+    </article>
+<article class="finance-topic-card">
+      <div class="finance-topic-head">
+        <h2 class="finance-topic-title">加密与金融监管</h2>
+        <span class="finance-topic-count">2</span>
+      </div>
+      <p class="finance-topic-tags"><span>HOOD</span></p>
+      <p class="finance-topic-signal"><strong>观点信号</strong>观点信号集中在「加密与金融监管」：本期ChartStorm讨论标普500回调空间、逢低买入、市场广度扩张、板块轮动、SpaceX IPO及航天股等主题。；文章称特朗普上周签署的GENIUS Act或对货币和财政政策产生持久影响，并暗示技术革命正在酝酿。涉及 HOOD。</p>
+      <div class="finance-topic-items">
+        <article class="finance-topic-item">
+          <h3><a href="https://www.chartstorm.info/p/weekly-s-and-p500-chartstorm-14-june" target="_blank" rel="noopener noreferrer">每周标普500图表风暴：回调空间、轮动与SpaceX IPO</a></h3>
+          <p class="article-meta">The Weekly ChartStorm</p>
+          <p>本期ChartStorm讨论标普500回调空间、逢低买入、市场广度扩张、板块轮动、SpaceX IPO及航天股等主题。</p>
+        </article>
+<article class="finance-topic-item">
+          <h3><a href="https://andreassteno.substack.com/p/final-call-steno-signals-206-is-the" target="_blank" rel="noopener noreferrer">Steno Signals第206期：GENIUS Act真是天才之举吗？</a></h3>
+          <p class="article-meta">Stenos Signals</p>
+          <p>文章称特朗普上周签署的GENIUS Act或对货币和财政政策产生持久影响，并暗示技术革命正在酝酿。</p>
+        </article>
+      </div>
+      <p class="finance-topic-risk"><strong>验证/风险</strong>这是财经博主观点聚合，不构成投资建议；需要用公司公告、财报和价格行为交叉验证。</p>
+    </article>
+  </section></div>
+<div class="sub-content" data-sub-content="news" data-cat="finance"><div class="sub-content active" data-sub-content="news" data-cat="finance">
+    
+    <div class="source-contents">
+      <div class="source-content active" data-source-content="_merged" data-sub="news" data-cat="finance">
+    <article class="article">
+  <h3 class="article-title"><a href="https://news.google.com/rss/articles/CBMirwFBVV95cUxQMjZSNjViRXpkcFVCci1GSTdET3doQnlHejZPRGNVYnlrRkZGOGZJdXhELXJpY2hfQ3lWX2EyWlhCQmFWdWE1ZWtzaFIwMmJfZmthVlBSUU1SQlB0XzhtQ0lCZHhwRFFFSTZmR1JXa1A4akR6VDM0ejBCTzdZUzRlVEs0X0VpeldtRDdPS3N6aGhpS1VEa1VRdVpGNzM4RGtBZWFyXzdPRzI3eFRYenVj?oc=5" target="_blank" rel="noopener noreferrer">美联储决议前亚洲股市料走低，油价趋稳</a></h3>
+  <p class="article-meta">原标题: Asian Stocks to Slip Ahead of Fed, Oil Steadies: Markets Wrap - Bloomberg.com</p>
+  
+  <p class="article-meta">Bloomberg via Google News · 06/17 06:06</p>
+  <p class="article-excerpt">Asian Stocks to Slip Ahead of Fed, Oil Steadies: Markets Wrap Bloomberg.com</p>
+  <p class="article-summary"><span class="summary-label">中文摘要</span> 彭博称，在美联储决议前，亚洲股市预计承压下滑；油价保持稳定，投资者关注货币政策与能源市场走向。</p>
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://news.google.com/rss/articles/CBMitgFBVV95cUxPalUyQ0ZBRE9NczY2a1F0RnJBSFJaS2dmb09YQS0zb0w5UHdka2FLSEZJTjMtWTRuU0FZXzBKbDhKS25fb1RuZ1NuYmgzMklSTlVaU1REQV9xOUhScGVsdkM4YjUzQzV5TUt6eVdFbGNVUTRYNW5OdXNmdmdmQXViTFZMYnF6ZlpWWUViMi1vYUJha1V5d1U2MUdfWVplNHh2cEh4bUxtbWlnNE1TMmhLV0s2X1ZOUQ?oc=5" target="_blank" rel="noopener noreferrer">富国银行上调标普500年末目标，称美伊协议接近达成</a></h3>
+  <p class="article-meta">原标题: Wells Fargo Boosts S&amp;P 500 Year-End Target as US-Iran Deal Nears - Bloomberg.com</p>
+  
+  <p class="article-meta">Bloomberg via Google News · 06/16 23:12</p>
+  <p class="article-excerpt">Wells Fargo Boosts S&amp;P 500 Year-End Target as US-Iran Deal Nears Bloomberg.com</p>
+  <p class="article-summary"><span class="summary-label">中文摘要</span> 富国银行上调标普500指数年末目标，背景是市场认为美国与伊朗协议接近达成，风险偏好或受到支撑。</p>
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://news.google.com/rss/articles/CBMipwFBVV95cUxNVnFmOXYwYm5TWVFkemtGNzV6N2RLSmZHZERBdUxEbW9SSHhHbW80bm1MbUdCbHFWcXlZMzhzekZ3eHVMWnZMOERWd0dtc2ZDeE5IRnRTM1d0TXlrYUpLTTE5MnJWaW5malBJYTR0MjlyZ2VvcERkYWZRanUxUXBCZzBvdl9IMjA3SDY1emtZVjdLZHhuQjFxY19KQ1kwS1lxZGFhTl92bw?oc=5" target="_blank" rel="noopener noreferrer">美国新屋开工降至2020年以来最弱水平</a></h3>
+  <p class="article-meta">原标题: US Housing Starts Drop to the Weakest Pace Since 2020 - Bloomberg.com</p>
+  
+  <p class="article-meta">Bloomberg via Google News · 06/16 22:05</p>
+  <p class="article-excerpt">US Housing Starts Drop to the Weakest Pace Since 2020 Bloomberg.com</p>
+  <p class="article-summary"><span class="summary-label">中文摘要</span> 美国住房开工数下滑至2020年以来最低步伐，显示房地产建设活动走弱，市场关注高利率环境下住房需求。</p>
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://news.google.com/rss/articles/CBMirwFBVV95cUxQblpEbk94c21naURhSF83dmdMZFZ3akRyekFPQWxLMkFZV0JRQlYzWjU5UmNlRDd6Y0pqa1J2YlFHQ2U0UWFlR18xV3RiNU04alN4R0JYeHNZT1NON1BRQ0kwcFkyVzR0LWx0amlXQ293YkFTRFc3czEtdFpqcXVWZ05PR1A0SDM3UWdyNkU1QVFtYU5FemcxaGpzTDN1SDRxa0N5TUpORUt3YjFheHU0?oc=5" target="_blank" rel="noopener noreferrer">Cursor上市数日后，SpaceX拟以600亿美元发起收购</a></h3>
+  <p class="article-meta">原标题: SpaceX Pounces on $60 Billion Cursor Takeover Days After IPO - Bloomberg.com</p>
+  
+  <p class="article-meta">Bloomberg via Google News · 06/16 21:47</p>
+  <p class="article-excerpt">SpaceX Pounces on $60 Billion Cursor Takeover Days After IPO Bloomberg.com</p>
+  <p class="article-summary"><span class="summary-label">中文摘要</span> 彭博称，Cursor完成IPO数日后，SpaceX迅速推进一项规模达600亿美元的收购行动，引发市场关注。</p>
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://36kr.com/p/3855879311823873?f=rss" target="_blank" rel="noopener noreferrer">鸿蒙智行全面引入电池二供，国轩高科将上车问界｜36氪独家</a></h3>
+  
+  
+  <p class="article-meta">36氪 · 06/16 21:24</p>
+  <p class="article-excerpt">今年以来，市场竞争进一步加剧，内存等供应链成本大幅攀升，寻求供应链降本、使产品定价更具竞争力，成了汽车行业更为迫切的课题。 在这样的背景下，36氪从多位产业人士处了解到，稳居中高端市场的鸿蒙智行也开始全面引入多家动力电池供应商。 “除了尊界短期内规模支撑不了第二家，其他界可能都会引入多元电池供应商。”有知情人士透露。 据36氪了解，其中，长期由宁德时代独供的问界品牌，将引入中创新航、国轩高科两家二线电池供应商，问界M6现已定点了国轩高科的81度电池包，有知情人士透露，去年国轩高科便已收到了鸿蒙智行的定点信，中创新航也将进入问界的供应体系。 而就在2022年8月，赛力斯曾与宁德时代签署了五年长期</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://news.google.com/rss/articles/CBMitgFBVV95cUxNc2dZcnNUNVN0Tm5sVGE4T0xlamV3ZDBlLXRvSk1aZVBjSUh5Y3FxZXh3ZWstXzQyTUE2T2hTcVRFd0YteHFvaXU4M2NZT19Ta2JHSnJsZnNvUXNNRjVMaEF0MXlGY2FSLTZjQUpJN3pGRkExcmFCU0htR040akNJQVlaQU9nS081cGRiTUsycXRlZUxES0RGSFBvaU9PRnQwR0tMOFQ5Ukl1c29lVGR5N0dXN08yZw?oc=5" target="_blank" rel="noopener noreferrer">霍尔木兹海峡开放后，卡塔尔计划迅速恢复LNG产量</a></h3>
+  <p class="article-meta">原标题: Qatar Plans to Rapidly Restart LNG Output After Hormuz Opens - Bloomberg.com</p>
+  
+  <p class="article-meta">Bloomberg via Google News · 06/16 18:58</p>
+  <p class="article-excerpt">Qatar Plans to Rapidly Restart LNG Output After Hormuz Opens Bloomberg.com</p>
+  <p class="article-summary"><span class="summary-label">中文摘要</span> 卡塔尔计划在霍尔木兹海峡重新开放后快速重启液化天然气产出，能源市场关注供应恢复进度。</p>
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://36kr.com/p/3855628692001799?f=rss" target="_blank" rel="noopener noreferrer">乘新浪潮之势，建智造创新之城，2026年番禺产业高质量发展招商大会圆满举行</a></h3>
+  
+  
+  <p class="article-meta">36氪 · 06/16 17:31</p>
+  <p class="article-excerpt">潮起湾区新机遇，科创赋能新番禺。6月16日上午，2026年番禺产业高质量发展招商大会在广州番禺良仓新造创意园举行，大会以“新浪潮·新番禺”为主题，旨在搭建高效政企对接、企企交流、资本赋能平台。 大会由广州市番禺信息技术投资发展有限公司（下称“番禺信投”）、广州市番禺交通建设投资集团有限公司（下称“番禺交投”）、广州市番禺区新造镇房地产开发公司主办（下称“新造房地产公司”），中国农业银行股份有限公司广州华南支行协办（下称“农行广州华南支行”），36氪承办，汇聚行业智库、龙头企业、优质项目、头部投资机构等多方代表逾百人，以科创为媒、以产业为桥、以资本为翼，共商发展大计，共绘产业新篇。 与此同时，为</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://36kr.com/p/3855262364488969?f=rss" target="_blank" rel="noopener noreferrer">融了数亿美金的「大晓机器人」，其创始人揭开了具身行业的割裂一面</a></h3>
+  
+  
+  <p class="article-meta">36氪 · 06/16 16:31</p>
+  <p class="article-excerpt">文｜周鑫雨 编辑｜张雨忻 梳理近半年的成果，大晓机器人董事长、商汤科技联合创始人王晓刚，滔滔不绝聊了10多分钟。 成立于2025年7月，大晓机器人（ACE ROBOTICS）是具身领域姗姗来迟的入局者。但一年来，这位新玩家成了赛道的“卷王”： 在模型侧，大晓新发布的具身大脑——世界模型“开悟（Kairos）3.0”，在4项全球具身智能基准测试中取得SOTA；开源的Kairos 3.0-4B，则率先实现在端侧直接驱动具身智能本体的能力。 △Kairos3.0在4个世界模型生成预测具身智能榜单中取得SOTA。图源：大晓机器人 在数据侧，大晓提出的“以人为中心”环境式采集方案，通过大规模采集人类与真</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://36kr.com/p/3853918856696834?f=rss" target="_blank" rel="noopener noreferrer">在大疆、影石夹缝中做智能影像生意，这家公司连续五年每年增长50%｜硬氪专访</a></h3>
+  
+  
+  <p class="article-meta">36氪 · 06/16 16:28</p>
+  <p class="article-excerpt">作者 | 黄楠 编辑 | 袁斯来 在创业者中，OBSBOT寻影CEO刘博已经是个“老人”了。 2016年，刘博浙大毕业就到深圳创业。不管是当初还是现在，在高调的“天才少年”创业者中，刘博履历都算不上特别耀眼。 他没有太多感性的故事分享。唯一一段难忘的经历，就是2019年时，因为产品定义出问题滞销，公司账户钱只够几个月，裁掉砍掉一半，相关业务暂停。那是他印象中最安静的一个冬天。 转机出现在2020年。居家办公常态化下，会议常用的Webcam需求暴增。刘博发现，市面上常见的摄像头都是固定式，而人在家里不会一直正襟危坐——会动、会起身、会改变姿势。他决定做一款能智能跟踪、自动构图的Webcam产品。</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://news.google.com/rss/articles/CBMitAFBVV95cUxOaWhxNDZBenBnUmRsaDY3R1czejg3Z0NFU1VKdzJ3enY5eGRnMFAxbTNjNXEzSWlMU0lSSjQ0Wmd3VnVCV3BoWVZZSEtOeXRUSzNhUGdMa19VVkJHMFVQaG1Rb3ZMWUpjQ0FoRzNIZnpKQ0J0NWpHR0JZMmZ6NDJMQU1tcTYtbXVJVGotdGZ3OU5lYy1EdElPYVpjUlhGRnBKdk45eXI1RUxaUFd0QldKX1pCdVQ?oc=5" target="_blank" rel="noopener noreferrer">以色列银行将切断约旦河西岸业务联系，引发经济担忧</a></h3>
+  <p class="article-meta">原标题: Israeli Bank to Sever West Bank Ties, Raising Alarm Over Economy - Bloomberg.com</p>
+  
+  <p class="article-meta">Bloomberg via Google News · 06/16 15:32</p>
+  <p class="article-excerpt">Israeli Bank to Sever West Bank Ties, Raising Alarm Over Economy Bloomberg.com</p>
+  <p class="article-summary"><span class="summary-label">中文摘要</span> 一家以色列银行计划切断与约旦河西岸的业务联系，引发外界对当地经济和金融往来的担忧。</p>
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://news.google.com/rss/articles/CBMitgFBVV95cUxNT0daVlZxVFNadUR0RXlrVVV2N2NoUGR2cElnUlVrWGhkOUpHMm84bFpUaWowRUZyRURJRkFyRk9NLXl5eGdHRDY2NURpa0poRVJjaE5TdFdDQXFfZ3FmMy1FMFhoaFBIZ2ZpM05xZGpxRnk2bmV1ZkdRYjk1cldKYmstZElOUUladUdWeGpBV0VtdndNMklmOXJ4Nmh4S2xDYzk3UFVXX1d0TEpDNXB3NnV1UWt4UQ?oc=5" target="_blank" rel="noopener noreferrer">消费与投资降至疫情时期水平，中国经济陷入停滞</a></h3>
+  <p class="article-meta">原标题: Chinese Economy Stalls as Spending, Investment Drop to Covid-Era Levels - Bloomberg.com</p>
+  
+  <p class="article-meta">Bloomberg via Google News · 06/16 13:27</p>
+  <p class="article-excerpt">Chinese Economy Stalls as Spending, Investment Drop to Covid-Era Levels Bloomberg.com</p>
+  <p class="article-summary"><span class="summary-label">中文摘要</span> 彭博称，中国消费和投资回落至疫情时期水平，经济动能放缓，市场关注内需与增长压力。</p>
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://news.google.com/rss/articles/CBMisAFBVV95cUxNLUExY1QyRk5uaUo2WlZOYWs1RUtocWpJNjNLZ3dPamFOMWZUWm9WZXZSNkl6SWZ0WXAwLVZQeWZfQUZtV2YxR19zSWlkOFBnbnRYTjlkTVFDN2xvWkxGZVUzbkhXaXp6R3diWEdwUHlwVWNWWlVVVHpxQlhmS0VzMTRVTmFHdlhCd0N1TFlBRFprXzRXQ2lydEx4N1ZjQi1adTR3ZmdTcnpVUVdKZmFzMQ?oc=5" target="_blank" rel="noopener noreferrer">评论称伊朗与市场成为两大明确赢家</a></h3>
+  <p class="article-meta">原标题: The Two Clear Winners Are Iran and Markets - Bloomberg.com</p>
+  
+  <p class="article-meta">Bloomberg via Google News · 06/16 12:00</p>
+  <p class="article-excerpt">The Two Clear Winners Are Iran and Markets Bloomberg.com</p>
+  <p class="article-summary"><span class="summary-label">中文摘要</span> 彭博评论称，在相关局势变化中，伊朗和金融市场被视为两大明确赢家，市场反应成为关注焦点。</p>
+</article>
+  </div>
+    </div>
+  </div></div>
+<div class="sub-content" data-sub-content="creator" data-cat="finance"><div class="sub-content active" data-sub-content="creator" data-cat="finance">
+    
+    <div class="source-contents">
+      <div class="source-content active" data-source-content="_merged" data-sub="creator" data-cat="finance">
+    <article class="article">
+  <h3 class="article-title"><a href="https://tavicosta.substack.com/p/the-case-for-silver-miners" target="_blank" rel="noopener noreferrer">Tavi Costa：白银矿商的投资逻辑</a></h3>
+  <p class="article-meta">原标题: The Case for Silver Miners</p>
+  <p class="article-stats">public RSS | opinion/NFA</p>
+  <p class="article-meta">Tavi Costa · 06/17 07:42</p>
+  <p class="article-excerpt">观点/NFA: A Disconnect That Won&#39;t Last</p>
+  <p class="article-summary"><span class="summary-label">中文摘要</span> 文章从观点角度讨论白银矿商，认为当前市场存在不会长期持续的错位，但不构成投资建议。</p>
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://tavicosta.substack.com/p/macro-update-077" target="_blank" rel="noopener noreferrer">Tavi Costa宏观更新：关键布局正在形成</a></h3>
+  <p class="article-meta">原标题: Macro Update</p>
+  <p class="article-stats">public RSS | opinion/NFA</p>
+  <p class="article-meta">Tavi Costa · 06/16 08:00</p>
+  <p class="article-excerpt">观点/NFA: Important Setups</p>
+  <p class="article-summary"><span class="summary-label">中文摘要</span> Tavi Costa发布宏观更新，聚焦若干重要市场设置与潜在机会，内容为观点分析而非投资建议。</p>
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.chartstorm.info/p/weekly-s-and-p500-chartstorm-14-june" target="_blank" rel="noopener noreferrer">每周标普500图表风暴：回调空间、轮动与SpaceX IPO</a></h3>
+  <p class="article-meta">原标题: Weekly S&amp;P500 ChartStorm - 14 June 2026</p>
+  <p class="article-stats">public RSS | opinion/NFA</p>
+  <p class="article-meta">The Weekly ChartStorm · 06/14 16:10</p>
+  <p class="article-excerpt">观点/NFA: This week: space for a sell-off, buying the dip, bullish broadening and rotation, the big and the small, SpaceX IPO, space sector stocks, the big sector skews...</p>
+  <p class="article-summary"><span class="summary-label">中文摘要</span> 本期ChartStorm讨论标普500回调空间、逢低买入、市场广度扩张、板块轮动、SpaceX IPO及航天股等主题。</p>
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.chartstorm.info/p/chart-of-the-week-earnings-euphoria" target="_blank" rel="noopener noreferrer">本周图表：盈利狂热成为市场焦点</a></h3>
+  <p class="article-meta">原标题: Chart of the Week - Earnings Euphoria</p>
+  <p class="article-stats">public RSS | opinion/NFA</p>
+  <p class="article-meta">The Weekly ChartStorm · 06/11 18:40</p>
+  <p class="article-excerpt">观点/NFA: Chart in-focus from the latest Weekly S&amp;P500 ChartStorm</p>
+  <p class="article-summary"><span class="summary-label">中文摘要</span> The Weekly ChartStorm选取最新标普500图表中的重点，围绕“盈利狂热”观察市场情绪与走势。</p>
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://themacrocompass.substack.com/p/run-it-hot-yet-again" target="_blank" rel="noopener noreferrer">The Macro Compass：经济再次“高温运行”</a></h3>
+  <p class="article-meta">原标题: Run It Hot, Yet Again</p>
+  <p class="article-stats">public RSS | opinion/NFA</p>
+  <p class="article-meta">The Macro Compass · 05/26 14:18</p>
+  <p class="article-excerpt">观点/NFA: I am back with a healthy dose of macro analysis for you</p>
+  <p class="article-summary"><span class="summary-label">中文摘要</span> The Macro Compass回归发布宏观分析，围绕经济与市场继续高热运行的背景展开观点解读。</p>
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://themacrocompass.substack.com/p/all-you-need-to-know-about-warsh" target="_blank" rel="noopener noreferrer">关于Warsh与新任美联储主席，你需要知道的一切</a></h3>
+  <p class="article-meta">原标题: All You Need To Know About Warsh</p>
+  <p class="article-stats">public RSS | opinion/NFA</p>
+  <p class="article-meta">The Macro Compass · 02/10 18:04</p>
+  <p class="article-excerpt">观点/NFA: Let&#39;s Look Into The New Fed Chair</p>
+  <p class="article-summary"><span class="summary-label">中文摘要</span> The Macro Compass分析Warsh及新任美联储主席相关议题，聚焦其对货币政策和市场预期的潜在影响。</p>
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://andreassteno.substack.com/p/absolute-final-call-steno-signals" target="_blank" rel="noopener noreferrer">Steno Signals第207期：全面巡览主要领先指标</a></h3>
+  <p class="article-meta">原标题: ABSOLUTE FINAL CALL: Steno Signals #207 – The Grand Tour of All the Leading Indicators</p>
+  <p class="article-stats">public RSS | opinion/NFA</p>
+  <p class="article-meta">Stenos Signals · 07/31 16:46</p>
+  <p class="article-excerpt">观点/NFA: Having been on vacation for a couple of weeks, I updated all of our leading indicators first thing upon returning to the office. Here’s your must-read guided tour throughour major leading indicators.</p>
+  <p class="article-summary"><span class="summary-label">中文摘要</span> 作者休假后更新全部主要领先指标，并以导览形式梳理关键宏观信号，供读者把握当前市场背景。</p>
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://andreassteno.substack.com/p/final-call-steno-signals-206-is-the" target="_blank" rel="noopener noreferrer">Steno Signals第206期：GENIUS Act真是天才之举吗？</a></h3>
+  <p class="article-meta">原标题: FINAL CALL: Steno Signals #206 – Is the GENIUS Act in fact an act of genius?</p>
+  <p class="article-stats">public RSS | opinion/NFA</p>
+  <p class="article-meta">Stenos Signals · 07/23 23:53</p>
+  <p class="article-excerpt">观点/NFA: The GENIUS Act, signed into law by Trump late last week, may have a lasting impact on everything from monetary to fiscal policy. There are signs of a tech revolution unfolding beneath the hood.</p>
+  <p class="article-summary"><span class="summary-label">中文摘要</span> 文章称特朗普上周签署的GENIUS Act或对货币和财政政策产生持久影响，并暗示技术革命正在酝酿。</p>
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.bloomberg.com/opinion/articles/2025-04-11/trump-tariffs-economic-and-market-stability-hinges-on-these-questions" target="_blank" rel="noopener noreferrer">El-Erian：经济与市场稳定取决于这些关键问题</a></h3>
+  <p class="article-meta">原标题: Economic and Market Stability Hinges on These Questions</p>
+  <p class="article-stats">public RSS | opinion/NFA</p>
+  <p class="article-meta">Mohamed El-Erian · 04/12 02:29</p>
+  <p class="article-excerpt">观点/NFA: The US government needs to reassure markets.</p>
+  <p class="article-summary"><span class="summary-label">中文摘要</span> Mohamed El-Erian认为，美国政府需要安抚市场，经济与市场稳定将取决于一系列关键问题的回应。</p>
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.bloomberg.com/opinion/articles/2025-04-08/fed-must-resist-giving-into-market-expectations-of-rate-cuts" target="_blank" rel="noopener noreferrer">El-Erian：美联储必须避免重蹈过去覆辙</a></h3>
+  <p class="article-meta">原标题: The Fed Must Resist Repeating Past Mistakes</p>
+  <p class="article-stats">public RSS | opinion/NFA</p>
+  <p class="article-meta">Mohamed El-Erian · 04/08 16:30</p>
+  <p class="article-excerpt">观点/NFA: Markets have been trained to expect lower rates at the first sign of volatility. Powell mustn’t give in to temptation.</p>
+  <p class="article-summary"><span class="summary-label">中文摘要</span> 文章称市场已习惯在波动初现时期待降息，Powell不应屈从这种诱惑，美联储需保持克制。</p>
+</article>
+  </div>
+    </div>
+  </div></div>
+<div class="sub-content" data-sub-content="macro" data-cat="finance"><div class="sub-content active" data-sub-content="macro" data-cat="finance">
+    
+    <div class="source-contents">
+      <div class="source-content active" data-source-content="_merged" data-sub="macro" data-cat="finance">
+    <article class="article">
+  <h3 class="article-title"><a href="https://www.sec.gov/newsroom/press-releases/2026-55-sec-appoints-john-moses-director-office-investor-education-assistance" target="_blank" rel="noopener noreferrer">SEC Appoints John Moses as Director of the Office of Investor Education and Assistance</a></h3>
+  
+  
+  <p class="article-meta">SEC Press Releases · 06/13 00:30</p>
+  <p class="article-excerpt">The Securities and Exchange Commission has appointed John Moses as Director of the agency’s Office of Investor Education and Assistance, which provides services and resources to help investors build their financial futures and protect against investment…</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.federalreserve.gov/newsevents/pressreleases/bcreg20260611a.htm" target="_blank" rel="noopener noreferrer">Federal Reserve Board announces final rule that establishes data standards for certain information collections</a></h3>
+  
+  
+  <p class="article-meta">Federal Reserve Press Releases · 06/11 23:00</p>
+  <p class="article-excerpt">Federal Reserve Board announces final rule that establishes data standards for certain information collections</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.sec.gov/newsroom/press-releases/2026-54-sec-proposes-rescission-regulation-nms-rules-611-610e" target="_blank" rel="noopener noreferrer">SEC Proposes Rescission of Regulation NMS Rules 611 and 610(e)</a></h3>
+  
+  
+  <p class="article-meta">SEC Press Releases · 06/11 22:55</p>
+  <p class="article-excerpt">The Securities and Exchange Commission today proposed amendments to rescind Rules 611 and 610(e) of Regulation NMS.“After two decades of Rule 611, it is high time that the Commission review its unintended consequences that have hindered — rather than…</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.bea.gov/news/2026/new-foreign-direct-investment-united-states-2025" target="_blank" rel="noopener noreferrer">New Foreign Direct Investment in the United States, 2025</a></h3>
+  
+  
+  <p class="article-meta">BEA News Releases · 06/10 20:30</p>
+  <p class="article-excerpt">Expenditures by foreign direct investors to acquire, establish, or expand U.S. businesses totaled $232.2 billion in 2025, according to preliminary statistics released today by the U.S. Bureau of Economic Analysis. Expenditures increased $76.8 billion, or 49.5 percent, from 2024 levels. As in previou</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.federalreserve.gov/newsevents/pressreleases/bcreg20260609a.htm" target="_blank" rel="noopener noreferrer">Federal Reserve Board announces that results from its annual bank stress test will be released on Wednesday, June 24, at 4 p.m. EDT.</a></h3>
+  
+  
+  <p class="article-meta">Federal Reserve Press Releases · 06/10 04:00</p>
+  <p class="article-excerpt">Federal Reserve Board announces that results from its annual bank stress test will be released on Wednesday, June 24, at 4 p.m. EDT.</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.bea.gov/news/2026/us-international-trade-goods-and-services-april-2026" target="_blank" rel="noopener noreferrer">U.S. International Trade in Goods and Services, April 2026</a></h3>
+  
+  
+  <p class="article-meta">BEA News Releases · 06/09 20:30</p>
+  <p class="article-excerpt">The U.S. monthly international trade deficit decreased in April 2026 according to the U.S. Bureau of Economic Analysis and the U.S. Census Bureau. The deficit decreased from $56.6 billion in March (revised) to $55.9 billion in April, as exports increased more than imports. The goods deficit decrease</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.sec.gov/newsroom/press-releases/2026-53-sec-establishes-joint-data-standards-required-under-financial-data-transparency-act-2022" target="_blank" rel="noopener noreferrer">SEC Establishes Joint Data Standards as Required Under the Financial Data Transparency Act of 2022</a></h3>
+  
+  
+  <p class="article-meta">SEC Press Releases · 06/08 22:36</p>
+  <p class="article-excerpt">The U.S. Securities and Exchange Commission established joint data standards under the Financial Data Transparency Act of 2022. The final rule establishes technical standards for data submitted to certain financial regulatory agencies. Eight additional…</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.sec.gov/newsroom/press-releases/2026-52-sec-announces-new-members-small-business-capital-formation-advisory-committee" target="_blank" rel="noopener noreferrer">SEC Announces New Members of Small Business Capital Formation Advisory Committee</a></h3>
+  
+  
+  <p class="article-meta">SEC Press Releases · 06/05 02:39</p>
+  <p class="article-excerpt">The Securities and Exchange Commission today announced five new members of the Small Business Capital Formation Advisory Committee. The new members were appointed to four-year terms and will join the 15 current …</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.federalreserve.gov/newsevents/pressreleases/bcreg20260602a.htm" target="_blank" rel="noopener noreferrer">Agencies remove additional references to reputation risk</a></h3>
+  
+  
+  <p class="article-meta">Federal Reserve Press Releases · 06/02 23:00</p>
+  <p class="article-excerpt">Agencies remove additional references to reputation risk</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.sec.gov/newsroom/press-releases/2026-51-sec-publishes-draft-strategic-plan-public-comment" target="_blank" rel="noopener noreferrer">SEC Publishes Draft Strategic Plan for Public Comment</a></h3>
+  
+  
+  <p class="article-meta">SEC Press Releases · 06/02 22:30</p>
+  <p class="article-excerpt">The Securities and Exchange Commission today published a Draft Strategic Plan that focuses on returning the agency to the core mission set by Congress more than 90 years ago: protecting investors; maintaining fair, orderly, and efficient…</p>
+  
+</article>
+  </div>
+    </div>
+  </div></div></div>
+  </section>
+  <section class="panel" data-panel="community">
+    <nav class="sub-tabs"><button class="sub-tab active" data-sub="cn-community" data-cat="tech">中文社区<span class="count">28</span></button><button class="sub-tab" data-sub="overseas-community" data-cat="tech">海外社区<span class="count">10</span></button></nav>
+<div class="sub-contents"><div class="sub-content active" data-sub-content="cn-community" data-cat="tech">
+    <nav class="source-tabs"><button class="source-tab active" data-source="v2ex-hot" data-sub="cn-community" data-cat="tech">V2EX<span class="count">8</span></button><button class="source-tab" data-source="weibo-hot" data-sub="cn-community" data-cat="tech">微博热搜<span class="count">10</span></button><button class="source-tab" data-source="zhihu-hot" data-sub="cn-community" data-cat="tech">知乎热榜<span class="count">10</span></button></nav>
+    <div class="source-contents">
+      <div class="source-content active" data-source-content="v2ex-hot" data-sub="cn-community" data-cat="tech">
+    <article class="article">
+  <h3 class="article-title"><a href="https://www.v2ex.com/t/1220816" target="_blank" rel="noopener noreferrer">闲鱼黑话查询</a></h3>
+  
+  
+  <p class="article-meta">06/16 14:27</p>
+  <p class="article-excerpt">RSSHub 技术社区 fallback · vacuitym: 早上登录 codex 发现需要验证手机号了，然后就想着去买个 giffgaff 的卡，然后果然被闲鱼屏蔽了，试了几个词都不行。 我觉得也许有其他人可以提供帮助，因此做了这个网站： https://search-sharp.com/ 用户可以输入需要搜的商品，来获取可用的搜索词（刚做的，内容基本是空的，需要大家来努力贡献） 为了避免无意义的刷词，因此做了 Google 登录验证（仅搜索不需要登录） 很需要大家参与，哪怕是仅仅帮我填上 giffgaff 用什么词可以搜到 longshot20260616141926.png</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.v2ex.com/t/1220810" target="_blank" rel="noopener noreferrer">最终买了凯美瑞</a></h3>
+  
+  
+  <p class="article-meta">06/16 14:10</p>
+  <p class="article-excerpt">RSSHub 技术社区 fallback · Jammmm: 前文 之前发帖子很多朋友有推荐车，在此表示感谢！最终我选购了凯美瑞 2.0 混动。分享一些选车的经过，供大家参考。前文链接：# 买了一辆 6000 块钱的二手车 # 12w 预算之内，家庭第一辆车选购 用车背景 家里有娃 偏爱轿车，不太喜欢 SUV 家庭唯一用车 年行驶里程约 1~1.5 万公里 每年会有一次 700 公里左右的长途出行 为什么没买电车？ 最近几年电车确实很火，包括站内也讨论了很多。我也去试驾、了解过不少车型，最后还是没有选择电车，主要有以下几个原因： 家属属于比较容易晕车的体质，而电车都比较容易出现晕车情况。 对底盘大电池的长期安全性多少还有些顾虑，虽然概率很</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.v2ex.com/t/1220761" target="_blank" rel="noopener noreferrer">收到一个杭州 offer 该去吗</a></h3>
+  
+  
+  <p class="article-meta">06/16 11:16</p>
+  <p class="article-excerpt">RSSHub 技术社区 fallback · Pinia1: 目前在深圳一家中厂做全栈外包，base17x12 加班多 应该还能稳定干一两年, 杭州 17x15 纯前端 最近名声不太好 害怕没干几个月就被裁了 ，太纠结了</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.v2ex.com/t/1220758" target="_blank" rel="noopener noreferrer">智谱真的一言难尽</a></h3>
+  
+  
+  <p class="article-meta">06/16 11:09</p>
+  <p class="article-excerpt">RSSHub 技术社区 fallback · CHTuring: 下载了 ZCode 想体验下新模型，结果 Request Many 。那我充钱行了吧。 GLM Coding Plan 居然全部售罄，还要等补货的吗。 告辞</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.v2ex.com/t/1220731" target="_blank" rel="noopener noreferrer">SpaceX 这个市值合理吗？</a></h3>
+  
+  
+  <p class="article-meta">06/16 10:07</p>
+  <p class="article-excerpt">RSSHub 技术社区 fallback · Bullish: 按这个夜盘价格市值已经超越亚马逊了，再稍微拉一下就可以超越微软了。</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.v2ex.com/t/1220726" target="_blank" rel="noopener noreferrer">分享： 3 个月减重 20 斤（饮食）</a></h3>
+  
+  
+  <p class="article-meta">06/16 09:50</p>
+  <p class="article-excerpt">RSSHub 技术社区 fallback · DonaldVVV: 起因 在今年 3 月份的时候，突然想到经常有 3 月不撸的挑战，这对我来说吧有点难度；就想着换个挑战吧 我想着那就挑战吃一个月的水煮菜吧 身体信息 身高：178 体重：92kg BMI 属于肥胖级别 水煮菜 真就是只有水和菜，油盐都没有放，煮熟之后放到饭盒带两顿 菜主要是土豆、山药、南瓜、白菜、莲藕、香菇 肉主要是牛肉、猪肉、鸡胸肉、牛肉丸。牛肉丸买的是海底捞的，不带馅的那种，鸡胸肉一般是腌制一下水煮的也挺好吃的，牛肉和猪肉喜欢切成薄片做成生烫 不吃米饭，糙米我也没吃，馒头那些精面在我中餐和晚餐都不会出现 到公司之后如果实在吃不下去，就会弄一些油醋汁加上 早餐的话，我一般</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.v2ex.com/t/1220709" target="_blank" rel="noopener noreferrer">小时候打过乙肝疫苗，检查显示抗体为 0 了，需要补打吗？</a></h3>
+  
+  
+  <p class="article-meta">06/16 09:10</p>
+  <p class="article-excerpt">RSSHub 技术社区 fallback · 052678: 很小的时候打过，大概有 20 年了吧，大概。然后体检检查显示抗体为 0 （复诊顺带查的，实际上体验不会查这个）。医生建议是补打，但是打这个太麻烦了，问了下三针（分时间段打，打完估计得大半年），医保还不是完全报销。</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.v2ex.com/t/1220708" target="_blank" rel="noopener noreferrer">想请教 claude 如何实战，我自己想从头到尾实现一个 ios 的 app，不知道如何高效的利用 claude？</a></h3>
+  
+  
+  <p class="article-meta">06/16 09:03</p>
+  <p class="article-excerpt">RSSHub 技术社区 fallback · sjmcefc2: 需求是：从头到尾一个人实现一个 ios 的 app ，体验 AI 加持下的一人公司。 困惑：以 chat 对话形式，写完了业务需求分析 PRD ，但 chat 模式使用 claude 效率很低，过程中频频出现限制。 后面知道需要运用 skill ，但目前不知道一般软件开发的流程是什么，我需要创建哪些 skill ，或者哪里有现成的 skill ？怎么才能最大化利用自己订阅的 pro 。 1.目前停留在 chat 阶段 2.完成了 PRD 文档写作，隐约知道软件开发需要 UI 设计、系统交互、技术架构、概要分析、详细设计这些，但是不知道如何下手。 3.UI 设计过程中，让 c</p>
+  
+</article>
+  </div>
+<div class="source-content" data-source-content="weibo-hot" data-sub="cn-community" data-cat="tech">
+    <article class="article">
+  <h3 class="article-title"><a href="https://s.weibo.com/weibo?q=%E5%A7%86%E5%B7%B4%E4%BD%A9%E6%B3%95%E5%9B%BD%E9%98%9F%E5%8F%B2%E5%B0%84%E6%89%8B%E7%8E%8B&amp;Refer=top" target="_blank" rel="noopener noreferrer">姆巴佩法国队史射手王</a></h3>
+  
+  
+  <p class="article-meta">06/17 08:02</p>
+  <p class="article-excerpt">热度 820,148</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://s.weibo.com/weibo?q=%E5%A4%A9%E7%8C%AB%E5%92%8C%E5%BD%B1%E8%A7%86%E9%A3%93%E9%A3%8E%E6%8E%A2%E7%B4%A2%E4%B8%8B%E4%B8%80%E4%BB%A3AI%E7%A1%AC%E4%BB%B6&amp;Refer=top" target="_blank" rel="noopener noreferrer">天猫和影视飓风探索下一代AI硬件</a></h3>
+  
+  
+  <p class="article-meta">06/17 08:02</p>
+  <p class="article-excerpt">热度 795,404 · 重磅</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://s.weibo.com/weibo?q=%E7%8E%8B%E6%BF%9B%E4%B8%80%E5%88%B0%E7%94%98%E9%9C%B2%E5%AF%BA%E9%82%A3%E6%AE%B5%E6%88%91%E5%B0%B1%E5%BF%AB%E8%BF%9B&amp;Refer=top" target="_blank" rel="noopener noreferrer">#王濛一到甘露寺那段我就快进#</a></h3>
+  
+  
+  <p class="article-meta">06/17 08:02</p>
+  <p class="article-excerpt">热度 407,747 · 综艺</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://s.weibo.com/weibo?q=%E5%A7%86%E5%B7%B4%E4%BD%A9%E6%A2%85%E5%BC%80%E4%BA%8C%E5%BA%A6&amp;Refer=top" target="_blank" rel="noopener noreferrer">姆巴佩梅开二度</a></h3>
+  
+  
+  <p class="article-meta">06/17 08:02</p>
+  <p class="article-excerpt">热度 2,360,901 · 热</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://s.weibo.com/weibo?q=%E8%AD%A6%E6%96%B9%E6%8F%90%E7%BA%A7%E5%A4%84%E7%90%86%E7%94%B7%E7%94%9F%E6%8A%A5%E8%AD%A6%E5%90%8E%E5%86%8D%E9%81%AD%E6%96%BD%E6%9A%B4&amp;Refer=top" target="_blank" rel="noopener noreferrer">#警方提级处理男生报警后再遭施暴#</a></h3>
+  
+  
+  <p class="article-meta">06/17 08:02</p>
+  <p class="article-excerpt">热度 1,422,556 · 新</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://s.weibo.com/weibo?q=%E5%89%8D5%E4%B8%AA%E6%9C%88%E5%9B%BD%E6%B0%91%E7%BB%8F%E6%B5%8E%E5%BB%B6%E7%BB%AD%E5%90%91%E6%96%B0%E5%90%91%E4%BC%98%E5%8F%91%E5%B1%95%E6%80%81%E5%8A%BF&amp;Refer=top" target="_blank" rel="noopener noreferrer">#前5个月国民经济延续向新向优发展态势#</a></h3>
+  
+  
+  <p class="article-meta">06/17 08:02</p>
+  <p class="article-excerpt">热度 1,104,657</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://s.weibo.com/weibo?q=%E4%BA%AC%E4%B8%9C%E6%98%8E%E6%98%9F%E7%BA%A2%E5%8C%85%E6%9C%80%E5%90%8E%E4%B8%80%E6%B3%A26180%E5%85%83&amp;Refer=top" target="_blank" rel="noopener noreferrer">京东明星红包最后一波6180元</a></h3>
+  
+  
+  <p class="article-meta">06/17 08:02</p>
+  <p class="article-excerpt">热度 1,101,980 · 重磅</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://s.weibo.com/weibo?q=%E5%93%88%E5%85%B0%E5%BE%B7%E8%BF%9B%E7%90%83&amp;Refer=top" target="_blank" rel="noopener noreferrer">哈兰德进球</a></h3>
+  
+  
+  <p class="article-meta">06/17 08:02</p>
+  <p class="article-excerpt">热度 1,093,948 · 新</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://s.weibo.com/weibo?q=%E4%BC%8A%E6%8B%89%E5%85%8Bvs%E6%8C%AA%E5%A8%81&amp;Refer=top" target="_blank" rel="noopener noreferrer">伊拉克vs挪威</a></h3>
+  
+  
+  <p class="article-meta">06/17 08:02</p>
+  <p class="article-excerpt">热度 902,390</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="http://weibo.com/2656274875/R4nq11ixr" target="_blank" rel="noopener noreferrer">#中缅胞波情谊深厚#</a></h3>
+  
+  
+  <p class="article-meta">06/17 08:02</p>
+  <p class="article-excerpt">热度 · 热</p>
+  
+</article>
+  </div>
+<div class="source-content" data-source-content="zhihu-hot" data-sub="cn-community" data-cat="tech">
+    <article class="article">
+  <h3 class="article-title"><a href="https://www.zhihu.com/question/2050239948306092201" target="_blank" rel="noopener noreferrer">腾讯大幅下调员工 AI Token 额度，从月均上万降至千元级别意味着什么？AI 算力成本面临哪些困局？</a></h3>
+  
+  
+  <p class="article-meta">06/17 08:02</p>
+  <p class="article-excerpt">知乎热榜 #2</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.zhihu.com/question/2050117326687527724" target="_blank" rel="noopener noreferrer">40 岁佛得角门将 7 次扑救 0 封西班牙，赛后泪洒球场，如何看待他本场表现？体现了哪些体育精神？</a></h3>
+  
+  
+  <p class="article-meta">06/17 08:02</p>
+  <p class="article-excerpt">知乎热榜 #3</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.zhihu.com/question/2049548864626202351" target="_blank" rel="noopener noreferrer">消息称蚂蚁集团正秘密测试 AI 版支付宝，新版本颠覆原有用户交互，会给用户体验和金融行业带来哪些改变？</a></h3>
+  
+  
+  <p class="article-meta">06/17 08:02</p>
+  <p class="article-excerpt">知乎热榜 #4</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.zhihu.com/question/2050151122652722811" target="_blank" rel="noopener noreferrer">匹克直播间官号自爆遭欠薪一年，网传匹克还有 50 万国家队赞助费未支付，具体怎么回事？</a></h3>
+  
+  
+  <p class="article-meta">06/17 08:02</p>
+  <p class="article-excerpt">知乎热榜 #5</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.zhihu.com/question/2049761360817534794" target="_blank" rel="noopener noreferrer">布伦森拿到老大冠军后，能否说他的职业生涯比东契奇更成功？东契奇还有反超的机会吗？</a></h3>
+  
+  
+  <p class="article-meta">06/17 08:02</p>
+  <p class="article-excerpt">知乎热榜 #6</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.zhihu.com/question/2050229682415613269" target="_blank" rel="noopener noreferrer">伊朗队赛前获准在美国过夜，赛后却被勒令立即离开，如何看待此事？风波背后折射出美伊关系怎样的冰与火？</a></h3>
+  
+  
+  <p class="article-meta">06/17 08:02</p>
+  <p class="article-excerpt">知乎热榜 #7</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.zhihu.com/question/2049828429411739036" target="_blank" rel="noopener noreferrer">刘昊然、董子健等演员「当众求职」，程潇坦言档期很空看看我，如何看待这一现象？折射出怎样的影视行业现状？</a></h3>
+  
+  
+  <p class="article-meta">06/17 08:02</p>
+  <p class="article-excerpt">知乎热榜 #8</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.zhihu.com/question/2050170338340873126" target="_blank" rel="noopener noreferrer">日本球迷在世界杯捡垃圾被批「出国作秀」，日本网友留言称「涩谷街头的垃圾也捡捡吧」，如何看待这一争议？</a></h3>
+  
+  
+  <p class="article-meta">06/17 08:02</p>
+  <p class="article-excerpt">知乎热榜 #9</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.zhihu.com/question/1980489635277854214" target="_blank" rel="noopener noreferrer">动物有「欺骗」或「演」的意识吗？</a></h3>
+  
+  
+  <p class="article-meta">06/17 08:02</p>
+  <p class="article-excerpt">知乎热榜 #10</p>
+  
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.zhihu.com/question/2050225721503475331" target="_blank" rel="noopener noreferrer">2026 年世界杯小组赛，法国 3-1 塞内加尔，姆巴佩双响成法国队史射手王，如何评价本场比赛？</a></h3>
+  
+  
+  <p class="article-meta">06/17 08:02</p>
+  <p class="article-excerpt">知乎热榜 #1</p>
+  
+</article>
+  </div>
+    </div>
+  </div>
+<div class="sub-content" data-sub-content="overseas-community" data-cat="tech">
+    
+    <div class="source-contents">
+      <div class="source-content active" data-source-content="hackernews" data-sub="overseas-community" data-cat="tech">
+    <article class="article">
+  <h3 class="article-title"><a href="https://writings.stephenwolfram.com/2026/06/launching-version-15-of-wolfram-language-mathematica-built-in-useful-ai-lots-of-new-core-functionality/" target="_blank" rel="noopener noreferrer">Wolfram Language 与 Mathematica 发布 15 版，加入 AI 助手等新功能</a></h3>
+  <p class="article-meta">原标题: Wolfram Language and Mathematica Version 15, AI Assistant, Symbolic Music, More</p>
+  
+  <p class="article-meta">06/17 07:15</p>
+  <p class="article-excerpt">10 points · 1 comments</p>
+  <p class="article-summary"><span class="summary-label">中文介绍</span> Stephen Wolfram 介绍 Wolfram Language 与 Mathematica 15 版，重点包括内置 AI 助手、符号音乐和多项核心功能更新。</p>
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://nlnet.nl/news/2026/20260616-67-new-projects.html" target="_blank" rel="noopener noreferrer">NLnet 宣布资助 67 个新的开源项目</a></h3>
+  <p class="article-meta">原标题: NLnet announces funding for 67 more open-source projects</p>
+  
+  <p class="article-meta">06/17 07:12</p>
+  <p class="article-excerpt">25 points · 7 comments</p>
+  <p class="article-summary"><span class="summary-label">中文介绍</span> NLnet 公布新一轮资助名单，将支持 67 个开源项目，延续其对开放互联网、软件基础设施和公共技术生态的投入。</p>
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://mll.sh/humiliating-iis-servers-for-fun-and-jail-time/" target="_blank" rel="noopener noreferrer">“取笑” IIS 服务器的技术故事引发 Hacker News 讨论</a></h3>
+  <p class="article-meta">原标题: Humiliating IIS servers for fun and jail time</p>
+  
+  <p class="article-meta">06/17 06:53</p>
+  <p class="article-excerpt">25 points · 1 comments</p>
+  <p class="article-summary"><span class="summary-label">中文介绍</span> 文章以调侃口吻讲述围绕 IIS 服务器的技术经历，并以“fun and jail time”制造反差，引发 Hacker News 用户关注。</p>
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.techdirt.com/2026/06/16/the-uks-teen-social-media-ban-is-political-theater-not-child-safety-policy/" target="_blank" rel="noopener noreferrer">Techdirt 批评英国青少年社交媒体禁令是政治表演</a></h3>
+  <p class="article-meta">原标题: The UK&#39;s Teen Social Media Ban Is Political Theater, Not Child Safety Policy</p>
+  
+  <p class="article-meta">06/17 06:15</p>
+  <p class="article-excerpt">60 points · 54 comments</p>
+  <p class="article-summary"><span class="summary-label">中文介绍</span> Techdirt 文章称，英国针对青少年的社交媒体禁令更像政治姿态，而非真正有效的儿童安全政策，引发大量讨论。</p>
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://discuss.grapheneos.org/d/36469-grapheneos-has-been-ported-to-android-17-and-official-releases-are-coming-soon" target="_blank" rel="noopener noreferrer">GrapheneOS 已移植至 Android 17，官方版本即将发布</a></h3>
+  <p class="article-meta">原标题: GrapheneOS has been ported to Android 17</p>
+  
+  <p class="article-meta">06/17 04:34</p>
+  <p class="article-excerpt">281 points · 113 comments</p>
+  <p class="article-summary"><span class="summary-label">中文介绍</span> GrapheneOS 社区消息称，该系统已完成向 Android 17 的移植，官方发布版本即将到来，在 Hacker News 上获得较高关注。</p>
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://github.com/nvlabs/cutile-rs" target="_blank" rel="noopener noreferrer">NVIDIA 展示 cuTile Rust：用 Rust 编写安全 GPU 内核</a></h3>
+  <p class="article-meta">原标题: Show HN: cuTile Rust: Safe, data-race-free GPU kernels in Rust</p>
+  
+  <p class="article-meta">06/17 04:17</p>
+  <p class="article-excerpt">20 points · 5 comments</p>
+  <p class="article-summary"><span class="summary-label">中文介绍</span> nvlabs 发布 cuTile Rust 项目，主打用 Rust 编写安全、无数据竞争的 GPU kernels，并以 Show HN 形式引发开发者讨论。</p>
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://words.filippo.io/frood/" target="_blank" rel="noopener noreferrer">Frood：基于 Alpine Initramfs 的 NAS 项目回顾</a></h3>
+  <p class="article-meta">原标题: Frood, an Alpine Initramfs NAS (2024)</p>
+  
+  <p class="article-meta">06/17 04:17</p>
+  <p class="article-excerpt">23 points · 8 comments</p>
+  <p class="article-summary"><span class="summary-label">中文介绍</span> 文章介绍 2024 年的 Frood 项目，一个基于 Alpine Initramfs 的 NAS 方案，涉及轻量系统启动与本地存储设备实践。</p>
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://arseniyshestakov.com/2026/06/16/apple-is-about-to-make-hide-my-email-useless/" target="_blank" rel="noopener noreferrer">文章称 Apple 可能让“隐藏我的邮箱”功能失去价值</a></h3>
+  <p class="article-meta">原标题: Apple is about to make Hide My Email useless</p>
+  
+  <p class="article-meta">06/17 02:37</p>
+  <p class="article-excerpt">356 points · 218 comments</p>
+  <p class="article-summary"><span class="summary-label">中文介绍</span> 作者认为 Apple 的相关变化可能削弱 Hide My Email 的实用性，该观点在 Hacker News 上引发隐私、平台政策和用户控制权讨论。</p>
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.tno.nl/en/digital/artificial-intelligence/gpt-nl/" target="_blank" rel="noopener noreferrer">GPT‑NL：面向荷兰的主权语言模型项目</a></h3>
+  <p class="article-meta">原标题: GPT‑NL: a sovereign language model for the Netherlands</p>
+  
+  <p class="article-meta">06/17 01:54</p>
+  <p class="article-excerpt">125 points · 128 comments</p>
+  <p class="article-summary"><span class="summary-label">中文介绍</span> TNO 介绍 GPT‑NL 项目，称其为面向荷兰的主权语言模型，强调本国语言、数字自主和人工智能基础设施建设。</p>
+</article>
+<article class="article">
+  <h3 class="article-title"><a href="https://www.gilesthomas.com/2026/06/10g-ethernet-switching-to-broadcom-sfp-plus" target="_blank" rel="noopener noreferrer">10Gb/s 以太网实践：改用 Broadcom SFP+ 模块</a></h3>
+  <p class="article-meta">原标题: 10Gb/s Ethernet: switching to a Broadcom SFP+ module</p>
+  
+  <p class="article-meta">06/17 01:48</p>
+  <p class="article-excerpt">86 points · 64 comments</p>
+  <p class="article-summary"><span class="summary-label">中文介绍</span> 作者记录 10Gb/s 以太网设备调试过程，重点是切换到 Broadcom SFP+ 模块后的网络连接与硬件兼容经验。</p>
+</article>
+  </div>
+    </div>
+  </div></div>
+  </section>
+
+  <section class="source-health-panel">
+    <div class="source-health-head">
+      <h2>源健康</h2>
+      <p>42/46 正常 · 1 空源 · 3 失败 · 378 items</p>
+    </div>
+    <div class="source-health-list">
+      <article class="source-health-item status-failed">
+        <div>
+          <strong>LinuxDo</strong>
+          <span>tech / cn-community</span>
+        </div>
+        <span class="source-health-status">失败 · 0</span>
+        <p>Command failed: curl -sSL -m 20 --compressed -H User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 -H Accep</p>
+      </article>
+<article class="source-health-item status-empty">
+        <div>
+          <strong>Serenity 观察</strong>
+          <span>finance / creator</span>
+        </div>
+        <span class="source-health-status">空源 · 0</span>
+        
+      </article>
+<article class="source-health-item status-failed">
+        <div>
+          <strong>The Kobeissi Letter</strong>
+          <span>finance / creator</span>
+        </div>
+        <span class="source-health-status">失败 · 0</span>
+        <p>Status code 402</p>
+      </article>
+<article class="source-health-item status-failed">
+        <div>
+          <strong>Financial Times</strong>
+          <span>finance / news</span>
+        </div>
+        <span class="source-health-status">失败 · 0</span>
+        <p>Request timed out after 15000ms</p>
+      </article>
+    </div>
+  </section>
+
+  <footer>
+    内容均来自原媒体，本站仅作摘要整理与回链。
+  </footer>
+</main>
+<script>
+  document.querySelectorAll('.tabs > .tab').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var target = btn.dataset.tab;
+      document.querySelectorAll('.tabs > .tab').forEach(function (b) {
+        b.classList.toggle('active', b === btn);
+      });
+      document.querySelectorAll('.panel').forEach(function (p) {
+        p.classList.toggle('active', p.dataset.panel === target);
+      });
+    });
+  });
+  // Scope sub-tab / source-tab toggles to the parent .panel so two L1 panels
+  // can share the same data-cat (e.g. tech main + community both data-cat=tech)
+  // without stomping on each other's active state.
+  document.querySelectorAll('.sub-tab').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var panel = btn.closest('.panel');
+      if (!panel) return;
+      var sub = btn.dataset.sub;
+      panel.querySelectorAll('.sub-tab').forEach(function (b) {
+        b.classList.toggle('active', b === btn);
+      });
+      panel.querySelectorAll('.sub-content').forEach(function (p) {
+        p.classList.toggle('active', p.dataset.subContent === sub);
+      });
+    });
+  });
+  document.querySelectorAll('.source-tab').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var subContent = btn.closest('.sub-content');
+      if (!subContent) return;
+      var src = btn.dataset.source;
+      subContent.querySelectorAll('.source-tab').forEach(function (b) {
+        b.classList.toggle('active', b === btn);
+      });
+      subContent.querySelectorAll('.source-content').forEach(function (p) {
+        p.classList.toggle('active', p.dataset.sourceContent === src);
+      });
+    });
+  });
+  // Trading panel: asset-group sub-tabs (US/crypto/china/commodity)
+  document.querySelectorAll('.trading-group-tab').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var grp = btn.dataset.group;
+      document.querySelectorAll('.trading-group-tab').forEach(function (b) {
+        b.classList.toggle('active', b === btn);
+      });
+      document.querySelectorAll('.trading-group-content').forEach(function (p) {
+        p.classList.toggle('active', p.dataset.group === grp);
+      });
+    });
+  });
+</script>
+</body>
+</html>

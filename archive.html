@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>daily-brief — archive</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root {
+    color-scheme: light;
+    --ink: #16251f;
+    --muted: #6d766f;
+    --paper: #f3efe6;
+    --card: rgba(255, 255, 255, 0.82);
+    --line: rgba(19, 75, 64, 0.14);
+    --teal: #0b493f;
+    --orange: #ef8b4b;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: clamp(1.2rem, 4vw, 3.5rem) 1.25rem 4rem;
+    line-height: 1.5;
+    color: var(--ink);
+    background:
+      radial-gradient(circle at 90% 0%, rgba(76, 139, 110, 0.16), transparent 28rem),
+      radial-gradient(circle at 0% 18%, rgba(239, 139, 75, 0.12), transparent 25rem),
+      var(--paper);
+    min-height: 100vh;
+  }
+  h1 { margin: 0 0 0.45rem; font-size: clamp(2.2rem, 7vw, 4.5rem); line-height: 1; letter-spacing: -0.055em; }
+  .meta { color: rgba(255,255,255,0.7); font-size: 0.88rem; margin: 0 0 2rem; }
+  ul { list-style: none; padding: 0; margin: 1rem 0 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.7rem; }
+  li {
+    padding: 1rem 1.1rem;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--card);
+    box-shadow: 0 7px 22px rgba(26, 55, 47, 0.05);
+    transition: transform 160ms ease, box-shadow 160ms ease;
+  }
+  li:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(26, 55, 47, 0.1); }
+  li a { color: var(--teal); font-weight: 750; text-decoration: none; }
+  li a:hover { color: #086b5a; }
+  .size { color: var(--muted); font-size: 0.78rem; }
+  .top {
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 1.2rem;
+    padding: clamp(2rem, 6vw, 4rem);
+    background: linear-gradient(135deg, #07382f, #105e50);
+    border-radius: 24px;
+    color: white;
+    box-shadow: 0 20px 50px rgba(9, 58, 49, 0.18);
+  }
+  .top::after { content: ""; position: absolute; width: 15rem; height: 15rem; border-radius: 50%; right: -4rem; top: -8rem; background: rgba(239,139,75,0.18); }
+  .top a { position: relative; z-index: 1; color: white; font-weight: 750; text-decoration: none; }
+  .top a:hover { text-decoration: underline; text-underline-offset: 4px; }
+  @media (max-width: 620px) { ul { grid-template-columns: 1fr; } .top { border-radius: 20px; } }
+  @media (prefers-color-scheme: dark) {
+    :root { color-scheme: dark; --ink: #eef4ef; --muted: #9eaaa2; --paper: #0d1714; --card: rgba(24, 42, 36, 0.9); --line: rgba(171, 214, 195, 0.15); --teal: #8ed3bd; }
+    body { background: radial-gradient(circle at 90% 0%, rgba(44, 102, 85, 0.28), transparent 28rem), var(--paper); }
+  }
+</style>
+</head>
+<body>
+  <div class="top">
+    <h1>往期简报</h1>
+    <p class="meta">共 57 期 · 按日期从新到旧 · 更新于 2026-07-23</p>
+    <a href="./index.html">返回今日简报 · 2026-07-23 →</a>
+  </div>
+  <ul>
+      <li><a href="./2026-07-23/2026-07-23.html">2026-07-23</a> <span class="size">205 KB</span></li>
+      <li><a href="./2026-07-22/2026-07-22.html">2026-07-22</a> <span class="size">203 KB</span></li>
+      <li><a href="./2026-07-21/2026-07-21.html">2026-07-21</a> <span class="size">199 KB</span></li>
+      <li><a href="./2026-07-20/2026-07-20.html">2026-07-20</a> <span class="size">187 KB</span></li>
+      <li><a href="./2026-07-19/2026-07-19.html">2026-07-19</a> <span class="size">176 KB</span></li>
+      <li><a href="./2026-07-18/2026-07-18.html">2026-07-18</a> <span class="size">184 KB</span></li>
+      <li><a href="./2026-07-17/2026-07-17.html">2026-07-17</a> <span class="size">184 KB</span></li>
+      <li><a href="./2026-07-16/2026-07-16.html">2026-07-16</a> <span class="size">186 KB</span></li>
+      <li><a href="./2026-07-15/2026-07-15.html">2026-07-15</a> <span class="size">183 KB</span></li>
+      <li><a href="./2026-07-14/2026-07-14.html">2026-07-14</a> <span class="size">187 KB</span></li>
+      <li><a href="./2026-07-09/2026-07-09.html">2026-07-09</a> <span class="size">183 KB</span></li>
+      <li><a href="./2026-07-07/2026-07-07.html">2026-07-07</a> <span class="size">184 KB</span></li>
+      <li><a href="./2026-07-06/2026-07-06.html">2026-07-06</a> <span class="size">184 KB</span></li>
+      <li><a href="./2026-07-05/2026-07-05.html">2026-07-05</a> <span class="size">183 KB</span></li>
+      <li><a href="./2026-07-04/2026-07-04.html">2026-07-04</a> <span class="size">172 KB</span></li>
+      <li><a href="./2026-07-03/2026-07-03.html">2026-07-03</a> <span class="size">179 KB</span></li>
+      <li><a href="./2026-07-01/2026-07-01.html">2026-07-01</a> <span class="size">180 KB</span></li>
+      <li><a href="./2026-06-30/2026-06-30.html">2026-06-30</a> <span class="size">169 KB</span></li>
+      <li><a href="./2026-06-29/2026-06-29.html">2026-06-29</a> <span class="size">180 KB</span></li>
+      <li><a href="./2026-06-28/2026-06-28.html">2026-06-28</a> <span class="size">173 KB</span></li>
+      <li><a href="./2026-06-27/2026-06-27.html">2026-06-27</a> <span class="size">182 KB</span></li>
+      <li><a href="./2026-06-26/2026-06-26.html">2026-06-26</a> <span class="size">176 KB</span></li>
+      <li><a href="./2026-06-25/2026-06-25.html">2026-06-25</a> <span class="size">177 KB</span></li>
+      <li><a href="./2026-06-24/2026-06-24.html">2026-06-24</a> <span class="size">178 KB</span></li>
+      <li><a href="./2026-06-23/2026-06-23.html">2026-06-23</a> <span class="size">178 KB</span></li>
+      <li><a href="./2026-06-22/2026-06-22.html">2026-06-22</a> <span class="size">180 KB</span></li>
+      <li><a href="./2026-06-21/2026-06-21.html">2026-06-21</a> <span class="size">209 KB</span></li>
+      <li><a href="./2026-06-20/2026-06-20.html">2026-06-20</a> <span class="size">208 KB</span></li>
+      <li><a href="./2026-06-19/2026-06-19.html">2026-06-19</a> <span class="size">207 KB</span></li>
+      <li><a href="./2026-06-18/2026-06-18.html">2026-06-18</a> <span class="size">207 KB</span></li>
+      <li><a href="./2026-06-17/2026-06-17.html">2026-06-17</a> <span class="size">181 KB</span></li>
+      <li><a href="./2026-06-16/2026-06-16.html">2026-06-16</a> <span class="size">205 KB</span></li>
+      <li><a href="./2026-06-15/2026-06-15.html">2026-06-15</a> <span class="size">179 KB</span></li>
+      <li><a href="./2026-06-14/2026-06-14.html">2026-06-14</a> <span class="size">177 KB</span></li>
+      <li><a href="./2026-06-13/2026-06-13.html">2026-06-13</a> <span class="size">208 KB</span></li>
+      <li><a href="./2026-06-12/2026-06-12.html">2026-06-12</a> <span class="size">175 KB</span></li>
+      <li><a href="./2026-06-11/2026-06-11.html">2026-06-11</a> <span class="size">176 KB</span></li>
+      <li><a href="./2026-06-10/2026-06-10.html">2026-06-10</a> <span class="size">225 KB</span></li>
+      <li><a href="./2026-06-09/2026-06-09.html">2026-06-09</a> <span class="size">217 KB</span></li>
+      <li><a href="./2026-06-08/2026-06-08.html">2026-06-08</a> <span class="size">198 KB</span></li>
+      <li><a href="./2026-06-07/2026-06-07.html">2026-06-07</a> <span class="size">206 KB</span></li>
+      <li><a href="./2026-06-06/2026-06-06.html">2026-06-06</a> <span class="size">201 KB</span></li>
+      <li><a href="./2026-06-05/2026-06-05.html">2026-06-05</a> <span class="size">197 KB</span></li>
+      <li><a href="./2026-06-04/2026-06-04.html">2026-06-04</a> <span class="size">155 KB</span></li>
+      <li><a href="./2026-06-03/2026-06-03.html">2026-06-03</a> <span class="size">131 KB</span></li>
+      <li><a href="./2026-06-02/2026-06-02.html">2026-06-02</a> <span class="size">102 KB</span></li>
+      <li><a href="./2026-06-01/2026-06-01.html">2026-06-01</a> <span class="size">108 KB</span></li>
+      <li><a href="./2026-05-31/2026-05-31.html">2026-05-31</a> <span class="size">111 KB</span></li>
+      <li><a href="./2026-05-30/2026-05-30.html">2026-05-30</a> <span class="size">110 KB</span></li>
+      <li><a href="./2026-05-29/2026-05-29.html">2026-05-29</a> <span class="size">111 KB</span></li>
+      <li><a href="./2026-05-28/2026-05-28.html">2026-05-28</a> <span class="size">90 KB</span></li>
+      <li><a href="./2026-05-27/2026-05-27.html">2026-05-27</a> <span class="size">90 KB</span></li>
+      <li><a href="./2026-05-26/2026-05-26.html">2026-05-26</a> <span class="size">89 KB</span></li>
+      <li><a href="./2026-05-25/2026-05-25.html">2026-05-25</a> <span class="size">70 KB</span></li>
+      <li><a href="./2026-05-24/2026-05-24.html">2026-05-24</a> <span class="size">71 KB</span></li>
+      <li><a href="./2026-05-23/2026-05-23.html">2026-05-23</a> <span class="size">70 KB</span></li>
+      <li><a href="./2026-05-22/2026-05-22.html">2026-05-22</a> <span class="size">82 KB</span></li>
+  </ul>
+</body>
+</html>

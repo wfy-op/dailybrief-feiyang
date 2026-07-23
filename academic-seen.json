@@ -1,0 +1,382 @@
+{
+  "version": 1,
+  "updated_at": "2026-07-23T01:09:12.258Z",
+  "papers": {
+    "doi:10.1063/5.0205483": {
+      "id": "doi:10.1063/5.0205483",
+      "title": "Laterally coupled photonic crystal surface emitting laser arrays",
+      "url": "https://doi.org/10.1063/5.0205483",
+      "first_seen_date": "2026-05-29",
+      "last_seen_date": "2026-07-04",
+      "seen_count": 27
+    },
+    "doi:10.1364/cleo_at.2024.am3j.6": {
+      "id": "doi:10.1364/cleo_at.2024.am3j.6",
+      "title": "Compact Coherent Photonic Crystal Surface-Emitting Laser Arrays",
+      "url": "https://doi.org/10.1364/cleo_at.2024.am3j.6",
+      "first_seen_date": "2026-05-29",
+      "last_seen_date": "2026-07-21",
+      "seen_count": 38
+    },
+    "doi:10.1117/12.3047700": {
+      "id": "doi:10.1117/12.3047700",
+      "title": "PCSEL modeling and design tool for photonic crystal surface-emitting lasers",
+      "url": "https://doi.org/10.1117/12.3047700",
+      "first_seen_date": "2026-05-29",
+      "last_seen_date": "2026-06-02",
+      "seen_count": 10
+    },
+    "doi:10.21203/rs.3.rs-3120839/v1": {
+      "id": "doi:10.21203/rs.3.rs-3120839/v1",
+      "title": "Superradiant photonic crystal surface emitting laser",
+      "url": "https://doi.org/10.21203/rs.3.rs-3120839/v1",
+      "first_seen_date": "2026-05-29",
+      "last_seen_date": "2026-05-29",
+      "seen_count": 1
+    },
+    "doi:10.1109/islc51662.2021.9615695": {
+      "id": "doi:10.1109/islc51662.2021.9615695",
+      "title": "29-W Continuous-Wave Operation of Photonic-Crystal Surface-Emitting Laser (PCSEL)",
+      "url": "https://doi.org/10.1109/islc51662.2021.9615695",
+      "first_seen_date": "2026-05-29",
+      "last_seen_date": "2026-07-21",
+      "seen_count": 34
+    },
+    "doi:10.1007/s11082-023-05919-x": {
+      "id": "doi:10.1007/s11082-023-05919-x",
+      "title": "Superradiant photonic crystal surface emitting laser",
+      "url": "https://doi.org/10.1007/s11082-023-05919-x",
+      "first_seen_date": "2026-05-29",
+      "last_seen_date": "2026-05-29",
+      "seen_count": 1
+    },
+    "doi:10.7567/ssdm.2020.e-1-02": {
+      "id": "doi:10.7567/ssdm.2020.e-1-02",
+      "title": "1.5 μm Photonic Crystal Surface Emitting Laser Diode",
+      "url": "https://doi.org/10.7567/ssdm.2020.e-1-02",
+      "first_seen_date": "2026-05-29",
+      "last_seen_date": "2026-05-29",
+      "seen_count": 1
+    },
+    "doi:10.1039/d5nr00761e": {
+      "id": "doi:10.1039/d5nr00761e",
+      "title": "Machine-learning-empowered FDTD/FEM simulations for predictive solar energy absorption in plasmonic metamaterial nanocavity arrays",
+      "url": "https://doi.org/10.1039/d5nr00761e",
+      "first_seen_date": "2026-05-29",
+      "last_seen_date": "2026-06-02",
+      "seen_count": 10
+    },
+    "doi:10.1364/ofc.2026.w2a.61": {
+      "id": "doi:10.1364/ofc.2026.w2a.61",
+      "title": "Monolithic Integration of Metasurface with Photonic-Crystal Surface-Emitting Laser (PCSEL) for Beam Manipulation in Free Space Optical Communication",
+      "url": "https://doi.org/10.1364/ofc.2026.w2a.61",
+      "first_seen_date": "2026-06-03",
+      "last_seen_date": "2026-07-21",
+      "seen_count": 30
+    },
+    "doi:10.1117/12.3116258": {
+      "id": "doi:10.1117/12.3116258",
+      "title": "Design of high-slope-efficiency quantum dot photonic crystal surface-emitting lasers with metal reflector",
+      "url": "https://doi.org/10.1117/12.3116258",
+      "first_seen_date": "2026-06-09",
+      "last_seen_date": "2026-07-09",
+      "seen_count": 23
+    },
+    "doi:10.1117/12.3104064": {
+      "id": "doi:10.1117/12.3104064",
+      "title": "Steerable surface emitting laser design based on a line of bound states in the continuum",
+      "url": "https://doi.org/10.1117/12.3104064",
+      "first_seen_date": "2026-06-09",
+      "last_seen_date": "2026-06-25",
+      "seen_count": 20
+    },
+    "arxiv:2507.01316": {
+      "id": "arxiv:2507.01316",
+      "title": "POST: Photonic Swin Transformer for Automated and Efficient Prediction of PCSEL",
+      "url": "https://arxiv.org/abs/2507.01316v1",
+      "first_seen_date": "2026-06-09",
+      "last_seen_date": "2026-07-14",
+      "seen_count": 4
+    },
+    "arxiv:2503.11022": {
+      "id": "arxiv:2503.11022",
+      "title": "Towards Efficient PCSEL Design: A Fully AI-driven Approach",
+      "url": "https://arxiv.org/abs/2503.11022v4",
+      "first_seen_date": "2026-06-09",
+      "last_seen_date": "2026-07-14",
+      "seen_count": 4
+    },
+    "arxiv:2606.05992": {
+      "id": "arxiv:2606.05992",
+      "title": "Rapid Gaussian Boson Sampling Circuit Screening for GKP States Creation via a Two-Stage Machine Learning Surrogate",
+      "url": "https://arxiv.org/abs/2606.05992v1",
+      "first_seen_date": "2026-06-09",
+      "last_seen_date": "2026-06-09",
+      "seen_count": 1
+    },
+    "doi:10.64388/irev9i11-1718174": {
+      "id": "doi:10.64388/irev9i11-1718174",
+      "title": "Metamaterials and Negative Refraction: From Electromagnetic Theory to Emerging Photonic Devices",
+      "url": "https://doi.org/10.64388/irev9i11-1718174",
+      "first_seen_date": "2026-06-09",
+      "last_seen_date": "2026-06-09",
+      "seen_count": 1
+    },
+    "doi:10.1088/1361-6463/ae7733": {
+      "id": "doi:10.1088/1361-6463/ae7733",
+      "title": "Short-cavity single-mode on-chip DFBL source for monolithic PICs in the telecom range",
+      "url": "https://doi.org/10.1088/1361-6463/ae7733",
+      "first_seen_date": "2026-06-09",
+      "last_seen_date": "2026-06-09",
+      "seen_count": 1
+    },
+    "doi:10.1088/1674-4926/25120001": {
+      "id": "doi:10.1088/1674-4926/25120001",
+      "title": "Low-threshold GaN surface emitting lasers: A comparative study of circular grating and photonic crystal designs",
+      "url": "https://doi.org/10.1088/1674-4926/25120001",
+      "first_seen_date": "2026-06-09",
+      "last_seen_date": "2026-06-12",
+      "seen_count": 6
+    },
+    "doi:10.1063/5.0331811": {
+      "id": "doi:10.1063/5.0331811",
+      "title": "A synergistic approach to optical modeling of PCSELs through rigorous methods and the coupled-wave theory",
+      "url": "https://doi.org/10.1063/5.0331811",
+      "first_seen_date": "2026-06-09",
+      "last_seen_date": "2026-07-23",
+      "seen_count": 9
+    },
+    "doi:10.1109/jstqe.2026.3687110": {
+      "id": "doi:10.1109/jstqe.2026.3687110",
+      "title": "Inverse Design of Photonic Crystal Lasers Through Automatic Differentiation Optimization",
+      "url": "https://doi.org/10.1109/jstqe.2026.3687110",
+      "first_seen_date": "2026-06-09",
+      "last_seen_date": "2026-07-21",
+      "seen_count": 36
+    },
+    "doi:10.1117/12.3055947": {
+      "id": "doi:10.1117/12.3055947",
+      "title": "Power and brightness scaling in coherently coupled PCSEL arrays",
+      "url": "https://doi.org/10.1117/12.3055947",
+      "first_seen_date": "2026-06-09",
+      "last_seen_date": "2026-07-15",
+      "seen_count": 26
+    },
+    "doi:10.1109/islc57752.2024.10717421": {
+      "id": "doi:10.1109/islc57752.2024.10717421",
+      "title": "High Brightness Coherent Photonic Crystal Surface-Emitting Laser Arrays",
+      "url": "https://doi.org/10.1109/islc57752.2024.10717421",
+      "first_seen_date": "2026-06-09",
+      "last_seen_date": "2026-07-19",
+      "seen_count": 32
+    },
+    "doi:10.1109/ecoc66593.2025.11262999": {
+      "id": "doi:10.1109/ecoc66593.2025.11262999",
+      "title": "Coherent Free-Space Optical Communication at the C-Band Using InP-Based Photonic-Crystal Surface-emitting Laser",
+      "url": "https://doi.org/10.1109/ecoc66593.2025.11262999",
+      "first_seen_date": "2026-06-12",
+      "last_seen_date": "2026-06-12",
+      "seen_count": 1
+    },
+    "doi:10.1364/oe.599120": {
+      "id": "doi:10.1364/oe.599120",
+      "title": "Size scaling law for radiation losses of modes in photonic crystal surface emitting devices",
+      "url": "https://doi.org/10.1364/oe.599120",
+      "first_seen_date": "2026-06-13",
+      "last_seen_date": "2026-07-23",
+      "seen_count": 16
+    },
+    "doi:10.3390/photonics11020150": {
+      "id": "doi:10.3390/photonics11020150",
+      "title": "High-Power Terahertz Photonic Crystal Surface-Emitting Laser with High Beam Quality",
+      "url": "https://doi.org/10.3390/photonics11020150",
+      "first_seen_date": "2026-06-13",
+      "last_seen_date": "2026-07-19",
+      "seen_count": 13
+    },
+    "doi:10.1364/oe.506641": {
+      "id": "doi:10.1364/oe.506641",
+      "title": "Design of double-lattice GaN-PCSEL based on triangular and circular holes.",
+      "url": "https://doi.org/10.1364/oe.506641",
+      "first_seen_date": "2026-06-13",
+      "last_seen_date": "2026-07-17",
+      "seen_count": 6
+    },
+    "arxiv:2606.13320": {
+      "id": "arxiv:2606.13320",
+      "title": "Learning light scattering from operator parameter spaces to Galerkin-consistent solution spaces",
+      "url": "https://arxiv.org/abs/2606.13320v1",
+      "first_seen_date": "2026-06-13",
+      "last_seen_date": "2026-06-16",
+      "seen_count": 3
+    },
+    "doi:10.1364/ao.592576": {
+      "id": "doi:10.1364/ao.592576",
+      "title": "Simulation study of a low-threshold, high-efficiency 1.55 µm InP PCSEL enabled by a bottom metal-capped DBR, peripheral DBRs, and a shifted triple-hole photonic crystal",
+      "url": "https://doi.org/10.1364/ao.592576",
+      "first_seen_date": "2026-06-15",
+      "last_seen_date": "2026-07-23",
+      "seen_count": 5
+    },
+    "doi:10.1063/5.0315502": {
+      "id": "doi:10.1063/5.0315502",
+      "title": "Regrowth-free blue GaN-based photonic crystal surface-emitting lasers with triangular air holes",
+      "url": "https://doi.org/10.1063/5.0315502",
+      "first_seen_date": "2026-06-19",
+      "last_seen_date": "2026-07-23",
+      "seen_count": 27
+    },
+    "doi:10.1364/ol.575630": {
+      "id": "doi:10.1364/ol.575630",
+      "title": "Electrically driven heterogeneous III-V/Si photonic crystal surface-emitting laser.",
+      "url": "https://doi.org/10.1364/ol.575630",
+      "first_seen_date": "2026-06-26",
+      "last_seen_date": "2026-07-19",
+      "seen_count": 5
+    },
+    "arxiv:2606.24639": {
+      "id": "arxiv:2606.24639",
+      "title": "Inverse designed photonic crystal waveguides for pulsed operation: dispersion, losses, and controlled light-matter interactions",
+      "url": "https://arxiv.org/abs/2606.24639v1",
+      "first_seen_date": "2026-06-26",
+      "last_seen_date": "2026-06-29",
+      "seen_count": 3
+    },
+    "arxiv:2603.02880": {
+      "id": "arxiv:2603.02880",
+      "title": "Size Scaling Law for Radiation Losses of Modes in Photonic Crystal Surface Emitting Devices",
+      "url": "https://arxiv.org/abs/2603.02880v2",
+      "first_seen_date": "2026-06-27",
+      "last_seen_date": "2026-07-14",
+      "seen_count": 4
+    },
+    "arxiv:2602.24197": {
+      "id": "arxiv:2602.24197",
+      "title": "A synergistic approach to optical modeling of PCSELs through rigorous methods and the coupled-wave theory",
+      "url": "https://arxiv.org/abs/2602.24197v2",
+      "first_seen_date": "2026-06-27",
+      "last_seen_date": "2026-07-14",
+      "seen_count": 4
+    },
+    "doi:10.1186/s11671-023-03866-w": {
+      "id": "doi:10.1186/s11671-023-03866-w",
+      "title": "Compact structured light generation based on meta-hologram PCSEL integration",
+      "url": "https://doi.org/10.1186/s11671-023-03866-w",
+      "first_seen_date": "2026-06-27",
+      "last_seen_date": "2026-06-27",
+      "seen_count": 1
+    },
+    "doi:10.1109/sas54819.2022.9881339": {
+      "id": "doi:10.1109/sas54819.2022.9881339",
+      "title": "Real-time LiDAR module with 64x128-pixel CMOS SPAD array and 940-nm PCSEL",
+      "url": "https://doi.org/10.1109/sas54819.2022.9881339",
+      "first_seen_date": "2026-06-27",
+      "last_seen_date": "2026-06-27",
+      "seen_count": 1
+    },
+    "doi:10.1109/lpt.2025.3625162": {
+      "id": "doi:10.1109/lpt.2025.3625162",
+      "title": "Quantum Cascade Photonic Crystal Surface-Emitting Laser With Lateral Coupling Cavity at 9.4 μm",
+      "url": "https://doi.org/10.1109/lpt.2025.3625162",
+      "first_seen_date": "2026-06-28",
+      "last_seen_date": "2026-07-01",
+      "seen_count": 2
+    },
+    "doi:10.1364/oe.491581": {
+      "id": "doi:10.1364/oe.491581",
+      "title": "1.5 µm wavelength NPN-type photonic-crystal surface-emitting laser exceeding 100 mW.",
+      "url": "https://doi.org/10.1364/oe.491581",
+      "first_seen_date": "2026-06-28",
+      "last_seen_date": "2026-07-01",
+      "seen_count": 2
+    },
+    "doi:10.1038/s41377-026-02322-5": {
+      "id": "doi:10.1038/s41377-026-02322-5",
+      "title": "High-purity linearly polarized emission from a compact BIC laser",
+      "url": "https://doi.org/10.1038/s41377-026-02322-5",
+      "first_seen_date": "2026-07-03",
+      "last_seen_date": "2026-07-23",
+      "seen_count": 20
+    },
+    "doi:10.1038/s41598-026-58385-2": {
+      "id": "doi:10.1038/s41598-026-58385-2",
+      "title": "Enhanced urine refractive index sensing using a defect-engineered one-dimensional photonic crystal",
+      "url": "https://doi.org/10.1038/s41598-026-58385-2",
+      "first_seen_date": "2026-07-03",
+      "last_seen_date": "2026-07-05",
+      "seen_count": 2
+    },
+    "doi:10.1126/sciadv.aef2717": {
+      "id": "doi:10.1126/sciadv.aef2717",
+      "title": "Structured lasing with disordered high- <i>Q</i> perovskite cavities",
+      "url": "https://doi.org/10.1126/sciadv.aef2717",
+      "first_seen_date": "2026-07-03",
+      "last_seen_date": "2026-07-03",
+      "seen_count": 1
+    },
+    "doi:10.1038/s41586-023-06059-8": {
+      "id": "doi:10.1038/s41586-023-06059-8",
+      "title": "High-brightness scalable continuous-wave single-mode photonic-crystal laser",
+      "url": "https://doi.org/10.1038/s41586-023-06059-8",
+      "first_seen_date": "2026-07-04",
+      "last_seen_date": "2026-07-04",
+      "seen_count": 1
+    },
+    "arxiv:2607.00739": {
+      "id": "arxiv:2607.00739",
+      "title": "On-Demand Coherent Nanolaser Metalens and Beam Steering Enabled by Physics-Informed Neural Networks",
+      "url": "https://arxiv.org/abs/2607.00739v1",
+      "first_seen_date": "2026-07-05",
+      "last_seen_date": "2026-07-07",
+      "seen_count": 3
+    },
+    "doi:10.1063/5.0325678": {
+      "id": "doi:10.1063/5.0325678",
+      "title": "Buried dielectric quasi-photonic-crystal surface-emitting lasers",
+      "url": "https://doi.org/10.1063/5.0325678",
+      "first_seen_date": "2026-07-09",
+      "last_seen_date": "2026-07-23",
+      "seen_count": 17
+    },
+    "doi:10.1109/jstqe.2026.3704048": {
+      "id": "doi:10.1109/jstqe.2026.3704048",
+      "title": "Three-Dimensional Coupled-Wave Analysis for Photonic-Crystal Surface-Emitting Lasers With External Optical Feedback",
+      "url": "https://doi.org/10.1109/jstqe.2026.3704048",
+      "first_seen_date": "2026-07-09",
+      "last_seen_date": "2026-07-23",
+      "seen_count": 10
+    },
+    "arxiv:2607.08159": {
+      "id": "arxiv:2607.08159",
+      "title": "Nyquist-Sampled Time-Domain Adjoint FDTD for Memory-Efficient Broadband Nanophotonic Inverse Design",
+      "url": "https://arxiv.org/abs/2607.08159v1",
+      "first_seen_date": "2026-07-11",
+      "last_seen_date": "2026-07-14",
+      "seen_count": 5
+    },
+    "arxiv:2607.10472": {
+      "id": "arxiv:2607.10472",
+      "title": "Mid-Infrared Single-Photon Detection via Enhanced Cross-Phase Modulation in Topology-Optimized Epsilon-Near-Zero Dual-Wavelength Nanocavities",
+      "url": "https://arxiv.org/abs/2607.10472v1",
+      "first_seen_date": "2026-07-14",
+      "last_seen_date": "2026-07-15",
+      "seen_count": 2
+    },
+    "arxiv:2607.16667": {
+      "id": "arxiv:2607.16667",
+      "title": "Graph State Generation Based on Quantum Photonic Devices, Enabling Measurement-Based Quantum Computing",
+      "url": "https://arxiv.org/abs/2607.16667v1",
+      "first_seen_date": "2026-07-21",
+      "last_seen_date": "2026-07-21",
+      "seen_count": 1
+    },
+    "doi:10.1109/jstqe.2026.3703418": {
+      "id": "doi:10.1109/jstqe.2026.3703418",
+      "title": "Carrier-Induced Mode Redistribution Enabling Scalable Single-Mode Lasing in Ultra-Large-Area Photonic-Crystal Surface-Emitting Lasers",
+      "url": "https://doi.org/10.1109/jstqe.2026.3703418",
+      "first_seen_date": "2026-07-22",
+      "last_seen_date": "2026-07-23",
+      "seen_count": 2
+    }
+  }
+}
